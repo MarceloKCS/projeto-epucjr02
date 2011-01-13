@@ -50,6 +50,7 @@ public class BuscaAvancada {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Congregacao> buscarCongregacao(String nome, String endereco){
 		List<Congregacao> listaDeCongregacao;
 		if(!nome.equals("")){
@@ -74,6 +75,7 @@ public class BuscaAvancada {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Reuniao> buscarReuniao(String data, String hora, String local){
 		List<Reuniao> listaDeReuniao;
 		
