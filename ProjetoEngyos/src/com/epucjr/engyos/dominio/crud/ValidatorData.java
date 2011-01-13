@@ -52,7 +52,7 @@ public class ValidatorData {
 
 		int quant_dias = dias_meses[mes - 1];
 
-		// verifica se o ano Ã© bissexto
+		// verifica se o ano é bissexto
 		if(anoBissexto(ano) && (mes == 2)) quant_dias = 29;
 
 		return quant_dias;
