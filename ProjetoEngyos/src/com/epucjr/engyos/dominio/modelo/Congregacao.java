@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.search.annotations.Field;
@@ -28,20 +27,23 @@ public class Congregacao {
 	
 	@Field
 	private String endereco;
-	@OneToMany (fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn
+	
+	@OneToMany (mappedBy = "congregacao", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	//@JoinColumn (name="congrefacao_id")
 	private List<Obreiro> obreiros;
 	
 	////////////////
 	// CONSTRUTOR //
 	////////////////
 	public Congregacao(){
-		
+		this.nome = "";
+		this.endereco = "";
+		this.obreiros = new ArrayList<Obreiro>();
 	}
 	
 	public Congregacao(String nome, String endereco) {
-		setNome(nome);
-		setEndereco(endereco);
+		this.nome = nome;
+		this.endereco = endereco;
 		this.obreiros = new ArrayList<Obreiro>();
 	}
 	

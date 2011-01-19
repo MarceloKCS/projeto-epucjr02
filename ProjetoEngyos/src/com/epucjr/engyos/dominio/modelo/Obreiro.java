@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.search.annotations.DocumentId;
@@ -22,19 +23,19 @@ public class Obreiro {
 	@Field
 	private String cargo;
 	
-	@Field
-	private String senha;
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+	@JoinColumn
+	private Identificacao identificacao;
 	
-	@Field
-	private String digital;
-
 	@Id
 	@DocumentId
 	@Field
 	private String cpf;
-
-	@Field
-	private String congregacao;
+	
+	//@Field
+	@ManyToOne//(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@JoinColumn (name="congregacao_fk")
+	private Congregacao congregacao;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn
@@ -46,15 +47,27 @@ public class Obreiro {
 	// CONSTRUTOR //
 	////////////////
 	public Obreiro(){
-		
+		this.nome = "";
+		this.cargo = "";
+		this.identificacao = new Identificacao();		
 	}
 	
-	public Obreiro(String nome, String cargo, String cpf, String congregacao) {
+	public Obreiro(String nome, String cargo, String cpf, Congregacao congregacao, String imppressaoDigital, String senha) {
+		this.nome = nome;
+		this.cargo = cargo;
+		this.cpf = cpf;
+		this.congregacao = congregacao;		
+		this.identificacao = new Identificacao(imppressaoDigital, senha);
+	}
+	
+	public Obreiro(String nome, String cargo, String cpf, Congregacao congregacao, Identificacao identificacao) {
 		setNome(nome);
 		setCargo(cargo);
 		setCpf(cpf);
 		setCongregacao(congregacao);
+		this.identificacao = identificacao;
 	}
+	
 
 	/////////////////////////
 	// GETTERS AND SETTERS //
@@ -86,24 +99,22 @@ public class Obreiro {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getCongregacao() {
-		return this.congregacao;
+	
+	public Congregacao getCongregacao() {
+		return congregacao;
 	}
-	public void setCongregacao(String congregacao) {
+
+	public void setCongregacao(Congregacao congregacao) {
 		this.congregacao = congregacao;
 	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	public String getDigital() {
-		return digital;
-	}
-	public void setDigital(String digital) {
-		this.digital = digital;
+
+	public Identificacao getIdentificacao() {
+		return identificacao;
 	}
 
+	public void setIdentificacao(Identificacao identificacao) {
+		this.identificacao = identificacao;
+	}
 
+	
 }
