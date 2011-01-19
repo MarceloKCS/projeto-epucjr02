@@ -10,7 +10,7 @@ import com.epucjr.engyos.dominio.modelo.Reuniao;
 public class DataSet {
 	
 	private DefaultCategoryDataset dcd;
-	private int modo;
+	private int modo; //modo, 0 sem legenda com uma cor, 1 com legenda multicores
 	private static final String[] mes = {"Janeiro", "Fevereiro", "Mar"+(char)0x00e7+"o", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outobro", "Novembro", "Dezembro"};
 	
 	public DataSet(int modo) {

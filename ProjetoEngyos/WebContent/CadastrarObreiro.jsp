@@ -7,13 +7,14 @@
 <%
 	FormularioDeObreiro formularioDeObreiro;
 	ValidadorDeFormularioDeObreiro validadorDeObreiro;
-	formularioDeObreiro = (FormularioDeObreiro) request.getAttribute("viewObreiro");
-	validadorDeObreiro = (ValidadorDeFormularioDeObreiro) request.getAttribute("errorObreiro");
+	formularioDeObreiro = (FormularioDeObreiro) request.getAttribute("formularioDeObreiro");
+	//validadorDeObreiro = (ValidadorDeFormularioDeObreiro) request.getAttribute("errorObreiro");
+	validadorDeObreiro = formularioDeObreiro.getValidadorDeFormularioDeObreiro();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Obreiros - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
 
@@ -51,9 +52,9 @@
 			<div id="mensagemRetorno">
 				<%
 					if (formularioDeObreiro != null) {
-						out.println(formularioDeObreiro.getStatus() + "<br />");
+						out.println(formularioDeObreiro.getMensagemStatus() + "<br />");
 						out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
-						if (formularioDeObreiro.getStatus().equals(
+						if (formularioDeObreiro.getMensagemStatus().equals(
 								"Sucesso ao Cadastrar")) {
 							out.println("Foram incluidos no banco de dados <br />");
 							Obreiro obreiroCadastrado = (Obreiro) request
@@ -68,7 +69,7 @@
 			</div>
 			<%
 				List<Congregacao> listaDeCongregacao;
-				listaDeCongregacao = (List<Congregacao>) request.getAttribute("listaDeCongregacao");
+				listaDeCongregacao = formularioDeObreiro.getListaDeCongregacoes();
 			%>
 			
 	

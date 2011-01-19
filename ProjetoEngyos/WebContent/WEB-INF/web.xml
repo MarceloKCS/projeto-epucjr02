@@ -239,4 +239,14 @@
 		<servlet-name>ReuniaoCarregaServlet</servlet-name>
 		<url-pattern>/ReuniaoCarregaServlet</url-pattern>
 	</servlet-mapping>
+	<servlet>
+    <description></description>
+    <display-name>Controller</display-name>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.web.FrontControlerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/Controller</url-pattern>
+  </servlet-mapping>
 </web-app>

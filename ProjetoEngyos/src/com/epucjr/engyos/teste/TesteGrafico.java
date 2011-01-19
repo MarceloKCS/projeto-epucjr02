@@ -70,8 +70,8 @@ public class TesteGrafico {
 	 * @return
 	 */
 	public BufferedImage gerarGrafico3D(int modo, Color cor) {
-		if (modo == 0) return Grafico.gerarGrafico3D(null, "Presenca 2010", "", "", 800, 500, 800, 500, dataset0.getDcd(), 0.75f, cor, modo);
-		if (modo == 1) return Grafico.gerarGrafico3D(null, "Presenca 2010", "", "", 800, 500, 800, 500, dataset1.getDcd(), 0.75f, null, modo);
+		if (modo == 0) return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês", "presença", 800, 500, 800, 500, dataset0.getDcd(), 0.75f, cor, modo);
+		if (modo == 1) return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês", "presença", 800, 500, 800, 500, dataset1.getDcd(), 0.75f, null, modo);
 		return null;
 	}
 	

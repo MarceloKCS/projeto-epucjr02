@@ -2,8 +2,6 @@ package com.epucjr.engyos.dominio.crud;
 
 import java.util.HashMap;
 
-import com.epucjr.engyos.dominio.modelo.Obreiro;
-
 public class ValidadorDeFormularioDeObreiro {
 	
 	///////////////
@@ -11,7 +9,7 @@ public class ValidadorDeFormularioDeObreiro {
 	///////////////
 	private boolean formularioValido;
 	private HashMap <String, String> errors;
-	private ValidatorCpf validadorCpf;
+	
 	
 	////////////////
 	// CONSTRUTOR //
@@ -19,7 +17,7 @@ public class ValidadorDeFormularioDeObreiro {
 	public ValidadorDeFormularioDeObreiro(){
 		this.formularioValido = false;
 		this.errors = new HashMap<String, String>();
-		this.validadorCpf = new ValidatorCpf();
+		
 	}
 	
 	/////////////////////////
@@ -63,7 +61,29 @@ public class ValidadorDeFormularioDeObreiro {
     	}
     }
 	
-	public void verificarCamposValidos(Obreiro obreiro){
+	public void verificarCamposValidos(String nome, String cpf, String cargo, String congregacao){
+		ValidatorCpf validadorCpf = new ValidatorCpf();
+		this.setFormularioValido(true);
+		
+		if (nome == null || nome.trim().length() == 0){
+			this.definirCampoComErro("Nome", "Nome Obrigatório");
+			this.setFormularioValido(false);
+		}
+		if (!validadorCpf.valido(cpf)){
+			this.definirCampoComErro("Cpf", "CPF Inválido");
+			this.setFormularioValido(false);
+		}
+		if (cargo == null || cargo.trim().length() == 0){
+			this.definirCampoComErro("Cargo", "Cargo Inválido");
+			this.setFormularioValido(false);
+		}
+		if (congregacao == null || congregacao.trim().length() == 0){
+			this.errors.put("Congregacao", "Congregação Inválida");
+			this.setFormularioValido(false);
+		}
+		
+		
+/*		//Verificando validade dos dados de obreiro
 		if (obreiro.getNome() == null || obreiro.getNome().trim().length() == 0){
 			this.definirCampoComErro("Nome", "Nome Obrigatório");
 		}
@@ -73,6 +93,8 @@ public class ValidadorDeFormularioDeObreiro {
 		if (obreiro.getCargo() == null || obreiro.getCargo().trim().length() == 0){
 			this.definirCampoComErro("Cargo", "Cargo Inválido");
 		}
+		
+		//Verificando a congregação associada
 		if (obreiro.getCongregacao() == null || obreiro.getCongregacao().trim().length() == 0){
 			this.errors.put("Congregacao", "Congregação Inválida");
 		}
@@ -80,7 +102,7 @@ public class ValidadorDeFormularioDeObreiro {
 			if((obreiro.getNome() != null && obreiro.getNome().trim().length() != 0) && (obreiro.getCargo() != null && obreiro.getCargo().trim().length() != 0) && (this.validadorCpf.valido(obreiro.getCpf())) && (obreiro.getCongregacao() != null && obreiro.getCongregacao().trim().length() != 0)){
 				this.setFormularioValido(true);
 			}
-		}
+		}*/
 	}
 
 }

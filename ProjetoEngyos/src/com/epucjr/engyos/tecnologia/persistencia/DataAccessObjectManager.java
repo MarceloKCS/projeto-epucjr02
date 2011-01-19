@@ -1,5 +1,8 @@
 package com.epucjr.engyos.tecnologia.persistencia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -220,6 +223,22 @@ public class DataAccessObjectManager {
 		}		
 		return usuario;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Congregacao> obterListaDeCongregacoes(){
+		
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+		
+		List<Congregacao> listaDeCongregacao = new ArrayList<Congregacao>();
+		
+		listaDeCongregacao =  entityManager.createQuery("from Congregacao").getResultList();
+		
+		return listaDeCongregacao;
+		
+	}
+	
 	
 	/******************************
 	 *	GETTERS AND SETTERS
