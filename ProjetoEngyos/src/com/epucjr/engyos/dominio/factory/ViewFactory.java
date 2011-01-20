@@ -28,6 +28,10 @@ public class ViewFactory {
 	private void carregarMapListView(){
 		this.adicionaView("null", "default", "teste.jsp");
 		this.adicionaView("obreiro_formload", "Formulario Carregado", "CadastrarObreiro.jsp");
+		this.adicionaView("obreiro_register", "Erro ao Cadastrar", "CadastrarObreiro.jsp");
+		this.adicionaView("obreiro_register", "Operação Realizada com Sucesso!", "CadastrarObreiro.jsp");
+		this.adicionaView("obreiro_register", "Erro interno na operação", "CadastrarObreiro.jsp");
+		this.adicionaView("obreiro_register", "Usuario Já Existente no Registro...", "CadastrarObreiro.jsp");
 		
 	}
 

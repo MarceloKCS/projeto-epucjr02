@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
+import javax.persistence.NoResultException;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Presenca;
@@ -43,7 +43,7 @@ public class DataAccessObjectManager {
 
 	public void persistirObjeto(Object generico){
 
-		boolean objetoExistente = false;
+		boolean objetoExistente = this.isObjetoExistente(generico);
 
 		if(entityManager == null || !entityManager.isOpen()){
 			this.entityManager = EmFactory.getEntityManager();
@@ -69,11 +69,39 @@ public class DataAccessObjectManager {
 		}
 		else{
 			this.setOperacaoEfetuada(false);
-			this.setMensagemStatus("Usuario Já Existente no Registro...");		
+					
 
 		}
 
-	}	
+	}
+
+	public boolean isObjetoExistente(Object generico){
+
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+
+		if(generico instanceof Obreiro){
+			Obreiro obreiro = (Obreiro) generico;
+			String cpf = obreiro.getCpf();
+			try{
+				Obreiro obreiroObtido = (Obreiro) entityManager.createQuery("from Obreiro o where o.cpf = '" + cpf + "'").getSingleResult();
+				if(obreiroObtido.getCpf().equals(cpf)){
+					this.setMensagemStatus("Usuario Já Existente no Registro...");
+					return true;
+					
+				}
+				else{
+					return false;
+				}
+			}
+			catch(NoResultException e){
+				return false;
+			}
+
+		}
+		return false;
+	}
 
 	public void mergeDataObjeto(Object objeto){
 		//TODO
@@ -133,7 +161,7 @@ public class DataAccessObjectManager {
 		return congregacao;
 	}
 
-	
+
 
 	public Object obterPresenca(int idDaPresenca){
 		if(entityManager == null || !entityManager.isOpen()){
@@ -170,8 +198,8 @@ public class DataAccessObjectManager {
 		}		
 		return reuniao;
 	}
-	
-	
+
+
 	public void deletarObjeto(Object generico){
 
 		boolean objetoExistente = false;
@@ -205,14 +233,14 @@ public class DataAccessObjectManager {
 		}
 
 	}
-	
+
 	public Obreiro obterObreiro(String cpf){
 		if(entityManager == null || !entityManager.isOpen()){
 			this.entityManager = EmFactory.getEntityManager();
 		}
-		
+
 		Obreiro usuario = entityManager.find(Obreiro.class, cpf);
-		
+
 		if(usuario == null){
 			this.setOperacaoEfetuada(false);
 			this.setMensagemStatus("Usuario não inexistente no sistema");
@@ -223,23 +251,23 @@ public class DataAccessObjectManager {
 		}		
 		return usuario;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Congregacao> obterListaDeCongregacoes(){
-		
+
 		if(entityManager == null || !entityManager.isOpen()){
 			this.entityManager = EmFactory.getEntityManager();
 		}
-		
+
 		List<Congregacao> listaDeCongregacao = new ArrayList<Congregacao>();
-		
+
 		listaDeCongregacao =  entityManager.createQuery("from Congregacao").getResultList();
-		
+
 		return listaDeCongregacao;
-		
+
 	}
-	
-	
+
+
 	/******************************
 	 *	GETTERS AND SETTERS
 	 ******************************/

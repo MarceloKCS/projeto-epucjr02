@@ -55,7 +55,30 @@ public class FormularioDeObreiro {
     	else{
     		return false;
     	}
-    }	
+    }
+    
+    
+    public void definirDadosDeConfirmacao(String nomeDoCampo, String valorDoCampo ) {
+		this.camposPreenchidos.put(nomeDoCampo, valorDoCampo);
+    }
+    
+    public String obterDadoDeConfirmacao(String nomeDoCampo) {
+    	if(this.camposPreenchidos.containsKey(nomeDoCampo)){
+    		return this.camposPreenchidos.get(nomeDoCampo);
+    	}
+    	else{
+    		return "";
+    	}
+    }
+    
+    public boolean verificarDadoDeConfirmacao(String nomeDoCampo){
+    	if (this.camposPreenchidos.containsKey(nomeDoCampo)){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    }
 	
 	private void carregarDadosDoFormulario(){
 		
@@ -85,9 +108,9 @@ public class FormularioDeObreiro {
 		String nome = httpServletRequest.getParameter("Nome");
 		String cpf = httpServletRequest.getParameter("Cpf");
 		String cargo = httpServletRequest.getParameter("Cargo");
-		String idCongregacaoEscolhido = httpServletRequest.getParameter("idCongregacao");
-		String congregacao = httpServletRequest.getParameter("Congregacao");
-		
+		String idCongregacaoEscolhido = httpServletRequest.getParameter("Congregacao");
+		String congregacao = httpServletRequest.getParameter(idCongregacaoEscolhido);
+				
 		
 		//TODO talvez não seja necessário pos o validador já faz isso
 		//Verifica o CPF obtido de modo a informar a validade do mesmo ao usuário
@@ -116,6 +139,16 @@ public class FormularioDeObreiro {
 		if(congregacao != null && !congregacao.equals("")){
 			this.definirCampoPreenchido("Congregacao", congregacao);
 		}
+	}
+	
+	public void definirDadosDeConfirmacaoDeCadastroObreiro(String confirmacaoCadastro, String nome, String cpf, String cargo, String congregacao){
+		
+		this.definirDadosDeConfirmacao("confirmacao_cadastro", confirmacaoCadastro);
+		this.definirDadosDeConfirmacao("confirmacao_nome", nome);
+		this.definirDadosDeConfirmacao("confirmacao_cpf", cpf);
+		this.definirDadosDeConfirmacao("confirmacao_cargo", cargo);
+		this.definirDadosDeConfirmacao("confirmacao_congregacao", congregacao);
+		
 	}
 	
 	public void definirCPFValido(String numeroCPF){

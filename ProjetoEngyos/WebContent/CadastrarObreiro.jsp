@@ -51,30 +51,22 @@
 		<div id="conteudo_tabmenu">
 			<div id="mensagemRetorno">
 				<%
-					if (formularioDeObreiro != null) {
+					if (formularioDeObreiro.getMensagemStatus() != null && !formularioDeObreiro.getMensagemStatus().equals("")) {
 						out.println(formularioDeObreiro.getMensagemStatus() + "<br />");
 						out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
-						if (formularioDeObreiro.getMensagemStatus().equals(
-								"Sucesso ao Cadastrar")) {
-							out.println("Foram incluidos no banco de dados <br />");
-							Obreiro obreiroCadastrado = (Obreiro) request
-									.getAttribute("obreiro");
-							out.println("Nome: "+obreiroCadastrado.getNome() + "<br />");
-							out.println("Cargo: "+obreiroCadastrado.getCargo() + "<br />");
-							out.println("CPF: "+obreiroCadastrado.getCpf() + "<br />");
-							out.println("Congregação: "+obreiroCadastrado.getCongregacao());
+						if(formularioDeObreiro.verificarDadoDeConfirmacao("confirmacao_cadastro")){
+							out.println("Foram incluidos no banco de dados <br />");							
+							out.println("Nome: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_nome") + "<br />");
+							out.println("Cargo: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cargo") + "<br />");
+							out.println("CPF: "+ formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cpf") + "<br />");
+							out.println("Congregação: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_congregacao"));
 						}
 					}
 				%>
 			</div>
-			<%
-				List<Congregacao> listaDeCongregacao;
-				listaDeCongregacao = formularioDeObreiro.getListaDeCongregacoes();
-			%>
-			
 	
 	
-	<form name="formularioObreiro" method="post" action="registrarObreiro" id="formularioObreiro">
+		<form name="formularioObreiro" method="post" action="Controller?acao=obreiro_register" id="formularioObreiro">
 			<p>
 				<label for="Nome">Nome: </label>
 				<input type="text" name="Nome" value="
@@ -163,20 +155,31 @@
 				<select name="Congregacao">
 					<option value=""></option>
 					<%
+					
+					
+						List<Congregacao> listaDeCongregacao;
+						listaDeCongregacao = formularioDeObreiro.getListaDeCongregacoes();
+						
+						
 						 if(formularioDeObreiro != null && formularioDeObreiro.verificarCampoPreenchido("Congregacao")){
-							 String congregacao = formularioDeObreiro.obterCampoPreenchido("Congregacao");
-							 for(int posicao=0; posicao<listaDeCongregacao.size(); posicao++){
-								 if(congregacao.equals(listaDeCongregacao.get(posicao).getNome())){
-									 out.println("<option selected=\"selected\" value=" + listaDeCongregacao.get(posicao).getNome() +">"+listaDeCongregacao.get(posicao).getNome()+"</option>");
+							 String congregacao = formularioDeObreiro.obterCampoPreenchido("Congregacao").trim();
+							
+							 for(int posicao=0; posicao<listaDeCongregacao.size(); posicao++){								 
+								 String congregacaoCorrente = listaDeCongregacao.get(posicao).getNome().trim();
+								 if(congregacaoCorrente.equals(congregacao)){
+									 out.println("<option selected=\"selected\" value=" + listaDeCongregacao.get(posicao).getIdCongregacao() +">" + listaDeCongregacao.get(posicao).getNome() + "</option>");
+									 out.print("<input type=\"hidden\" name=\""+ listaDeCongregacao.get(posicao).getIdCongregacao() + "\" value=\" "+  listaDeCongregacao.get(posicao).getNome() +" \"/>");
 								 }
 								 else{
-									 out.println("<option value=\""+listaDeCongregacao.get(posicao).getNome()+"\">"+listaDeCongregacao.get(posicao).getNome()+"</option>");
+									 out.println("<option value=\"" + listaDeCongregacao.get(posicao).getIdCongregacao()+ "\">"+listaDeCongregacao.get(posicao).getNome()+"</option>");
+									 out.print("<input type=\"hidden\" name=\""+ listaDeCongregacao.get(posicao).getIdCongregacao() + "\" value=\" "+  listaDeCongregacao.get(posicao).getNome() +" \"/>");
 								 }
 							}
 						 }
 						 else{
 							for(int posicao = 0; posicao < listaDeCongregacao.size(); posicao++){
-								out.println("<option value=\""+listaDeCongregacao.get(posicao).getNome()+"\">"+listaDeCongregacao.get(posicao).getNome()+"</option>");
+								out.println("<option value=\"" + listaDeCongregacao.get(posicao).getIdCongregacao() + "\">" + listaDeCongregacao.get(posicao).getNome() + "</option>");
+								out.print("<input type=\"hidden\" name=\""+ listaDeCongregacao.get(posicao).getIdCongregacao() + "\" value=\" "+  listaDeCongregacao.get(posicao).getNome() +" \"/>");
 							}
 						 }
 					%>
