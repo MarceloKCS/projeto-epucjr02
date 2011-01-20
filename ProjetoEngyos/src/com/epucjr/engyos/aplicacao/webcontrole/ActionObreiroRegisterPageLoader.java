@@ -13,15 +13,10 @@ public class ActionObreiroRegisterPageLoader implements Command{
 		FormularioDeObreiro formularioDeObreiro = new FormularioDeObreiro();
 		String respostaOperacao = formularioDeObreiro.getMensagemStatus();
 		
-		request.setAttribute("formularioDeObreiro", formularioDeObreiro);
-		
-		//Obtenção de parâmetros necessários obtidos da página
-		/*String nome = request.getParameter("Nome");
-		String cpf = request.getParameter("Cpf");
-		String cargo = request.getParameter("Cargo");
-		String idCongregacaoEscolhido = request.getParameter("idCongregacao");
-		long idCongregacao = Long.parseLong(idCongregacaoEscolhido);
-		String congregacao = (String)request.getParameter("Congregacao");*/
+		//Solução temporária para não aparecer o msg pagina carregana na página
+		formularioDeObreiro.setMensagemStatus(null);
+				
+		request.setAttribute("formularioDeObreiro", formularioDeObreiro);		
 		
 		return respostaOperacao;
 	}
