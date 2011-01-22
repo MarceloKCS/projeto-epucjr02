@@ -21,6 +21,7 @@ public class FabricaComandos {
         comandos.put("getReuniao", new ComandoGetReuniao());
         comandos.put("marcarPresenca", new ComandoMarcarPresenca());
         comandos.put("marcarPresencaDigital", new ComandoMarcarPresencaDigital());
+        comandos.put("RegistrarDigital", new ActionCommandCapturarDigital());
     }
 
     public Comando getComando(String acao) {
