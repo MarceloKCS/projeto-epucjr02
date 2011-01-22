@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlet;
 
 import java.io.IOException;
@@ -15,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Diego
+ * @author Rogerio
  */
-public class ServletControler extends HttpServlet {
-   
+public class ServletDeTeste extends HttpServlet {
+
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -26,24 +25,28 @@ public class ServletControler extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(request.getInputStream());
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(response.getOutputStream());
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // response.setContentType("text/html;charset=UTF-8");
+        // PrintWriter out = response.getWriter();
+        System.out.println("Opa!");
+        ObjectInputStream objectInputStream = new ObjectInputStream(request.getInputStream());
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(response.getOutputStream());
+        String acao = objectInputStream.readUTF();
+       // try {
+         //   Progress objeto = (Progress) objectInputStream.readObject();
+       //     System.out.println("valor = " + objeto.getNomeTitle());
+      //  } catch (ClassNotFoundException ex) {
+       //     Logger.getLogger(ServletDeTeste.class.getName()).log(Level.SEVERE, null, ex);
+       // }
+        System.out.println("ValorAcao = " + acao);
 
-            String acao = objectInputStream.readUTF();
-            System.out.println(acao);
-            FabricaComandos fabricaComandosc = new FabricaComandos();
-            fabricaComandosc.getComando(acao).execute(objectInputStream, objectOutputStream);
-            
-            objectInputStream.close();
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } 
+        FabricaComandos fc = new FabricaComandos();
+        fc.getComando(acao).execute(objectInputStream, objectOutputStream);
+
+       // objectInputStream.close();
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -55,9 +58,9 @@ public class ServletControler extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -68,7 +71,7 @@ public class ServletControler extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -80,5 +83,4 @@ public class ServletControler extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

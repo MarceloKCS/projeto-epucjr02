@@ -15,16 +15,19 @@ import java.io.ObjectOutputStream;
  */
 public class ComandoMarcarPresenca implements Comando{
 
-    public String execute(ObjectInputStream ois, ObjectOutputStream oos) {
+    public String execute(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
         try {
-            long idReuniao = ois.readLong();
-            String senha = ois.readUTF();
-            //Todo
+           // long idReuniao = objectInputStream.readLong();
+            //String senha = objectInputStream.readUTF();
+            //TODO
+
+            //System.out.println("senha = " + senha);
 
             //Teste
-            oos.writeUTF("Nome de Alguem via Senha");
+            objectOutputStream.writeUTF("Nome de Alguem via Senha");
             return "ok";
         } catch (IOException ex) {
+            ex.printStackTrace();
             return "erro";
         }
     }

@@ -120,17 +120,17 @@
 				</span>
 			</p>
 			
-			<!--
+			
 			<p>
 				<label for="Senha">Senha: </label>
 				<input type="text" name="Senha" id="Senha" />
 				<span class="erroCampoFormulario">
-					<% /*
+					<% 
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("Senha")) {
 							out.println(validadorDeObreiro.obterCampoComErro("Senha"));
 						}
-						*/
+						
 					%>
 				</span>
 			</p>			
@@ -139,16 +139,16 @@
 				<label for="SenhaConfirmacao">Confirmação da Senha: </label>
 				<input type="text" name="SenhaConfirmacao" id="SenhaConfirmacao" />
 				<span class="erroCampoFormulario">
-					<% /*
+					<%
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("SenhaConfirmacao")) {
 							out.println(validadorDeObreiro.obterCampoComErro("SenhaConfirmacao"));
 						}
-						*/
+						
 					%>
 				</span>
 			</p>
-			-->			
+						
 			
 			<p>
 				<label for="Congregacao">Congregação</label>
