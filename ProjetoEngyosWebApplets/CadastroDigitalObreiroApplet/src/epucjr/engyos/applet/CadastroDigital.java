@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author Rogerio
  */
-public class CapturaDigital extends JApplet {
+public class CadastroDigital extends JApplet {
 
     /** Initializes the applet CapturaDigital */
     @Override

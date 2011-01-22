@@ -5,6 +5,7 @@
 package epucjr.engyos.comunicacao;
 
 import epucjr.engyos.test.Progress;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,7 +28,9 @@ public class ServletComunication {
 
     public ServletComunication() {
         try {
-            this.url = new URL("http://localhost:8080/ProjetoBiometria/TestServlet");
+            this.url = new URL("http://localhost:8080/ProjetoEngyos/AppletController");
+           // this.url = new URL("http://localhost:8080/ProjetoBiometria/TestServlet");
+
         } catch (MalformedURLException ex) {
             Logger.getLogger(ServletComunication.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,7 +62,7 @@ public class ServletComunication {
             ex.printStackTrace();
             this.setMensagemStatus("Erro de IO");
             this.setOperacaoExecutada(false);
-        }
+        }       
 
         return urlConn;
     }
@@ -114,7 +117,6 @@ public class ServletComunication {
 
             //Obtém uma resposta do status da requisição feita ao servidor
 
-
             ObjectInputStream objectInputStream = new ObjectInputStream(urlConn.getInputStream());
             requestStatus = objectInputStream.readUTF();
             System.out.println("MSG Retorno = " + requestStatus);
@@ -128,6 +130,7 @@ public class ServletComunication {
             this.setOperacaoExecutada(false);
             ex.printStackTrace();
         }
+        
 
         return requestStatus;
     }

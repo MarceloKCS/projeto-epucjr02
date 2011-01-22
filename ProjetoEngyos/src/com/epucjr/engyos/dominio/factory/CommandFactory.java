@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.TestCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionCommandCapturarDigital;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterPageLoader;
 
@@ -36,6 +37,7 @@ public class CommandFactory {
 		mapaCommand.put("teste", new TestCommand());
 		mapaCommand.put("obreiro_formload", new ActionObreiroRegisterPageLoader());
 		mapaCommand.put("obreiro_register", new ActionObreiroRegisterCommand());
+		mapaCommand.put("RegistrarDigital", new ActionCommandCapturarDigital());
 	}
 
 }

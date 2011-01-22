@@ -9,237 +9,213 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
-		<servlet-name>CongregacaoRegisterServlet</servlet-name>
-		<servlet-class>
+    <servlet-name>CongregacaoRegisterServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.CongregacaoRegisterServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CongregacaoRegisterServlet</servlet-name>
-		<url-pattern>/registrarCongregacao</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ObreiroRegisterServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CongregacaoRegisterServlet</servlet-name>
+    <url-pattern>/registrarCongregacao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ObreiroRegisterServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroRegisterServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ObreiroRegisterServlet</servlet-name>
-		<url-pattern>/registrarObreiro</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>CongregacaoEditServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ObreiroRegisterServlet</servlet-name>
+    <url-pattern>/registrarObreiro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CongregacaoEditServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.CongregacaoEditServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CongregacaoEditServlet</servlet-name>
-		<url-pattern>/editarCongregacao</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ObreiroEditServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CongregacaoEditServlet</servlet-name>
+    <url-pattern>/editarCongregacao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ObreiroEditServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroEditServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ObreiroEditServlet</servlet-name>
-		<url-pattern>/editarObreiro</url-pattern>
-	</servlet-mapping>
-		
-		
-	<servlet>
-		<servlet-name>ReuniaoRegisterServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ObreiroEditServlet</servlet-name>
+    <url-pattern>/editarObreiro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ReuniaoRegisterServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ReuniaoRegisterServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReuniaoRegisterServlet</servlet-name>
-		<url-pattern>/registrarReuniao</url-pattern>
-	</servlet-mapping>
-		
-		
-	<servlet>
-		<servlet-name>ReuniaoEditServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReuniaoRegisterServlet</servlet-name>
+    <url-pattern>/registrarReuniao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ReuniaoEditServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ReuniaoEditServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReuniaoEditServlet</servlet-name>
-		<url-pattern>/editarReuniao</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>CongregacaoFindServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.CongregacaoFindServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CongregacaoFindServlet</servlet-name>
-		<url-pattern>/buscarCongregacao</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ObreiroFindServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.ObreiroFindServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ObreiroFindServlet</servlet-name>
-		<url-pattern>/buscarObreiro</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ReuniaoFindServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.ReuniaoFindServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReuniaoFindServlet</servlet-name>
-		<url-pattern>/buscarReuniao</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>NavegarPaginasServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.NavegarPaginasServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>NavegarPaginasServlet</servlet-name>
-		<url-pattern>/NavegarPaginaBusca</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ObreiroCadastrarCongregacaoFindAllServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.ObreiroCadastrarCongregacaoFindAllServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ObreiroCadastrarCongregacaoFindAllServlet</servlet-name>
-		<url-pattern>/CadastrarObreiro</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ObreiroEditarCongregacaoFindAllServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReuniaoEditServlet</servlet-name>
+    <url-pattern>/editarReuniao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CongregacaoFindServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.CongregacaoFindServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CongregacaoFindServlet</servlet-name>
+    <url-pattern>/buscarCongregacao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ObreiroFindServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.ObreiroFindServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ObreiroFindServlet</servlet-name>
+    <url-pattern>/buscarObreiro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ReuniaoFindServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.ReuniaoFindServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReuniaoFindServlet</servlet-name>
+    <url-pattern>/buscarReuniao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>NavegarPaginasServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.NavegarPaginasServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NavegarPaginasServlet</servlet-name>
+    <url-pattern>/NavegarPaginaBusca</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ObreiroCadastrarCongregacaoFindAllServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.ObreiroCadastrarCongregacaoFindAllServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ObreiroCadastrarCongregacaoFindAllServlet</servlet-name>
+    <url-pattern>/CadastrarObreiro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ObreiroEditarCongregacaoFindAllServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroEditarCongregacaoFindAllServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ObreiroEditarCongregacaoFindAllServlet</servlet-name>
-		<url-pattern>/EditarObreiro</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ObreiroFindCongregacaoFindAllServlet</servlet-name>
-		<servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ObreiroEditarCongregacaoFindAllServlet</servlet-name>
+    <url-pattern>/EditarObreiro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ObreiroFindCongregacaoFindAllServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroFindCongregacaoFindAllServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>ObreiroDeleteServlet</display-name>
-		<servlet-name>ObreiroDeleteServlet</servlet-name>
-		<servlet-class>
+    <display-name>ObreiroDeleteServlet</display-name>
+    <servlet-name>ObreiroDeleteServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroDeleteServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>ReuniaoDeleteServlet</display-name>
-		<servlet-name>ReuniaoDeleteServlet</servlet-name>
-		<servlet-class>
+    <display-name>ReuniaoDeleteServlet</display-name>
+    <servlet-name>ReuniaoDeleteServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ReuniaoDeleteServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>CongregacaoDeleteServlet</display-name>
-		<servlet-name>CongregacaoDeleteServlet</servlet-name>
-		<servlet-class>
+    <display-name>CongregacaoDeleteServlet</display-name>
+    <servlet-name>CongregacaoDeleteServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.CongregacaoDeleteServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>RelatorioServlet</display-name>
-		<servlet-name>RelatorioServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.RelatorioServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+    <display-name>RelatorioServlet</display-name>
+    <servlet-name>RelatorioServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.RelatorioServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>LoginServlet</display-name>
-		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>com.epucjr.engyos.aplicacao.webcontrole.LoginServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+    <display-name>LoginServlet</display-name>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>ObreiroCarregaServlet</display-name>
-		<servlet-name>ObreiroCarregaServlet</servlet-name>
-		<servlet-class>
+    <display-name>ObreiroCarregaServlet</display-name>
+    <servlet-name>ObreiroCarregaServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroCarregaServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>CongregacaoCarregaServlet</display-name>
-		<servlet-name>CongregacaoCarregaServlet</servlet-name>
-		<servlet-class>
+    <display-name>CongregacaoCarregaServlet</display-name>
+    <servlet-name>CongregacaoCarregaServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.CongregacaoCarregaServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
+  </servlet>
+  <servlet>
+    <description>
 		</description>
-		<display-name>ReuniaoCarregaServlet</display-name>
-		<servlet-name>ReuniaoCarregaServlet</servlet-name>
-		<servlet-class>
+    <display-name>ReuniaoCarregaServlet</display-name>
+    <servlet-name>ReuniaoCarregaServlet</servlet-name>
+    <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ReuniaoCarregaServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ObreiroFindCongregacaoFindAllServlet</servlet-name>
-		<url-pattern>/BuscarObreiro</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ObreiroDeleteServlet</servlet-name>
-		<url-pattern>/ObreiroDeleteServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ReuniaoDeleteServlet</servlet-name>
-		<url-pattern>/ReuniaoDeleteServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>CongregacaoDeleteServlet</servlet-name>
-		<url-pattern>/CongregacaoDeleteServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>RelatorioServlet</servlet-name>
-		<url-pattern>/RelatorioServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/LoginServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ObreiroCarregaServlet</servlet-name>
-		<url-pattern>/ObreiroCarregaServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>CongregacaoCarregaServlet</servlet-name>
-		<url-pattern>/CongregacaoCarregaServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ReuniaoCarregaServlet</servlet-name>
-		<url-pattern>/ReuniaoCarregaServlet</url-pattern>
-	</servlet-mapping>
-	<servlet>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ObreiroFindCongregacaoFindAllServlet</servlet-name>
+    <url-pattern>/BuscarObreiro</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ObreiroDeleteServlet</servlet-name>
+    <url-pattern>/ObreiroDeleteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReuniaoDeleteServlet</servlet-name>
+    <url-pattern>/ReuniaoDeleteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CongregacaoDeleteServlet</servlet-name>
+    <url-pattern>/CongregacaoDeleteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RelatorioServlet</servlet-name>
+    <url-pattern>/RelatorioServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ObreiroCarregaServlet</servlet-name>
+    <url-pattern>/ObreiroCarregaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CongregacaoCarregaServlet</servlet-name>
+    <url-pattern>/CongregacaoCarregaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReuniaoCarregaServlet</servlet-name>
+    <url-pattern>/ReuniaoCarregaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <description></description>
     <display-name>Controller</display-name>
     <servlet-name>Controller</servlet-name>
@@ -248,5 +224,15 @@
   <servlet-mapping>
     <servlet-name>Controller</servlet-name>
     <url-pattern>/Controller</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FrontControllerAppletServlet</display-name>
+    <servlet-name>FrontControllerAppletServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.web.FrontControllerAppletServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FrontControllerAppletServlet</servlet-name>
+    <url-pattern>/AppletController</url-pattern>
   </servlet-mapping>
 </web-app>
