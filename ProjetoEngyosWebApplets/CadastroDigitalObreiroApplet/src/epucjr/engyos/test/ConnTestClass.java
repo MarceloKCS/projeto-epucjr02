@@ -13,11 +13,7 @@ import epucjr.engyos.comunicacao.ServletComunication;
  */
 public class ConnTestClass {
 
-    public static void main(String[] args){
-        //ConnTestClass.testarConexaoServlet();
-        ConnTestClass.testarComunicacaoAppletServlet();
-
-    }
+    
 
     public static void testarConexaoServlet(){
         ServletComunication servletComunication = new ServletComunication();

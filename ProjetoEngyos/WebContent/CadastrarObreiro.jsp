@@ -34,6 +34,24 @@
 		}
 		
 	</script>
+	
+	<script language="JavaScript">
+
+        function AbreAppletPopUp()
+        {
+            w=300; //largura da janela(popup)
+            h=300; //altura da janela(popup)
+
+            winl = (screen.width - w) / 2; //DEIXARÁ A JANELA(POPUP) NO CENTRO DA TELA
+            wint = (screen.height - h) / 2;
+
+            winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars=yes,toolbar=0,status=0, resizable=yes'; //configurações da popup
+
+            win = window.open("applet_page.jsp","popApplet",winprops); // abre a popup
+            win.focus(); //Focaliza a popup
+        }
+
+    </script>
 
 </head>
 <body id="obreiros"> 
@@ -148,7 +166,10 @@
 					%>
 				</span>
 			</p>
-						
+			<p>
+				<label for="Digital">Digital: </label>
+				<input type="button" name="digital" onClick="AbreAppletPopUp()" id="digital" value="InserirDigital"/>
+			</p>		
 			
 			<p>
 				<label for="Congregacao">Congregação</label>
