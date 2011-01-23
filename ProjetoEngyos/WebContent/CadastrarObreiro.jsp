@@ -151,6 +151,15 @@
 						
 					%>
 				</span>
+				<span class="erroCampoFormulario">
+					<% 
+						if (validadorDeObreiro != null
+								&& validadorDeObreiro.verificarCampoComErro("SenhaMatch")) {
+							out.println(validadorDeObreiro.obterCampoComErro("SenhaMatch"));
+						}
+						
+					%>
+				</span>
 			</p>			
 
 			<p>

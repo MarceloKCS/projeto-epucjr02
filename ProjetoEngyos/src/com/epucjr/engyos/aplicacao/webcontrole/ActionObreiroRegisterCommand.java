@@ -1,6 +1,7 @@
 package com.epucjr.engyos.aplicacao.webcontrole;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeObreiro;
@@ -25,16 +26,29 @@ public class ActionObreiroRegisterCommand implements Command{
 		String cargo = request.getParameter("Cargo");
 		String idCongregacaoEscolhido = request.getParameter("Congregacao");
 		String congregacao = request.getParameter(idCongregacaoEscolhido);
+		String senha = request.getParameter("Senha");
+		String senhaConfirmacao = request.getParameter("SenhaConfirmacao");
+			
 		long idCongregacao = 0;
 		if(idCongregacaoEscolhido != null && idCongregacaoEscolhido != ""){
 			idCongregacao = Long.parseLong(idCongregacaoEscolhido);
-		}		
+		}
+		
+		//Obtém uma session para obtenção da digital inserida por um obreiro via applet
+		//TODO - verificar soluções alternativas
+		HttpSession session = request.getSession();			 
+		
+		String digitalLida = "";
+		
+		if(!session.isNew()){
+			digitalLida = (String) session.getAttribute("DigitalObtida");
+		}
 		
 		
 		//Passoss para cadastrar um obreiro
 		//1. Validar os dados cadastrais
 		ValidadorDeFormularioDeObreiro validadorDeFormularioDeObreiro = new ValidadorDeFormularioDeObreiro();
-		validadorDeFormularioDeObreiro.verificarCamposValidos(nome, cpf, cargo, congregacao);
+		validadorDeFormularioDeObreiro.verificarCamposValidos(nome, cpf, cargo, congregacao, senha, senhaConfirmacao);
 		
 		if(validadorDeFormularioDeObreiro.isFormularioValido()){
 			dataAccessObjectManager = new DataAccessObjectManager();
@@ -42,7 +56,13 @@ public class ActionObreiroRegisterCommand implements Command{
 			
 			//Identificacao identificacao = new Identificacao(impressaoDigital, senha);
 			//TODO para teste, aós o recebimento dos parâmetros da página alterar 
-			Obreiro obreiro = new Obreiro(nome, cargo, cpf, congregacaoCarregada, new Identificacao("digital", "senha"));
+			
+			Identificacao identificacao = new Identificacao(senha);
+			if(digitalLida != null && !digitalLida.equals("")){
+				identificacao.setImpressaoDigital(digitalLida);
+			}
+			
+			Obreiro obreiro = new Obreiro(nome, cargo, cpf, congregacaoCarregada, identificacao);
 			dataAccessObjectManager.persistirObjeto(obreiro);			
 			
 			//Realização de passos para caso de sucesso ou fracasso por ocorrência de um erro interno

@@ -32,6 +32,10 @@ public class Identificacao {
 		this.impressaoDigital = impressaoDigital;
 		this.senha = senha;
 	}
+	
+	public Identificacao(String senha) {	
+		this.senha = senha;
+	}
 
 
 
