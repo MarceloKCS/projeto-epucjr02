@@ -61,7 +61,7 @@ public class ValidadorDeFormularioDeObreiro {
     	}
     }
 	
-	public void verificarCamposValidos(String nome, String cpf, String cargo, String congregacao){
+	public void verificarCamposValidos(String nome, String cpf, String cargo, String congregacao, String senha, String senhaConfirmacao){
 		ValidatorCpf validadorCpf = new ValidatorCpf();
 		this.setFormularioValido(true);
 		
@@ -80,8 +80,19 @@ public class ValidadorDeFormularioDeObreiro {
 		if (congregacao == null || congregacao.trim().length() == 0){
 			this.errors.put("Congregacao", "Congregação Inválida");
 			this.setFormularioValido(false);
+		}		
+		
+		if (senha == null || senha.trim().length() == 0){
+			this.errors.put("Senha", "Senha Inválida");
+			this.setFormularioValido(false);
 		}
 		
+		if (senhaConfirmacao == null || senhaConfirmacao.trim().length() == 0){
+			this.errors.put("SenhaConfirmacao", "Confirmacao De Senha Inválida");
+			this.setFormularioValido(false);
+		}
+		
+		this.verificarSenhaMatchSenhaConfirmacao(senha, senhaConfirmacao);		
 		
 /*		//Verificando validade dos dados de obreiro
 		if (obreiro.getNome() == null || obreiro.getNome().trim().length() == 0){
@@ -103,6 +114,17 @@ public class ValidadorDeFormularioDeObreiro {
 				this.setFormularioValido(true);
 			}
 		}*/
+	}
+	
+	private void verificarSenhaMatchSenhaConfirmacao(String senha, String senhaConfirmacao){
+		
+		if((senha != null && senha.trim().length() > 0) && (senhaConfirmacao != null && senhaConfirmacao.trim().length() > 0) ){
+			if(!senha.equals(senhaConfirmacao)){
+				this.errors.put("SenhaMatch", "Senha e Confirmação de Senha diferem");
+				this.setFormularioValido(false);
+			}
+			
+		}		
 	}
 
 }

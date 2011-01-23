@@ -13,46 +13,47 @@ public class ActionCommandCapturarDigital implements Command{
 
 	public Object execute(Object... arg) {
 		HttpServletRequest request = (HttpServletRequest) arg[0];
-		
+
 		String mensagemResposta = "";
 
 		ObjectInputStream objectInputStream = (ObjectInputStream) arg[2];
 		ObjectOutputStream objectOutputStream = (ObjectOutputStream) arg[3];
-		
-		
+
+
 		try {
 
-            try {
-                String digitalCapturada =  (String) objectInputStream.readObject();
-              //Obtém uma session
-    			HttpSession session = request.getSession();			 
-    			//Armazena temporariamente na session para ser lida pelo cadastro
-    			session.setAttribute("DigitalObtida", digitalCapturada);
-    			//TODO teste, remover
-    			System.out.println("ValorConfere = " + digitalCapturada);
-    			mensagemResposta = "Digital capturada com sucesso";
-    			
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                mensagemResposta = "Erro na Operacao de Leitura do Cliente";
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
-                mensagemResposta = "Erro de Instanciação no Objeto Cliente";
-            }
+			try {
+				String digitalCapturada =  (String) objectInputStream.readObject();
+				//Obtém uma session
+				HttpSession session = request.getSession();			 
+				//Armazena temporariamente na session para ser lida pelo cadastro
+				session.setAttribute("DigitalObtida", digitalCapturada);
+				//TODO teste, remover
+				System.out.println("ValorConfere = " + digitalCapturada);
+				System.out.println("ValorConfere length = " + digitalCapturada.length());
+				mensagemResposta = "Digital capturada com sucesso";
 
-            objectOutputStream.writeUTF(mensagemResposta);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-            objectInputStream.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            mensagemResposta = "Erro de IO no retorno ao cliente";
-        }
-		
-		
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				mensagemResposta = "Erro na Operacao de Leitura do Cliente";
+			} catch (ClassNotFoundException ex) {
+				ex.printStackTrace();
+				mensagemResposta = "Erro de Instanciação no Objeto Cliente";
+			}
+
+			objectOutputStream.writeUTF(mensagemResposta);
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			objectInputStream.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			mensagemResposta = "Erro de IO no retorno ao cliente";
+		}
+
+
 
 		/*try {
-			
+
 			String digitalCapturada =  (String) objectInputStream.readObject();
 
 			//Obtém uma session
