@@ -5,6 +5,6 @@ import com.epucjr.engyos.dominio.modelo.Obreiro;
 public class ValidadorSenha {
 
 		public boolean validarSenha(String senha, Obreiro obreiro){
-			return senha.equals(obreiro.getSenha());
+			return senha.equals(obreiro.getIdentificacao().getSenha());
 		}
 }

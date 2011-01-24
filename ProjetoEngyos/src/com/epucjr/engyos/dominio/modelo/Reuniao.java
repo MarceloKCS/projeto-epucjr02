@@ -21,12 +21,16 @@ public class Reuniao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idReuniao;
+	
 	@Field
 	private String local;
+	
 	@Field
 	private String data;
+	
 	@Field
 	private String hora;
+	
 	@OneToMany (fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	@JoinColumn
 	private List<Obreiro> listaDePresenca;

@@ -184,36 +184,50 @@
 				<label for="Congregacao">Congregação</label>
 				<select name="Congregacao">
 					<option value=""></option>
+					
 					<%
 					
+					List<Congregacao> listaDeCongregacao;
+					listaDeCongregacao = formularioDeObreiro.getListaDeCongregacoes();
 					
-						List<Congregacao> listaDeCongregacao;
-						listaDeCongregacao = formularioDeObreiro.getListaDeCongregacoes();
+					 if(formularioDeObreiro != null && formularioDeObreiro.verificarCampoPreenchido("Congregacao")){
+						 String congregacao = formularioDeObreiro.obterCampoPreenchido("Congregacao").trim();
 						
-						
-						 if(formularioDeObreiro != null && formularioDeObreiro.verificarCampoPreenchido("Congregacao")){
-							 String congregacao = formularioDeObreiro.obterCampoPreenchido("Congregacao").trim();
-							
-							 for(int posicao=0; posicao<listaDeCongregacao.size(); posicao++){								 
-								 String congregacaoCorrente = listaDeCongregacao.get(posicao).getNome().trim();
-								 if(congregacaoCorrente.equals(congregacao)){
-									 out.println("<option selected=\"selected\" value=" + listaDeCongregacao.get(posicao).getIdCongregacao() +">" + listaDeCongregacao.get(posicao).getNome() + "</option>");
-									 out.print("<input type=\"hidden\" name=\""+ listaDeCongregacao.get(posicao).getIdCongregacao() + "\" value=\" "+  listaDeCongregacao.get(posicao).getNome() +" \"/>");
-								 }
-								 else{
-									 out.println("<option value=\"" + listaDeCongregacao.get(posicao).getIdCongregacao()+ "\">"+listaDeCongregacao.get(posicao).getNome()+"</option>");
-									 out.print("<input type=\"hidden\" name=\""+ listaDeCongregacao.get(posicao).getIdCongregacao() + "\" value=\" "+  listaDeCongregacao.get(posicao).getNome() +" \"/>");
-								 }
-							}
-						 }
-						 else{
-							for(int posicao = 0; posicao < listaDeCongregacao.size(); posicao++){
-								out.println("<option value=\"" + listaDeCongregacao.get(posicao).getIdCongregacao() + "\">" + listaDeCongregacao.get(posicao).getNome() + "</option>");
-								out.print("<input type=\"hidden\" name=\""+ listaDeCongregacao.get(posicao).getIdCongregacao() + "\" value=\" "+  listaDeCongregacao.get(posicao).getNome() +" \"/>");
-							}
-						 }
+						 for(int posicao=0; posicao<listaDeCongregacao.size(); posicao++){								 
+							 String congregacaoCorrente = listaDeCongregacao.get(posicao).getNome().trim();
+							 if(congregacaoCorrente.equals(congregacao)){
+					
 					%>
+								<option selected="selected" value="<%out.print(listaDeCongregacao.get(posicao).getIdCongregacao()); %>"> <% out.print(listaDeCongregacao.get(posicao).getNome()); %> </option>
+						
+							<%}else{ %>
+								<option value="<%out.print(listaDeCongregacao.get(posicao).getIdCongregacao()); %>"> <% out.print(listaDeCongregacao.get(posicao).getNome()); %> </option>
+							
+							<%
+							}
+						 }
+					 }
+					 else{
+						for(int posicao = 0; posicao < listaDeCongregacao.size(); posicao++){
+					%>
+							<option value="<%out.print(listaDeCongregacao.get(posicao).getIdCongregacao()); %>"> <% out.print(listaDeCongregacao.get(posicao).getNome()); %> </option>
+					<%
+					
+						}
+					 }
+					
+					%>
+					<!-- Hidden Input dos campos para retrieve -->
+					<%
+					for(Congregacao congregacao : listaDeCongregacao){
+						out.println("<input type=\"hidden\" name=\"" + congregacao.getIdCongregacao() + "\" value=\"" + congregacao.getNome() + "\"/>");
+					}
+					
+					%>
+					
+					
 				</select>
+				<!-- Exibe erros relacionado ao preenchimento da congregação -->
 				<span class="erroCampoFormulario">
 				<%
 					if (validadorDeObreiro != null
