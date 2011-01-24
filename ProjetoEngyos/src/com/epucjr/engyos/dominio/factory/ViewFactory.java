@@ -32,6 +32,12 @@ public class ViewFactory {
 		this.adicionaView("obreiro_register", "Operação Realizada com Sucesso!", "CadastrarObreiro.jsp");
 		this.adicionaView("obreiro_register", "Erro interno na operação", "CadastrarObreiro.jsp");
 		this.adicionaView("obreiro_register", "Usuario Já Existente no Registro...", "CadastrarObreiro.jsp");
+		this.adicionaView("buscar_obreiro", "Busca Realizada", "BuscarObreiro.jsp");
+		this.adicionaView("buscar_obreiro", "Não existem registros no banco de dados", "BuscarObreiro.jsp");
+		this.adicionaView("buscar_congregacao", "Busca Realizada", "BuscarCongregacao.jsp");
+		this.adicionaView("buscar_congregacao", "Não existem registros no banco de dados", "BuscarCongregacao.jsp");
+		this.adicionaView("buscar_reuniao", "Busca Realizada", "BuscarReuniao.jsp");
+		this.adicionaView("buscar_reuniao", "Não existem registros no banco de dados", "BuscarReuniao.jsp");
 		
 	}
 

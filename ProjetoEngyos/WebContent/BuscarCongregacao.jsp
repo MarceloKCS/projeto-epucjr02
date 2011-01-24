@@ -8,12 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <%
-	ArrayList<Congregacao> resultadoDeBusca;
-	resultadoDeBusca = null;
-	FormularioDeBuscaDaCongregacao buscarCongregacao = (FormularioDeBuscaDaCongregacao) request.getAttribute("resultadoDaBusca");
-	if(buscarCongregacao != null){
-		resultadoDeBusca = buscarCongregacao.getListaDeCongregacaoDaPagina();
-	}
+	FormularioDeBuscaDaCongregacao resultadoDeBuscaDaCongregacao = (FormularioDeBuscaDaCongregacao) request.getAttribute("resultadoDeBuscaDaCongregacao");
 %>
 
 
@@ -21,7 +16,7 @@
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Buscar - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
 </head>
@@ -41,13 +36,13 @@
 		</ul>
 		<div id="conteudo_tabmenu">
 			<div id="buscarCongregacoes">
-				<form name="buscarCongregacao" method="post" action="buscarCongregacao"	id="buscarCongregacao">
-					<label for="Nome">Nome: </label><input type="text" name="Nome" id="Nome" />
-					<button type="submit" name="botao_action" value="Buscar">Buscar Congregação</button>
+				<form name="buscarCongregacao" method="post" action="Controller"	id="buscarCongregacao">
+					<label for="Nome">Parâmetro: </label><input type="text" name="busca_input" id="Nome" />
+					<button type="submit" name="acao" value="buscar_congregacao">Buscar Congregação</button>
 				</form>
 				
 				
-				<% if (buscarCongregacao != null) { %>
+				<% if (resultadoDeBuscaDaCongregacao != null) { %>
 				<table id="resultadoBusca">
 					<tr>
 						<th>Nome</th>
@@ -57,33 +52,50 @@
 					</tr>
 				
 				<%
-					Congregacao congregacao;
-					for(int i = 0; i < resultadoDeBusca.size(); i++){	
-						congregacao = (Congregacao) resultadoDeBusca.get(i);
+				int countVisual = 0;
+				List<Congregacao> congregacoesDaPagina = resultadoDeBuscaDaCongregacao.getListaDeCongregacaoDaPagina();
+				for(Congregacao congregacao : congregacoesDaPagina){	
+						
 				%>
-					<tr class="<% out.println("zebra"+i%2); %>">
+					<tr class="<% out.println("zebra" + countVisual % 2); %>">
 						<td><% out.println(congregacao.getNome()); %></td>
 						<td><% out.println(congregacao.getEndereco()); %></td>
-						<td><% out.println("<a href=http://localhost:8080/ProjetoEngyos/CongregacaoCarregaServlet?id="+congregacao.getIdCongregacao()+">Editar</a>"); %></td>
-						<td><a href="#">Excluir</a></td>
+						<td><a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
+						<td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a></td>
 					</tr>
-				<% } %>
+				<% 
+				countVisual++;
+				}
+				%>
 				
 				</table>
 				
 				<p class="paginacao">
+				
 				<%
-					// Paginação
-					int numeroPagina = 1;
-					int qntidadePage = buscarCongregacao.getPaginaTotal();
-					out.println("<a href=http://localhost:8080/ProjetoEngyos/NavegarPaginaBusca?numeroPagina=" + numeroPagina + ">" +numeroPagina+ "</a>");
-					if(qntidadePage > numeroPagina){
-						for(numeroPagina = 2; numeroPagina<=qntidadePage; numeroPagina++){
-							out.println(" | " +"<a href=http://localhost:8080/ProjetoEngyos/NavegarPaginaBusca?numeroPagina=" + numeroPagina + ">" +numeroPagina+ "</a>");
-						}
+				int numPagina = 1;							
+				
+				out.print("<p><b>Busca por: </b>" +  resultadoDeBuscaDaCongregacao.getParametroDeBusca() + "</p> ");
+				if(resultadoDeBuscaDaCongregacao.getPaginaCorrente() == 1){
+					out.println("<a class=\"paginaAtual\" href=\"Controller?busca_input=" + resultadoDeBuscaDaCongregacao.getParametroDeBusca() + "&acao=buscar_congregacao&paginaCorrente="+numPagina+"\">" +numPagina+ "</a>");
+				}
+				else{
+                	out.println("<a class=\"pagina\" href=\"Controller?busca_input=" + resultadoDeBuscaDaCongregacao.getParametroDeBusca() + "&acao=buscar_congregacao&paginaCorrente="+numPagina+"\">" +numPagina+ "</a>");
+
+				}
+				
+				for(numPagina = 2; numPagina <= resultadoDeBuscaDaCongregacao.getQuantidadeTotalDePaginas(); numPagina++){
+					if(numPagina == resultadoDeBuscaDaCongregacao.getPaginaCorrente()){
+						out.print("<a> | </a>" +"<a class=\"paginaAtual\">" +numPagina+ "</a>");
 					}
+					else{
+						out.println("<a> | </a>" +"<a class=\"pagina\" href=\"Controller?busca_input=" + resultadoDeBuscaDaCongregacao.getParametroDeBusca() + "&acao=buscar_congregacao&paginaCorrente="+numPagina+"\">" +numPagina+ "</a>");
+					}
+				}
+					
 				%>				
 				</p>
+				
 				<% } %>
 				
 			</div>
