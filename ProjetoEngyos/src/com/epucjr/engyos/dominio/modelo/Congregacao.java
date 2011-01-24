@@ -12,14 +12,27 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 
 @Entity
 @Indexed
 public class Congregacao {
 
-	@Field
+	//Essas marcação são necessárias ao hibernate search e cumprem duas funções:
+	// - O primeiro é para indexar para tornar possivel a realização de buscas
+	//no campo referido
+	//-A segunda, a qual foi atribuido um nome nomexxx_sort é utilizado pelo 
+	//hibernate search para realizar uma ordenação com base no campo nome
+	//Veja a classe BuscaAvancada no método de sort para verificar a implementação
+	@Fields(
+			{@Field(index=Index.TOKENIZED, store=Store.YES),
+			@Field(name="nomecong_sort",
+			index=Index.UN_TOKENIZED),
+			})
 	private String nome;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

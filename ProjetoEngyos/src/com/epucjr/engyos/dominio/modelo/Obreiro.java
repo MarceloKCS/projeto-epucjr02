@@ -10,14 +10,27 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 
 @Entity
 @Indexed
 public class Obreiro {
 
-	@Field
+	//Essas marcação são necessárias ao hibernate search e cumprem duas funções:
+	// - O primeiro é para indexar para tornar possivel a realização de buscas
+	//no campo referido
+	//-A segunda, a qual foi atribuido um nome nomexxx_sort é utilizado pelo 
+	//hibernate search para realizar uma ordenação com base no campo nome
+	//Veja a classe BuscaAvancada no método de sort para verificar a implementação
+	@Fields(
+			{@Field(index=Index.TOKENIZED, store=Store.YES),
+			@Field(name="nomeobr_sort",
+			index=Index.UN_TOKENIZED),
+			})
 	private String nome;
 
 	@Field
@@ -33,8 +46,10 @@ public class Obreiro {
 	private String cpf;
 	
 	//@Field
-	@ManyToOne//(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@IndexedEmbedded
 	@JoinColumn (name="congregacao_fk")
+	//@ContainedIn
 	private Congregacao congregacao;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
