@@ -34,7 +34,7 @@ public class GeradorQueryLucene {
 
 		searchQuery = geradorDeQuery.removerAndFinal(searchQuery);*/
 
-		this.setSearchQuery("nome:" + parametroBusca + " OR cargo:" + parametroBusca + " OR congregacao.nome:" + parametroBusca);
+		this.setSearchQuery("nome:" + parametroBusca + " OR cargo:" + parametroBusca + " OR cpf:" + parametroBusca + " OR congregacao.nome:" + parametroBusca);
 
 		this.setLuceneQuery(this.getQueryParser().parse(this.getSearchQuery()));
 		System.out.println("GQL:33: " + this.getLuceneQuery().toString());

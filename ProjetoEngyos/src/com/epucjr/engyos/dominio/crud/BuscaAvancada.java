@@ -106,22 +106,7 @@ public class BuscaAvancada {
 		}
 		else{
 			this.buscarTodosObreiros(numeroPagina);
-		}
-		/*	if(!parametroBusca.equals("")){
-			GeradorQueryLucene testeluceneQ = new GeradorQueryLucene();
-			try {
-				testeluceneQ.buscarObreiro(parametroBusca);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-			FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-			Query query = fullTextEntityManager.createFullTextQuery(testeluceneQ.getLuceneQuery(), Obreiro.class);
-			listaDeObreiros = query.getResultList();
-		}
-		else{
-			listaDeObreiros = this.buscarTodosObreiros();
-		}*/
+		}		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -188,7 +173,7 @@ public class BuscaAvancada {
 	public Sort ordenaReuniaoResult(){
 		Sort sort = null;
 		//Define a partir de qual campo será ordenado
-		SortField sortField = new SortField("nomecong_sort", SortField.STRING, true);
+		SortField sortField = new SortField("datareun_sort", SortField.STRING, true);
 		sort = new Sort(sortField);
 
 		return sort;
@@ -305,7 +290,7 @@ public class BuscaAvancada {
 				FullTextQuery query = fullTextEntityManager.createFullTextQuery(this.luceneQueryGenerator.getLuceneQuery(), Reuniao.class);
 
 				//Define a ordenação da lista obtida
-				//query.setSort(this.ordenaCongregacaoResult());
+				query.setSort(this.ordenaCongregacaoResult());
 
 				//Definindo Quantidade Total de Resultados
 				this.calcularQuantidadeTotalDeResultados(fullTextEntityManager);

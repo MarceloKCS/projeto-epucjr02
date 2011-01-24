@@ -7,18 +7,13 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<%
-	ArrayList<Obreiro> resultadoDeBusca;
-	resultadoDeBusca = null;
-	FormularioDeBuscaDoObreiro buscarObreiro = (FormularioDeBuscaDoObreiro) request.getAttribute("resultadoDaBusca");
-	if(buscarObreiro != null){
-		resultadoDeBusca = buscarObreiro.getListaDeCongregacaoDaPagina();
-	}
+<%	
+	FormularioDeBuscaDoObreiro resultadoDeBuscaDoObreiro = (FormularioDeBuscaDoObreiro) request.getAttribute("resultadoDeBuscaDoObreiro");
 %>
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Buscar - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
 	
@@ -39,48 +34,69 @@
 		</ul>
 		<div id="conteudo_tabmenu">
 			<div id="buscarObreiros">
-				<form name="buscarObreiro" method="post" action="buscarObreiro"	id="buscarObreiro">
-					<label for="Nome">Nome: </label><input type="text" name="Nome" id="Nome" />
+				<form name="buscarObreiro" method="post" action="Controller" id="buscarObreiro">
+					<label for="Nome">Parâmetro: </label><input type="text" name="busca_input" id="Nome" />
 					<!--<label for="Cpf">CPF: </label><input type="text" name="Cpf" maxlength="11" id="Cpf" />-->
-					<button type="submit" name="botao_action" value="Buscar">Buscar Obreiro</button>
+					<button type="submit" name="acao" value="buscar_obreiro">Buscar Obreiro</button>
 				</form>
 				
 				
-				<% if (buscarObreiro != null) { %>
+				<% if (resultadoDeBuscaDoObreiro != null) { %>
 				<table id="resultadoBusca">
 					<tr>
 						<th>CPF</th>
 						<th>Nome</th>
 						<th>Cargo</th>
 						<th>Congregação</th>
+						<th>Editar</th>
+						<th>|Excluir</th>
 					</tr>
 				
 				<%
-					Obreiro obreiro;
-					for(int i = 0; i < resultadoDeBusca.size(); i++){	
-						obreiro = (Obreiro) resultadoDeBusca.get(i);
+					int countVisual = 0;
+					List<Obreiro> obreirosDaPAgina = resultadoDeBuscaDoObreiro.getListaDeObreiroDaPagina();
+					for(Obreiro obreiro: obreirosDaPAgina){	
+						
 				%>
-					<tr class="<% out.println("zebra"+i%2); %>">
-						<td><% out.println("<a href=http://localhost:8080/ProjetoEngyos/ObreiroCarregaServlet?cpf="+obreiro.getCpf()+">"+obreiro.getCpf()+"</a>"); %></td>
-						<td><% out.println("<a href=http://localhost:8080/ProjetoEngyos/ObreiroCarregaServlet?cpf="+obreiro.getCpf()+">"+obreiro.getNome()+"</a>"); %></td>
-						<td><% out.println("<a href=http://localhost:8080/ProjetoEngyos/ObreiroCarregaServlet?cpf="+obreiro.getCpf()+">"+obreiro.getCargo()+"</a>"); %></td>
-						<td><% out.println("<a href=#>"+obreiro.getCongregacao()+"</a>"); %></td>
+					<tr class="<% out.println("zebra" + countVisual % 2); %>">
+						<td><% out.println(obreiro.getCpf()); %></td>
+						<td>|<% out.println(obreiro.getNome()); %></td>
+						<td>|<% out.println(obreiro.getCargo()); %></td>
+						<td>|<% out.println(obreiro.getCongregacao().getNome()); %></td>
+						<!-- <td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a> | <a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td> -->
+						<td><a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
+						<td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a></td>
 					</tr>
-				<% } %>
+				<% 
+					countVisual++;
+					} 
+				%>
 				
 				</table>
 				
 				<p class="paginacao">
+				
 				<%
-					// Paginação
-					int numeroPagina = 1;
-					int qntidadePage = buscarObreiro.getPaginaTotal();
-					out.println("<a href=http://localhost:8080/ProjetoEngyos/NavegarPaginaBusca?numeroPagina=" + numeroPagina + ">" +numeroPagina+ "</a>");
-					if(qntidadePage > numeroPagina){
-						for(numeroPagina = 2; numeroPagina<=qntidadePage; numeroPagina++){
-							out.println(" | " +"<a href=http://localhost:8080/ProjetoEngyos/NavegarPaginaBusca?numeroPagina=" + numeroPagina + ">" +numeroPagina+ "</a>");
-						}
+				int numPagina = 1;							
+				
+				out.print("<p><b>Busca por: </b>" +  resultadoDeBuscaDoObreiro.getParametroDeBusca() + "</p> ");
+				if(resultadoDeBuscaDoObreiro.getPaginaCorrente() == 1){
+					out.println("<a class=\"paginaAtual\" href=\"Controller?busca_input=" + resultadoDeBuscaDoObreiro.getParametroDeBusca() + "&acao=buscar_obreiro&paginaCorrente="+numPagina+"\">" +numPagina+ "</a>");
+				}
+				else{
+                	out.println("<a class=\"pagina\" href=\"Controller?busca_input=" + resultadoDeBuscaDoObreiro.getParametroDeBusca() + "&acao=buscar_obreiro&paginaCorrente="+numPagina+"\">" +numPagina+ "</a>");
+
+				}
+				
+				for(numPagina = 2; numPagina <= resultadoDeBuscaDoObreiro.getQuantidadeTotalDePaginas(); numPagina++){
+					if(numPagina == resultadoDeBuscaDoObreiro.getPaginaCorrente()){
+						out.print("<a> | </a>" +"<a class=\"paginaAtual\">" +numPagina+ "</a>");
 					}
+					else{
+						out.println("<a> | </a>" +"<a class=\"pagina\" href=\"Controller?busca_input=" + resultadoDeBuscaDoObreiro.getParametroDeBusca() + "&acao=buscar_obreiro&paginaCorrente="+numPagina+"\">" +numPagina+ "</a>");
+					}
+				}
+					
 				%>				
 				</p>
 				<% } %>

@@ -347,7 +347,8 @@ div#conteudo_tabmenu {
 /* Tabela - resultados da busca */
 
 	table#resultadoBusca {
-		width: 560px;
+		font-size: 12px;
+		width: 605px;
 	}
 		table#resultadoBusca tr.zebra1 {
 			background-color: #FEFEFE;
@@ -357,12 +358,12 @@ div#conteudo_tabmenu {
 				text-align: left;
 			}
 			table#resultadoBusca td {
-				line-height: 30px;
+				line-height: 15px;				
 			}
 
 
 	p.paginacao {
-		line-height: 30px;
+		line-height: 15px;
 	}
 	p.paginacao a {
 		color: #555555;
@@ -373,3 +374,22 @@ div#conteudo_tabmenu {
 		text-decoration: none;
 	}
 /* fim Tabela Resultados*/
+
+/*Paginação*/
+
+#paginacaoPaginas{
+	width:800px;
+	margin: 0 0 0 30px;
+}
+
+.pagina:hover{
+	text-decoration: underline;
+	color: #BEBEBE;
+}
+
+.paginaAtual {
+	font: 16px Calibri, Arial, Times, serif;
+	color: #000000;
+	font-weight: bold;
+	text-decoration: underline;
+}

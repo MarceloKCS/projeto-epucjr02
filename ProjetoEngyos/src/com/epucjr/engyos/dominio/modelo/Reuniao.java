@@ -13,7 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 @Entity
 @Indexed
@@ -25,7 +28,11 @@ public class Reuniao {
 	@Field
 	private String local;
 	
-	@Field
+	@Fields(
+			{@Field(index=Index.TOKENIZED, store=Store.YES),
+			@Field(name="datareun_sort",
+			index=Index.UN_TOKENIZED),
+			})
 	private String data;
 	
 	@Field
