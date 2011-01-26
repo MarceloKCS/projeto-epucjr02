@@ -1,5 +1,9 @@
 package com.epucjr.engyos.teste;
 
+import com.epucjr.engyos.dominio.modelo.Congregacao;
+import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
+
 
 public class TesteInsert {
 	public static void main(String[] args) {
@@ -24,5 +28,35 @@ public class TesteInsert {
 
 		//finaliza o programa
 		
+		TesteInsert.testeCongregaInsert();
+		
+	}
+	
+	public static void inserirReuniao(){
+		
+		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+		Reuniao reuniao = new Reuniao("Na casa do Calebe", "31/01/2010", "00:30");
+		dataAccessObjectManager.persistirObjeto(reuniao);
+		
+		if(dataAccessObjectManager.isOperacaoEfetuada()){
+			System.out.println("SucessoMSG = " + dataAccessObjectManager.getMensagemStatus());
+		}
+		else{
+			System.out.println("FracassoMSG = " + dataAccessObjectManager.getMensagemStatus());
+		}
+		
+	}
+	
+	public static void testeCongregaInsert(){
+		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+		Congregacao congregacao = new Congregacao("Congregação de Taboão", "Taboão da Serra");
+		dataAccessObjectManager.persistirObjeto(congregacao);
+		
+		if(dataAccessObjectManager.isOperacaoEfetuada()){
+			System.out.println("SucessoMSG = " + dataAccessObjectManager.getMensagemStatus());
+		}
+		else{
+			System.out.println("FracassoMSG = " + dataAccessObjectManager.getMensagemStatus());
+		}
 	}
 }

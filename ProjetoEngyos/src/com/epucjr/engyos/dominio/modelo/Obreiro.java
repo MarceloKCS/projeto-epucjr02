@@ -19,6 +19,10 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Indexed
 public class Obreiro {
+	
+	/******************************
+	 *	ATRIBUTOS
+	 ******************************/
 
 	//Essas marcação são necessárias ao hibernate search e cumprem duas funções:
 	// - O primeiro é para indexar para tornar possivel a realização de buscas
@@ -50,17 +54,11 @@ public class Obreiro {
 	@IndexedEmbedded
 	@JoinColumn (name="congregacao_fk")
 	//@ContainedIn
-	private Congregacao congregacao;
+	private Congregacao congregacao;	
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn
-	@IndexedEmbedded
-	private Presenca presenca;
-
-
-	////////////////
-	// CONSTRUTOR //
-	////////////////
+	/******************************
+	 *	CONSTRUTOR
+	 ******************************/
 	public Obreiro(){
 		this.nome = "";
 		this.cargo = "";
@@ -83,23 +81,19 @@ public class Obreiro {
 		this.identificacao = identificacao;
 	}
 	
+	/******************************
+	 *	METODOS
+	 ******************************/
+	
 
-	/////////////////////////
-	// GETTERS AND SETTERS //
-	/////////////////////////
+	/******************************
+	 *	GETTERS AND SETTERS
+	 ******************************/
 	public String getNome() {
 		return this.nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Presenca getPresenca() {
-		return presenca;
-	}
-
-	public void setPresenca(Presenca presenca) {
-		this.presenca = presenca;
 	}
 
 	public String getCargo() {
@@ -129,7 +123,6 @@ public class Obreiro {
 
 	public void setIdentificacao(Identificacao identificacao) {
 		this.identificacao = identificacao;
-	}
-
+	}	
 	
 }

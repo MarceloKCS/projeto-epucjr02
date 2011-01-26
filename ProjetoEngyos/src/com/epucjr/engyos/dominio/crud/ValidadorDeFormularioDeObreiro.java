@@ -3,68 +3,53 @@ package com.epucjr.engyos.dominio.crud;
 import java.util.HashMap;
 
 public class ValidadorDeFormularioDeObreiro {
-	
-	///////////////
-	// ATRIBUTOS //
-	///////////////
+
+	/******************************
+	 *	ATRIBUTOS
+	 ******************************/
 	private boolean formularioValido;
 	private HashMap <String, String> errors;
-	
-	
-	////////////////
-	// CONSTRUTOR //
-	////////////////
+
+
+	/******************************
+	 *	CONSTRUTOR
+	 ******************************/
 	public ValidadorDeFormularioDeObreiro(){
 		this.formularioValido = false;
 		this.errors = new HashMap<String, String>();
-		
+
 	}
-	
-	/////////////////////////
-	// GETTERS AND SETTERS //
-	/////////////////////////
-	public boolean isFormularioValido() {
-		return formularioValido;
-	}
-	public void setFormularioValido(boolean formularioValido) {
-		this.formularioValido = formularioValido;
-	}
-	public HashMap<String, String> getErrors() {
-		return errors;
-	}
-	public void setErrors(HashMap<String, String> errors) {
-		this.errors = errors;
-	}
-	
-	/////////////
-	// METODOS //
-	/////////////
-    public void definirCampoComErro(String nomeDoCampo, String valorDoCampo ) {
+
+	/******************************
+	 *	METODOS
+	 ******************************/
+
+	public void definirCampoComErro(String nomeDoCampo, String valorDoCampo ) {
 		this.errors.put(nomeDoCampo, valorDoCampo);
-    }
-    
-    public String obterCampoComErro(String nomeDoCampo) {
-    	if(this.errors.containsKey(nomeDoCampo)){
-    		return this.errors.get(nomeDoCampo);
-    	}
-    	else{
-    		return "";
-    	}
-    }
-    
-    public boolean verificarCampoComErro(String nomeDoCampo){
-    	if (this.errors.containsKey(nomeDoCampo)){
-    		return true;
-    	}
-    	else{
-    		return false;
-    	}
-    }
-	
+	}
+
+	public String obterCampoComErro(String nomeDoCampo) {
+		if(this.errors.containsKey(nomeDoCampo)){
+			return this.errors.get(nomeDoCampo);
+		}
+		else{
+			return "";
+		}
+	}
+
+	public boolean verificarCampoComErro(String nomeDoCampo){
+		if (this.errors.containsKey(nomeDoCampo)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 	public void verificarCamposValidos(String nome, String cpf, String cargo, String congregacao, String senha, String senhaConfirmacao){
 		ValidatorCpf validadorCpf = new ValidatorCpf();
 		this.setFormularioValido(true);
-		
+
 		if (nome == null || nome.trim().length() == 0){
 			this.definirCampoComErro("Nome", "Nome Obrigatório");
 			this.setFormularioValido(false);
@@ -81,20 +66,20 @@ public class ValidadorDeFormularioDeObreiro {
 			this.errors.put("Congregacao", "Congregação Inválida");
 			this.setFormularioValido(false);
 		}		
-		
+
 		if (senha == null || senha.trim().length() == 0){
 			this.errors.put("Senha", "Senha Inválida");
 			this.setFormularioValido(false);
 		}
-		
+
 		if (senhaConfirmacao == null || senhaConfirmacao.trim().length() == 0){
 			this.errors.put("SenhaConfirmacao", "Confirmacao De Senha Inválida");
 			this.setFormularioValido(false);
 		}
-		
+
 		this.verificarSenhaMatchSenhaConfirmacao(senha, senhaConfirmacao);		
-		
-/*		//Verificando validade dos dados de obreiro
+
+		/*		//Verificando validade dos dados de obreiro
 		if (obreiro.getNome() == null || obreiro.getNome().trim().length() == 0){
 			this.definirCampoComErro("Nome", "Nome Obrigatório");
 		}
@@ -104,7 +89,7 @@ public class ValidadorDeFormularioDeObreiro {
 		if (obreiro.getCargo() == null || obreiro.getCargo().trim().length() == 0){
 			this.definirCampoComErro("Cargo", "Cargo Inválido");
 		}
-		
+
 		//Verificando a congregação associada
 		if (obreiro.getCongregacao() == null || obreiro.getCongregacao().trim().length() == 0){
 			this.errors.put("Congregacao", "Congregação Inválida");
@@ -115,16 +100,32 @@ public class ValidadorDeFormularioDeObreiro {
 			}
 		}*/
 	}
-	
+
 	private void verificarSenhaMatchSenhaConfirmacao(String senha, String senhaConfirmacao){
-		
+
 		if((senha != null && senha.trim().length() > 0) && (senhaConfirmacao != null && senhaConfirmacao.trim().length() > 0) ){
 			if(!senha.equals(senhaConfirmacao)){
 				this.errors.put("SenhaMatch", "Senha e Confirmação de Senha diferem");
 				this.setFormularioValido(false);
 			}
-			
+
 		}		
+	}
+
+	/******************************
+	 *	GETTERS AND SETTERS
+	 ******************************/
+	public boolean isFormularioValido() {
+		return formularioValido;
+	}
+	public void setFormularioValido(boolean formularioValido) {
+		this.formularioValido = formularioValido;
+	}
+	public HashMap<String, String> getErrors() {
+		return errors;
+	}
+	public void setErrors(HashMap<String, String> errors) {
+		this.errors = errors;
 	}
 
 }

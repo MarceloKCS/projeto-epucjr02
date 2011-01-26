@@ -2,8 +2,6 @@ package com.epucjr.engyos.tecnologia.utilitarios;
 
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.epucjr.engyos.dominio.modelo.Reuniao;
-
 /*
  * O DataSet cria uma tabela para o grafico
  */
@@ -28,7 +26,7 @@ public class DataSet {
 		}
 	}
 
-	public void addReuniao(Reuniao r) {
+	/*public void addReuniao(Reuniao r) {
 		String mes;
 		try {
 			int i = Integer.parseInt(r.getMes());
@@ -42,7 +40,7 @@ public class DataSet {
 		} else if (modo == 0) {
 			dcd.addValue(r.getQtdObreirosListaDePresenca(), "", mes);
 		}
-	}
+	}*/
 		
 	public DefaultCategoryDataset getDcd() {
 		return dcd;

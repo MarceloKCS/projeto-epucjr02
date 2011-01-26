@@ -235,4 +235,14 @@
     <servlet-name>FrontControllerAppletServlet</servlet-name>
     <url-pattern>/AppletController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TesteServlet</display-name>
+    <servlet-name>TesteServlet</servlet-name>
+    <servlet-class>com.epucjr.engyos.aplicacao.webcontrole.TesteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TesteServlet</servlet-name>
+    <url-pattern>/TesteServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

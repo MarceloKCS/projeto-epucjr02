@@ -69,7 +69,7 @@
 		<div id="conteudo_tabmenu">
 			<div id="mensagemRetorno">
 				<%
-					if (formularioDeObreiro.getMensagemStatus() != null && !formularioDeObreiro.getMensagemStatus().equals("")) {
+					if (formularioDeObreiro.getMensagemStatus() != null && !formularioDeObreiro.getMensagemStatus().equals("")){
 						out.println(formularioDeObreiro.getMensagemStatus() + "<br />");
 						out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
 						if(formularioDeObreiro.verificarDadoDeConfirmacao("confirmacao_cadastro")){

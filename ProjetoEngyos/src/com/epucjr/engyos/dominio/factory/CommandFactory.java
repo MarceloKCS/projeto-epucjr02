@@ -10,6 +10,8 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterPageLoader;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoFindCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterPageLoader;
 
 
 public class CommandFactory {
@@ -39,6 +41,8 @@ public class CommandFactory {
 		mapaCommand.put("default", new TestCommand());
 		mapaCommand.put("teste", new TestCommand());
 		mapaCommand.put("obreiro_formload", new ActionObreiroRegisterPageLoader());
+		mapaCommand.put("reuniao_formload", new ActionReuniaoRegisterPageLoader());
+		mapaCommand.put("reuniao_register", new ActionReuniaoRegisterCommand());
 		mapaCommand.put("obreiro_register", new ActionObreiroRegisterCommand());
 		mapaCommand.put("buscar_obreiro", new ActionObreiroFindCommand());
 		mapaCommand.put("buscar_congregacao", new ActionCongregacaoFindCommand());
