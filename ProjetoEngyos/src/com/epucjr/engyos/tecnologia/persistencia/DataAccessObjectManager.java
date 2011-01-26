@@ -6,9 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
-import com.epucjr.engyos.dominio.modelo.Presenca;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 
 public class DataAccessObjectManager {
@@ -163,7 +163,7 @@ public class DataAccessObjectManager {
 
 
 
-	public Object obterPresenca(int idDaPresenca){
+	/*public Object obterPresenca(long idDaPresenca){
 		if(entityManager == null || !entityManager.isOpen()){
 			this.entityManager = EmFactory.getEntityManager();
 		}
@@ -180,7 +180,7 @@ public class DataAccessObjectManager {
 		}		
 		return presenca;
 	}
-
+*/
 	public Reuniao obterReuniao(long idDaReuniao){
 		if(entityManager == null || !entityManager.isOpen()){
 			this.entityManager = EmFactory.getEntityManager();
@@ -251,6 +251,19 @@ public class DataAccessObjectManager {
 		}		
 		return usuario;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Obreiro> obterListaDeObreiros(){		
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+		
+		List<Obreiro> listaDeObreiro = new ArrayList<Obreiro>();
+		
+		listaDeObreiro = this.getEntityManager().createQuery("from Obreiro order by nome").getResultList();
+	
+		return listaDeObreiro;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Congregacao> obterListaDeCongregacoes(){
@@ -261,7 +274,7 @@ public class DataAccessObjectManager {
 
 		List<Congregacao> listaDeCongregacao = new ArrayList<Congregacao>();
 
-		listaDeCongregacao =  entityManager.createQuery("from Congregacao").getResultList();
+		listaDeCongregacao =  entityManager.createQuery("from Congregacao order by nome").getResultList();
 
 		return listaDeCongregacao;
 

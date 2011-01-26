@@ -5,9 +5,9 @@
 				
 		<class>com.epucjr.engyos.dominio.modelo.Congregacao</class>
 		<class>com.epucjr.engyos.dominio.modelo.Obreiro</class>
-		<class>com.epucjr.engyos.dominio.modelo.Reuniao</class>
-		<class>com.epucjr.engyos.dominio.modelo.Presenca</class>
-		<class>com.epucjr.engyos.dominio.modelo.Identificacao</class>
+		<class>com.epucjr.engyos.dominio.modelo.Reuniao</class>		
+		<class>com.epucjr.engyos.dominio.modelo.Identificacao</class>		
+		<class>com.epucjr.engyos.dominio.modelo.PresencaObreiro</class>		
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

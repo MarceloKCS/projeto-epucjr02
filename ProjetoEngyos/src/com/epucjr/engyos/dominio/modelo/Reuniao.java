@@ -10,7 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Fields;
@@ -21,6 +22,10 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Indexed
 public class Reuniao {
+	
+	/******************************
+	 *	ATRIBUTOS
+	 ******************************/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idReuniao;
@@ -36,88 +41,116 @@ public class Reuniao {
 	private String data;
 	
 	@Field
-	private String hora;
+	private String hora;	
 	
-	@OneToMany (fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-	@JoinColumn
-	private List<Obreiro> listaDePresenca;
+	@ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@JoinColumn 
+	private List<PresencaObreiro> listaDePresencaObreiro;
 	
-	////////////////
-	// CONSTRUTOR //
-	////////////////
-	public Reuniao(){
+	private String reuniaoStatus;  //ATIVO-INATIVO
+	
+	@Transient
+	private int quantidadeMaxObreirosReuniao;
+	
 		
+	/******************************
+	 *	CONSTRUTOR
+	 ******************************/
+	public Reuniao(){
+		this.local = "";
+		this.data = "";
+		this.hora = "";		
+		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
+		this.reuniaoStatus = "ATIVO";
+		this.quantidadeMaxObreirosReuniao = 0;
 	}
 	
-	public Reuniao(String data, String hora) {
-		setLocal();
-		setData(data);
-		setHora(hora);
-		this.listaDePresenca = new ArrayList<Obreiro>();
+	public Reuniao(String local, String data, String hora) {
+		this.local = local;
+		this.data = data;
+		this.hora = hora;		
+		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
+		this.reuniaoStatus = "ATIVO";
+		this.quantidadeMaxObreirosReuniao = 0;
 	}
 	
-	/////////////////////////
-	// GETTERS AND SETTERS //
-	/////////////////////////
-	public String  getLocal(){
-		return this.local;
+	/******************************
+	 *	METODOS
+	 ******************************/
+	
+	public void adicionarObreiroNaLista(Obreiro obreiro){
+		PresencaObreiro presencaObreiro = new PresencaObreiro(obreiro);
+		if(!this.isObreiroNaLista(obreiro)){
+			this.getListaDePresencaObreiro().add(presencaObreiro);
+		}		
 	}
-	public void setLocal(){
-		this.local = "Parque São Joaquim";
+	
+	public boolean isObreiroNaLista(Obreiro obreiro){
+		boolean obreiroNaLista = false;
+		for(PresencaObreiro presencaObreiro : this.getListaDePresencaObreiro()){
+			if(presencaObreiro.getObreiro().getCpf().equals(obreiro.getCpf())){
+				obreiroNaLista = true;
+				break;
+			}
+		}
+		return obreiroNaLista;
 	}
+	
+	/******************************
+	 *	GETTERS AND SETTERS
+	 ******************************/
+
+	public String getLocal() {
+		return local;
+	}
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
 	public String getData() {
-		return this.data;
+		return data;
 	}
+
 	public void setData(String data) {
 		this.data = data;
 	}
-	public String getDia() {
-		return this.data.substring(0, 2);
+
+	public String getHora() {
+		return hora;
 	}
-	public String getMes() {
-		return this.data.substring(2, 4);
-	}
-	public String getAno() {
-		return this.data.substring(4);
-	}
-	public String getHoraReuniao(){
-		return this.hora;
-	}
-	public String getHora(){
-		return this.hora.substring(0, 2);
-	}
-	public String getMinuto(){
-		return this.hora.substring(2);
-	}
-	public void setHora(String hora){
+
+	public void setHora(String hora) {
 		this.hora = hora;
+	}		
+
+	public long getIdReuniao() {
+		return idReuniao;
+	}	
+
+	public String getReuniaoStatus() {
+		return reuniaoStatus;
 	}
-	public List<Obreiro> getListaDePresenca() {
-		return this.listaDePresenca;
+
+	public void setReuniaoStatus(String reuniaoStatus) {
+		this.reuniaoStatus = reuniaoStatus;
 	}
-	public void setListaDePresenca(List<Obreiro> listaDePresenca) {
-		this.listaDePresenca = listaDePresenca;
+
+	public List<PresencaObreiro> getListaDePresencaObreiro() {
+		return listaDePresencaObreiro;
 	}
-	public void addObreiroListaDePresenca(Obreiro obreiro) {
-		this.listaDePresenca.add(obreiro);
+
+	public void setListaDePresencaObreiro(
+			List<PresencaObreiro> listaDePresencaObreiro) {
+		this.listaDePresencaObreiro = listaDePresencaObreiro;
 	}
-	public void removeObreiroListaDePresenca(Obreiro obreiro) {
-		this.listaDePresenca.remove(obreiro);
+
+	public int getQuantidadeMaxObreirosReuniao() {
+		return quantidadeMaxObreirosReuniao;
 	}
-	public void removeObreiroListaDePresenca(int indice) {
-		this.listaDePresenca.remove(indice);
-	}
-	public Obreiro getObreirosListaDePresenca(int indice) {
-		return this.listaDePresenca.get(indice);
-	}
-	public int getQtdObreirosListaDePresenca() {
-		return listaDePresenca.size();
-	}
-	public long getIdReuniao(){
-		return this.idReuniao;
-	}
-	public void setIdReuniao(long idReuniao){
-		this.idReuniao = idReuniao;
+
+	public void setQuantidadeMaxObreirosReuniao(int quantidadeMaxObreirosReuniao) {
+		this.quantidadeMaxObreirosReuniao = quantidadeMaxObreirosReuniao;
 	}
 
 }

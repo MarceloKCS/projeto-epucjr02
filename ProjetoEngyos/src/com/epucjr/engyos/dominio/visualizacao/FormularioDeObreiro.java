@@ -12,9 +12,9 @@ import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
 public class FormularioDeObreiro {
 
-	///////////////
-	// ATRIBUTOS //
-	///////////////
+	/******************************
+	 *	ATRIBUTOS
+	 ******************************/
 	private HashMap<String, String> camposPreenchidos;	
 	private List<Congregacao> listaDeCongregacoes; 
 	private String mensagemStatus;
@@ -22,9 +22,9 @@ public class FormularioDeObreiro {
 	
 	private boolean isCPFValido;
 
-	////////////////
-	// CONSTRUTOR //
-	////////////////
+	/******************************
+	 *	CONSTRUTOR
+	 ******************************/
 	public FormularioDeObreiro(){
 		this.camposPreenchidos = new HashMap<String, String>();		
 		this.mensagemStatus = "";
@@ -32,9 +32,9 @@ public class FormularioDeObreiro {
 		this.carregarDadosDoFormulario();		
 	}
 	
-	/////////////
-	// METODOS //
-	/////////////
+	/******************************
+	 *	METODOS
+	 ******************************/
     public void definirCampoPreenchido(String nomeDoCampo, String valorDoCampo ) {
 		this.camposPreenchidos.put(nomeDoCampo, valorDoCampo);
     }
@@ -164,9 +164,9 @@ public class FormularioDeObreiro {
 		
 	}
 	
-	/////////////////////////
-	// GETTERS AND SETTERS //
-	/////////////////////////
+	/******************************
+	 *	GETTERS AND SETTERS
+	 ******************************/
 
 	public HashMap<String, String> getCamposPreenchidos() {
 		return camposPreenchidos;
