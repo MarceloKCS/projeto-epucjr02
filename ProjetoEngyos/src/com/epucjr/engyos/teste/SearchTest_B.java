@@ -7,6 +7,7 @@ import com.epucjr.engyos.dominio.crud.BuscaAvancada;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.tecnologia.ferramentas.GeradorQueryLucene;
 import com.epucjr.engyos.tecnologia.ferramentas.SearchInitializator;
 
 public class SearchTest_B {
@@ -63,6 +64,11 @@ public class SearchTest_B {
 				System.out.print("Entre com o Parâmetro de busca: ");
 				parametroBusca = input.next();
 				SearchTest_B.buscarReunioesPaginadas(parametroBusca);
+				break;
+				
+			case 9:
+				System.out.println("Testa Escape Sequence para Query Lucene");
+				SearchTest_B.putScapeSequenceHoraTest();
 				break;
 				
 
@@ -294,6 +300,10 @@ public class SearchTest_B {
 
 	}
 	
-	
+	public static void putScapeSequenceHoraTest(){
+		GeradorQueryLucene geradorQueryLucene = new GeradorQueryLucene();
+		String valorModificado = geradorQueryLucene.putScapeCaracterParametroBusca("18:07");
+		System.out.println("ValorMod = " + valorModificado);
+	}
 
 }

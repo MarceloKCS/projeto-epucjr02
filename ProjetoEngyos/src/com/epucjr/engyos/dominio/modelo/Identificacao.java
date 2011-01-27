@@ -1,5 +1,6 @@
 package com.epucjr.engyos.dominio.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Identificacao {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idIdentificacao;
+	@Column(length=600)
 	private String impressaoDigital;
 	private String senha;
 	

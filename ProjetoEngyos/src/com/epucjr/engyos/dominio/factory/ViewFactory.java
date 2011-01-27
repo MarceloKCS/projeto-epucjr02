@@ -27,19 +27,31 @@ public class ViewFactory {
 	
 	private void carregarMapListView(){         
 		this.adicionaView("null", "default", "teste.jsp");
+		
 		this.adicionaView("obreiro_formload", "Formulario Carregado", "CadastrarObreiro.jsp");
-		this.adicionaView("reuniao_formload", "Formulario Carregado", "CadastrarReuniao.jsp");		
+		this.adicionaView("reuniao_formload", "Formulario Carregado", "CadastrarReuniao.jsp");
+		this.adicionaView("congregacao_formload", "Formulario Carregado", "CadastrarCongregacao.jsp");
+		
 		this.adicionaView("obreiro_register", "Erro ao Cadastrar", "CadastrarObreiro.jsp");
 		this.adicionaView("obreiro_register", "Operação Realizada com Sucesso!", "CadastrarObreiro.jsp");
 		this.adicionaView("obreiro_register", "Erro interno na operação", "CadastrarObreiro.jsp");		
-		this.adicionaView("obreiro_register", "Usuario Já Existente no Registro...", "CadastrarObreiro.jsp");
+		this.adicionaView("obreiro_register", "Usuario Já Existente no Registro...", "CadastrarObreiro.jsp");	
+		
+		this.adicionaView("congregacao_register", "Erro ao Cadastrar", "CadastrarCongregacao.jsp");
+		this.adicionaView("congregacao_register", "Operação Realizada com Sucesso!", "CadastrarCongregacao.jsp");
+		this.adicionaView("congregacao_register", "Erro interno na operação", "CadastrarCongregacao.jsp");		
+		this.adicionaView("congregacao_register", "Congregacao Já Existente no Registro...", "CadastrarCongregacao.jsp");	
+		
 		this.adicionaView("reuniao_register", "Erro ao Cadastrar", "CadastrarReuniao.jsp");
 		this.adicionaView("reuniao_register", "Operação Realizada com Sucesso!", "CadastrarReuniao.jsp");
 		this.adicionaView("reuniao_register", "Erro interno na operação", "CadastrarReuniao.jsp");
+		
 		this.adicionaView("buscar_obreiro", "Busca Realizada", "BuscarObreiro.jsp");
 		this.adicionaView("buscar_obreiro", "Não existem registros no banco de dados", "BuscarObreiro.jsp");
+		
 		this.adicionaView("buscar_congregacao", "Busca Realizada", "BuscarCongregacao.jsp");
 		this.adicionaView("buscar_congregacao", "Não existem registros no banco de dados", "BuscarCongregacao.jsp");
+		
 		this.adicionaView("buscar_reuniao", "Busca Realizada", "BuscarReuniao.jsp");
 		this.adicionaView("buscar_reuniao", "Não existem registros no banco de dados", "BuscarReuniao.jsp");
 		

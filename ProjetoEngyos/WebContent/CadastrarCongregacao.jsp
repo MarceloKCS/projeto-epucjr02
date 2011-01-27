@@ -8,15 +8,13 @@
 <%
 	FormularioDeCongregacao formularioDeCongregacao;
 	ValidadorDeFormularioDeCongregacao validadorDeCongregacao;
-	formularioDeCongregacao = (FormularioDeCongregacao) request
-			.getAttribute("viewCongregacao");
-	validadorDeCongregacao = (ValidadorDeFormularioDeCongregacao) request
-			.getAttribute("errorCongregacao");
+	formularioDeCongregacao = (FormularioDeCongregacao) request.getAttribute("formularioDeCongregacao");
+	validadorDeCongregacao = formularioDeCongregacao.getValidadorDeFormularioDeCongregacao();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Congregações - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
@@ -49,22 +47,19 @@
 			
 			<div id="mensagemRetorno">
 			<%
-				if (formularioDeCongregacao != null) {
+				if (formularioDeCongregacao.getMensagemStatus() != null && !formularioDeCongregacao.getMensagemStatus().equals("")) {
 					out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
-					out.println(formularioDeCongregacao.getStatus() + "<br />");
-					if (formularioDeCongregacao.getStatus().equals(
-							"Sucesso ao Cadastrar")) {
-						out.println("<p>Foram incluidos no banco de dados</p>");
-						Congregacao obreiroCadastrado = (Congregacao) request
-								.getAttribute("congregacao");
-						out.println("Nome: "+obreiroCadastrado.getNome() + "<br />");
-						out.println("Endereço: "+obreiroCadastrado.getEndereco() + "<br />");
+					out.println(formularioDeCongregacao.getMensagemStatus() + "<br />");
+					if (formularioDeCongregacao.verificarDadoDeConfirmacao("confirmacao_cadastro")) {
+						out.println("<p>Foram incluidos no banco de dados</p>");						
+						out.println("Nome: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_nomeDaCongregacao") + "<br />");
+						out.println("Endereço: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_endereco") + "<br />");
 					}
 				}
 			%>
 			</div>
 			
-			<form name="formularioCongregacao" method="post" action="registrarCongregacao" id="formularioCongregacao">
+			<form name="formularioCongregacao" method="post" action="Controller" id="formularioCongregacao">
 			<p>
 				<label for="Nome">Nome: </label>
 				<input type="text" name="Nome" value="
@@ -72,7 +67,8 @@
 					&& formularioDeCongregacao.verificarCampoPreenchido("Nome")) {
 				out.println(formularioDeCongregacao
 						.obterCampoPreenchido("Nome"));
-			}%>
+				}
+				%>
 				" id="Nome"/>
 				<span class="erroCampoFormulario">
 				<%
@@ -104,7 +100,7 @@
 				</span>
 			</p>
 			<p>
-			<button type=submit name=botao_action value=Cadastrar>Cadastrar</button>
+			<button type="submit" name="acao" value="congregacao_register">Cadastrar</button>
 			</p>
 			</form>
 		</div>

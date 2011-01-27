@@ -2,27 +2,65 @@ package com.epucjr.engyos.dominio.crud;
 
 import java.util.HashMap;
 
-import com.epucjr.engyos.dominio.modelo.Congregacao;
-
 public class ValidadorDeFormularioDeCongregacao {
-	
-	///////////////
-	// ATRIBUTOS //
-	///////////////
+
+	/******************************
+	 *	ATRIBUTOS
+	 ******************************/
 	private boolean formularioValido;
 	private HashMap<String, String> errors;
-	
-	////////////////
-	// CONSTRUTOR //
-	////////////////
+
+	/******************************
+	 *	CONSTRUTOR
+	 ******************************/
 	public ValidadorDeFormularioDeCongregacao(){
 		this.formularioValido = false;
 		this.errors = new HashMap<String, String>();
 	}
-	
-	/////////////////////////
-	// GETTERS AND SETTERS //
-	/////////////////////////
+
+	/******************************
+	 *	METODOS
+	 ******************************/
+
+	public void definirCampoComErro(String nomeDoCampo, String valorDoCampo ) {
+		this.errors.put(nomeDoCampo, valorDoCampo);
+	}
+
+	public String obterCampoComErro(String nomeDoCampo) {
+		if(this.errors.containsKey(nomeDoCampo)){
+			return this.errors.get(nomeDoCampo);
+		}
+		else{
+			return "";
+		}
+	}
+
+	public boolean verificarCampoComErro(String nomeDoCampo){
+		if (this.errors.containsKey(nomeDoCampo)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public void verificarCamposValidos(String nomeDaCongregacao, String endereco){		
+		this.setFormularioValido(true);
+		
+		if (nomeDaCongregacao == null || nomeDaCongregacao.trim().length() == 0){
+			this.definirCampoComErro("Nome", "Nome Obrigátorio");
+			this.setFormularioValido(false);
+		}
+		if (endereco == null || endereco.trim().length() == 0){
+			this.definirCampoComErro("Endereco", "Endereço Obrigatório");
+			this.setFormularioValido(false);
+		}
+	}
+
+	/******************************
+	 *	GETTERS AND SETTERS
+	 ******************************/
+
 	public boolean isFormularioValido() {
 		return formularioValido;
 	}
@@ -35,44 +73,4 @@ public class ValidadorDeFormularioDeCongregacao {
 	public void setErrors(HashMap<String, String> errors) {
 		this.errors = errors;
 	}
-	
-	/////////////
-	// METODOS //
-	/////////////
-    public void definirCampoComErro(String nomeDoCampo, String valorDoCampo ) {
-		this.errors.put(nomeDoCampo, valorDoCampo);
-    }
-    
-    public String obterCampoComErro(String nomeDoCampo) {
-    	if(this.errors.containsKey(nomeDoCampo)){
-    		return this.errors.get(nomeDoCampo);
-    	}
-    	else{
-    		return "";
-    	}
-    }
-    
-    public boolean verificarCampoComErro(String nomeDoCampo){
-    	if (this.errors.containsKey(nomeDoCampo)){
-    		return true;
-    	}
-    	else{
-    		return false;
-    	}
-    }
-	
-	public void verificarCamposValidos(Congregacao congregacao){
-		if (congregacao.getNome() == null || congregacao.getNome().trim().length() == 0){
-			this.definirCampoComErro("Nome", "Nome Obrigátorio");
-		}
-		if (congregacao.getEndereco() == null || congregacao.getEndereco().trim().length() == 0){
-			this.definirCampoComErro("Endereco", "Endereço Obrigatório");
-		}
-		else{
-			if(congregacao.getNome() != null && congregacao.getNome().trim().length() != 0){
-				this.setFormularioValido(true);
-			}
-		}
-	}
-
 }
