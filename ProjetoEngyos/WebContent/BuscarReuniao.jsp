@@ -2,7 +2,6 @@
 <%@ page import="java.util.*"%>
 
 <%@ page import="com.epucjr.engyos.dominio.modelo.Reuniao" %>
-<%@ page import="com.epucjr.engyos.dominio.modelo.PaginaDeBusca" %>
 <%@ page import="com.epucjr.engyos.dominio.visualizacao.FormularioDeBuscaDaReuniao" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -58,7 +57,7 @@
 				%>
 					<tr class="<% out.println("zebra" + countVisual % 2); %>">
 						<td><% out.println(reuniao.getDia()+"/"+reuniao.getMes()+"/"+reuniao.getAno()+"</a>"); %></td>
-						<td><% out.println(reuniao.getHora()+":"+reuniao.getMinuto()); %></td>
+						<td><% out.println(reuniao.getHora()+":"+reuniao.getMinuto());%></td>
 						<td><% out.println(reuniao.getLocal()); %></td>
 						<td><a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
 						<td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a></td>

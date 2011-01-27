@@ -67,8 +67,10 @@ public class GeradorQueryLucene {
 		if(parametroBusca == null || parametroBusca.equals("")){
 			parametroBusca = "\"\"";
 		}
+		
+		parametroBusca = this.putScapeCaracterParametroBusca(parametroBusca);
 
-		this.setSearchQuery("local:" + parametroBusca + " OR data:" + parametroBusca + " OR hora:" + parametroBusca);
+		this.setSearchQuery("local:" + parametroBusca + " OR data:" + parametroBusca + "* OR horario:" + parametroBusca + "*");
 
 		this.setLuceneQuery(this.getQueryParser().parse(this.getSearchQuery()));
 		
@@ -76,6 +78,18 @@ public class GeradorQueryLucene {
 		System.out.println(searchQuery.toString());
 
 
+	}
+	
+	public String putScapeCaracterParametroBusca(String parametroBusca){
+		if(parametroBusca.contains(":")){
+			parametroBusca = parametroBusca.replace(":", "\\:");			
+		}
+		if(parametroBusca.contains("-")){
+			parametroBusca = parametroBusca.replace("-", "\\-");			
+		}
+		
+		return parametroBusca;
+		
 	}
 
 

@@ -123,6 +123,15 @@ public class ValidadorDeFormularioDeReuniao {
 		}
 		
 	}
+	/**
+	 * 
+	 * @param dia
+	 * @param mes
+	 * @param ano
+	 * 
+	 * Validador de data, que a partir dos parametros inseridos verifica se 
+	 * o evento verificado ocorre em uma data que não seja menor que a data corrente
+	 */
 	
 	private void validarDateFornecido(String dia, String mes, String ano){
 		String diaCorrente = DateUtils.obterDiaDeDataBrasileira(DateUtils.obterDataCorrenteBr());
@@ -162,6 +171,18 @@ public class ValidadorDeFormularioDeReuniao {
 				
 	}
 	
+	/**
+	 * 
+	 * @param dia
+	 * @param mes
+	 * @param ano
+	 * @param hora
+	 * @param minuto
+	 * 
+	 * Método que verifica a hora registrada caso o evento marcado seja na data corrente,
+	 * e marca um aviso ao relatório caso o evento seja marcado em um horário menor que o horário corrente
+	 */
+	
 	private void validarDateTimeFornecido(String dia, String mes, String ano, String hora, String minuto){
 		String diaCorrente = DateUtils.obterDiaDeDataBrasileira(DateUtils.obterDataCorrenteBr());
 		String mesCorrente = DateUtils.obterMesDeDataBrasileira(DateUtils.obterDataCorrenteBr());
@@ -187,7 +208,7 @@ public class ValidadorDeFormularioDeReuniao {
 		int minutoObtidaInt = Integer.parseInt(minuto);
 		//int segundoObtidaInt = Integer.parseInt(segundoObtido);		
 				
-		boolean dataValida = false;
+		/*boolean dataValida = false;
 		
 		if(anoObtidoInt > anoCorrenteInt){
 			dataValida = true;
@@ -197,7 +218,7 @@ public class ValidadorDeFormularioDeReuniao {
 		}
 		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt == mesCorrenteInt) && (diaObtidInto > diaCorrenteInt)){
 			dataValida = true;
-		}
+		}*/
 		
 		/*if(!dataValida){
 			this.definirCampoComErro("Data", "Data Inválida, é menor que a data corrente");
@@ -206,10 +227,10 @@ public class ValidadorDeFormularioDeReuniao {
 		
 		if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt == mesCorrenteInt) && (diaObtidInto == diaCorrenteInt)){
 			if(horaObtidaInt > horaCorrenteInt){
-				dataValida = true;
+				//dataValida = true;
 			}
 			else if((horaObtidaInt == horaCorrenteInt) && minutoObtidaInt > minutoCorrenteInt){
-				dataValida = true;
+				//dataValida = true;
 			}
 			else{
 				this.definirCampoComErro("Horario", "Horário Inválido, horário para este dia já passou");

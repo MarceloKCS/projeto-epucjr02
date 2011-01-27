@@ -19,6 +19,8 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
+import com.epucjr.engyos.tecnologia.utilitarios.DateUtils;
+
 @Entity
 @Indexed
 public class Reuniao {
@@ -41,7 +43,7 @@ public class Reuniao {
 	private String data;
 	
 	@Field
-	private String hora;	
+	private String horario;	
 	
 	@ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	@JoinColumn 
@@ -59,7 +61,7 @@ public class Reuniao {
 	public Reuniao(){
 		this.local = "";
 		this.data = "";
-		this.hora = "";		
+		this.horario = "";		
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = "ATIVO";
 		this.quantidadeMaxObreirosReuniao = 0;
@@ -68,7 +70,7 @@ public class Reuniao {
 	public Reuniao(String local, String data, String hora) {
 		this.local = local;
 		this.data = data;
-		this.hora = hora;		
+		this.horario = hora;		
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = "ATIVO";
 		this.quantidadeMaxObreirosReuniao = 0;
@@ -99,6 +101,51 @@ public class Reuniao {
 	/******************************
 	 *	GETTERS AND SETTERS
 	 ******************************/
+	
+	public String getDia(){
+		if(this.getData() != null && !this.getData().equals("") ){
+			return DateUtils.obterDiaDeDataBrasileira(this.getData());
+		}
+		else{
+			return "";
+		}
+	}
+	
+	public String getMes(){
+		if(this.getData() != null && !this.getData().equals("") ){
+			return DateUtils.obterMesDeDataBrasileira(this.getData());
+		}
+		else{
+			return "";
+		}
+	}
+	
+	public String getAno(){
+		if(this.getData() != null && !this.getData().equals("") ){
+			return DateUtils.obterAnoDeDataBrasileira(this.getData());
+		}
+		else{
+			return "";
+		}
+	}
+	
+	public String getHora(){
+		if(this.getHorario() != null && !this.getHorario().equals("") ){
+			return DateUtils.obterHora(this.getHorario());
+		}
+		else{
+			return "";
+		}
+	}
+	
+	public String getMinuto(){
+		if(this.getHorario() != null && !this.getHorario().equals("") ){
+			return DateUtils.obterMinuto(this.getHorario());
+		}
+		else{
+			return "";
+		}
+	}
 
 	public String getLocal() {
 		return local;
@@ -116,12 +163,12 @@ public class Reuniao {
 		this.data = data;
 	}
 
-	public String getHora() {
-		return hora;
+	public String getHorario() {
+		return horario;
 	}
 
-	public void setHora(String hora) {
-		this.hora = hora;
+	public void setHorario(String horario) {
+		this.horario = horario;
 	}		
 
 	public long getIdReuniao() {
