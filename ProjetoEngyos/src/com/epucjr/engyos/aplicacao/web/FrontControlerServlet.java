@@ -50,6 +50,7 @@ public class FrontControlerServlet extends HttpServlet {
 		//response.getWriter().print("TESTE");
 		String acao = request.getParameter("acao");
 		
+		//Cada comando mapeado na fábrica implementa a interface Command 
 		Command comando = fabricaComandos.getCommand(acao);
 		String resposta = (String) comando.execute(request, response);		
 		
