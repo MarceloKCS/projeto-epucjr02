@@ -57,7 +57,7 @@ public class DateUtils {
 	 * @return a data brasileira correspondente no formato "DD/MM/YYYY"
 	 */
 	public static String transformarDataAmericanaParaBrasileira( String dataAmericana ){
-		String ano = ""; 
+		/*String ano = ""; 
 		String mes = "";
 		String dia = "";
 		String dataBrasileira = "";
@@ -80,7 +80,9 @@ public class DateUtils {
 			posicao++;
 		}
 		dataBrasileira = dia + "/" + mes + "/" + ano;
-		return dataBrasileira;
+		return dataBrasileira;*/
+		String[] dataArray = ListUtilTokenizer.obterArrayString(dataAmericana, "-"); 
+		return dataArray[2]+'/'+dataArray[1]+'/'+dataArray[0];
 	}
 	/** Transformar uma data (String) do formato brasileiroo para o formato americano.
 	 * 
@@ -88,7 +90,7 @@ public class DateUtils {
 	 * @return a data americana correspondente no formato "YYYY/MM/DD"
 	 */
 	public static String transformarDataBrasileiraParaAmericana( String dataBrasileira ){
-		String dataAmericana = "";
+		/*String dataAmericana = "";
 		String ano = "";
 		String mes = "";
 		String dia = "";
@@ -112,7 +114,10 @@ public class DateUtils {
 		}
 		dataAmericana = ano + "-" + mes + "-" + dia;
 
-		return dataAmericana;
+		return dataAmericana;*/
+		
+		String[] dataArray = ListUtilTokenizer.obterArrayString(dataBrasileira, "/"); 
+		return dataArray[2]+'-'+dataArray[1]+'-'+dataArray[0];
 	}    
 
 	/** Capturar o valor de Real (String) de uma string contendo um valor total
@@ -122,33 +127,40 @@ public class DateUtils {
 	 */
 	public static String pegarValorReal( String valor ){
 		String real = "";
-		int posicao = 0;
+		//int posicao = 0;
 		if( !valor.equals("")) {
 
-			while(valor.charAt(posicao) != ','){
+			/*while(valor.charAt(posicao) != ','){
 				real = real + valor.charAt(posicao);
 				posicao++;
-			}
+			}*/
+			real = ListUtilTokenizer.obterArrayString(valor, ".,")[0]; 
 		}
 		return real;
 	}
 	public static String pegarValorCentavo( String valor ){
 		String centavo = "";
-		int posicao = 0;
-		int fim = valor.length();
-		if( !valor.equals("")) {
-			while(valor.charAt(posicao) != ','){
+		/*int posicao = 0;
+		int fim = valor.length();*/
+		if(valor.length() > 0) {
+			/*while(valor.charAt(posicao) != ','){
 				posicao++;
 			}
 			for(int k = posicao + 1; k < fim; k++ ){
 				centavo = centavo + valor.charAt(k);
-			}
+			}*/
+			String[] valorArray = ListUtilTokenizer.obterArrayString(valor, ".,");
+			if (valor.charAt(0) == '.' || valor.charAt(0) == ',') {
+				centavo = valorArray[0];
+			} else if (valorArray.length > 1) {
+				centavo = valorArray[1]; 
+			} else centavo = "0";
 		}
 		return centavo;
 	}
 
 	public static String obterDiaDeDataBrasileira(String dataBrasileira){
-		String dia = "";
+		/*String dia = "";
 		if(!dataBrasileira.equals("")){
 			int posicao = 0;			
 			while(dataBrasileira.charAt(posicao) != '/'){
@@ -156,11 +168,12 @@ public class DateUtils {
 				posicao++;
 			}
 		}
-		return dia;
+		return dia;*/
+		return DataUtil.obterDia(dataBrasileira);
 	}
 
 	public static String obterMesDeDataBrasileira(String dataBrasileira){
-		String dia = "";
+		/*String dia = "";
 		String mes = "";
 		if(!dataBrasileira.equals("")){
 			int posicao = 0;			
@@ -174,13 +187,13 @@ public class DateUtils {
 				mes = mes + dataBrasileira.charAt(posicao);
 				posicao++;
 			}
-		}
-		return mes;
+		}*/
+		return DataUtil.obterMes(dataBrasileira);
 	}
 
 
 	public static String obterAnoDeDataBrasileira(String dataBrasileira){
-		String dia = "";
+		/*String dia = "";
 		String mes = "";
 		String ano = "";
 		if(!dataBrasileira.equals("")){
@@ -203,11 +216,12 @@ public class DateUtils {
 				posicao++; 
 			}
 		}
-		return ano;
+		return ano;*/
+		return DataUtil.obterAno(dataBrasileira);
 	}
 
 	public static String obterHora(String horario){
-		String hora = "";
+		/*String hora = "";
 		if(!horario.equals("")){
 			int posicao = 0;			
 			while(horario.charAt(posicao) != ':'){
@@ -216,11 +230,12 @@ public class DateUtils {
 			}
 		}
 
-		return hora;
+		return hora;*/
+		return HoraUtil.obterHora(horario);
 	}
 
 	public static String obterMinuto(String horario){
-		String hora = "";
+		/*String hora = "";
 		String minuto = "";
 		if(!horario.equals("")){
 			int posicao = 0;			
@@ -237,11 +252,12 @@ public class DateUtils {
 			}
 		}
 
-		return minuto;
+		return minuto;*/
+		return HoraUtil.obterMinuto(horario);
 	}
 
 	public static String obterSegundo(String horario){
-		String hora = "";
+		/*String hora = "";
 		String minuto = "";
 		String segundo = "";
 		if(!horario.equals("")){
@@ -268,7 +284,8 @@ public class DateUtils {
 			}
 		}
 
-		return segundo;
+		return segundo;*/
+		return HoraUtil.obterSegundo(horario);
 	}
 
 	public static int calcularIdade(String dataDeNascimento){

@@ -28,8 +28,9 @@ public class ServletComunication {
 
     public ServletComunication() {
         try {
+//            getCodeBase pega o local de onde o applet veio
+//            this.url = new URL(getCodeBase(), "/ProjetoEngyos/AppletController");
             this.url = new URL("http://localhost:8080/ProjetoEngyos/AppletController");
-           // this.url = new URL("http://localhost:8080/ProjetoBiometria/TestServlet");
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(ServletComunication.class.getName()).log(Level.SEVERE, null, ex);

@@ -67,13 +67,16 @@ public class ControleBioDeviceHardware {
     }
 
     //TODO - captura 0 (Zero) e porque a captura diz texto mas devolve int?
+    //O .Capture devolve o estado da captura
+    //Se = 0, entao ok
+    //Se = 513, erro ocorrido devido ao usuario ter clikado em cancelar
     public Object capturarDigitalModoString() {
         //Inicialização e instanciações
         NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
         NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = null;
 
         //Captura a digital
-        this.nBioBSPJNI.Capture(fir_handle);
+        int capture = this.nBioBSPJNI.Capture(fir_handle);
        
         //Obtém a digital capturada em modo texto
         if (!this.nBioBSPJNI.IsErrorOccured()) {
@@ -85,13 +88,19 @@ public class ControleBioDeviceHardware {
             this.setOperacaoExecutada(true);
             this.setMensagemStatus("Digital capturada");
         } else {
-            this.setOperacaoExecutada(false);
-            this.setMensagemStatus("Erro na cptura e/ou dispositivo");
+            if (capture == 513) { //cancelou
+                this.setOperacaoExecutada(false);
+                this.setMensagemStatus("Cancelou captura");
+            } else { //outro erro
+                this.setOperacaoExecutada(false);
+                this.setMensagemStatus("Erro na captura e/ou dispositivo");
+            }
         }
 
 
         return textSavedFIR;
 
+//        return textSavedFIR.TextFIR;//Captura a String
     }
 
     public Object capturarDigitalModoBinario() {

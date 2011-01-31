@@ -48,6 +48,7 @@ public class ReuniaoRegister {
 	
 	
 	//Para Implementar estes pensar talvez na query???
+	//TODO
 	public void adicionarListaObreirosTabelaPresenca(){
 		
 	}
