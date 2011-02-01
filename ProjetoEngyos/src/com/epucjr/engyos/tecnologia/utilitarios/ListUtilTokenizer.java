@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ListUtilTokenizer {
 	
-	private static final String regex =  "\t\n\r\f|%;";
+	private static final String regex =  "\t|\n|\r|\f|%|;";
 	/**
 	 * Obtém uma lista de nomes através de uma string passada como uma lista separada por tokens
 	 * @param tokenizedString
@@ -31,5 +31,4 @@ public class ListUtilTokenizer {
 	public static String[] obterArrayString(String texto, String regex) {
 		return texto.split(regex);
 	}
-
 }
