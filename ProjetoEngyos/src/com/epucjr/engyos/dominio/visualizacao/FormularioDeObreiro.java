@@ -141,6 +141,44 @@ public class FormularioDeObreiro {
 		}
 	}
 	
+public void definirCamposPreenchidos(String nome, String cpf, String cargo, String idCongregacaoEscolhido, String congregacao, ){
+		
+		String nome = httpServletRequest.getParameter("Nome");
+		String cpf = httpServletRequest.getParameter("Cpf");
+		String cargo = httpServletRequest.getParameter("Cargo");
+		String idCongregacaoEscolhido = httpServletRequest.getParameter("Congregacao");
+		String congregacao = httpServletRequest.getParameter(idCongregacaoEscolhido);
+				
+		
+		//TODO talvez não seja necessário pos o validador já faz isso
+		//Verifica o CPF obtido de modo a informar a validade do mesmo ao usuário
+		
+		this.definirCPFValido(cpf);
+		
+		//Define os campos preenchidos de modo que o usuário não perca os dados previamente 
+		//inseridos em caso de erro no preenchimento
+		
+		if(nome != null && !nome.equals("")){
+			this.definirCampoPreenchido("Nome", nome);
+		}
+		
+		if(cpf != null && !cpf.equals("")){
+			this.definirCampoPreenchido("Cpf", cpf);
+		}
+		
+		if(cargo != null && !cargo.equals("")){
+			this.definirCampoPreenchido("Cargo", cargo);
+		}
+		
+		if(idCongregacaoEscolhido != null && !idCongregacaoEscolhido.equals("")){
+			this.definirCampoPreenchido("idCongregacaoEscolhido", idCongregacaoEscolhido);
+		}
+		
+		if(congregacao != null && !congregacao.equals("")){
+			this.definirCampoPreenchido("Congregacao", congregacao);
+		}
+	}
+	
 	public void definirDadosDeConfirmacaoDeCadastroObreiro(String confirmacaoCadastro, String nome, String cpf, String cargo, String congregacao){
 		
 		this.definirDadosDeConfirmacao("confirmacao_cadastro", confirmacaoCadastro);
