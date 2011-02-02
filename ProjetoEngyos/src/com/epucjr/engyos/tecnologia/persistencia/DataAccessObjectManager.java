@@ -119,7 +119,6 @@ public class DataAccessObjectManager {
 				}
 				entityManager.merge(objeto);		
 				transaction.commit();
-				entityManager.close();
 				this.setOperacaoEfetuada(true);
 				this.setMensagemStatus("Item Inserido");		
 			}catch(Exception e){
@@ -137,6 +136,12 @@ public class DataAccessObjectManager {
 		//this.listaDeFuncionarios.add(funcionario);
 		//this.carregarListaDeCandidatos();
 	}	
+	
+	public void fecharEntityManager(){
+		if(this.getEntityManager().isOpen()){
+			this.getEntityManager().close();
+		}
+	}
 
 	/*****************************************
 	 * Criando um 'obter' para cada caso, no

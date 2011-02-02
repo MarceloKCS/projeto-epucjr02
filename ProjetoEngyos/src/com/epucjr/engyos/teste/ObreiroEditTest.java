@@ -1,6 +1,7 @@
 package com.epucjr.engyos.teste;
 
 import com.epucjr.engyos.dominio.modelo.Congregacao;
+import com.epucjr.engyos.dominio.modelo.Identificacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
@@ -32,15 +33,15 @@ public class ObreiroEditTest {
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
 		Obreiro obreiro = dataAccessObjectManager.obterObreiro(cpfOreiro);
 		Congregacao congregacaoObreiro = obreiro.getCongregacao();
-		//Identificacao identificacao = obreiro.getIdentificacao();
-		//obreiro.setCargo("Programador Delphi");
+		Identificacao identificacao = obreiro.getIdentificacao();
+		obreiro.setCargo("Programador Delphi");
 		
 		dataAccessObjectManager.mergeDataObjeto(obreiro);
 		
 		System.out.println("Dados de Obreiro...");
 		System.out.println("Nome: " + obreiro.getNome());
 		System.out.println("Congregacao: " + congregacaoObreiro.getEndereco());
-		//System.out.println("Identificacao = " + identificacao.getSenha());
+		System.out.println("Identificacao = " + identificacao.getSenha());
 		if(dataAccessObjectManager.isOperacaoEfetuada()){
 			System.out.println("Dados editados....");
 			System.out.println("MSGStatus = " + dataAccessObjectManager.getMensagemStatus());
@@ -49,7 +50,8 @@ public class ObreiroEditTest {
 			System.out.println("MSGStatus = " + dataAccessObjectManager.getMensagemStatus());
 		}
 		
-		
+		//Senha não será alterada, apenas se o usuário realizar a inserção de uma nova, 
+		//o mesmo é válido para a impressão digital
 		System.exit(0);		
 	}
 
