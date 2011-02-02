@@ -24,6 +24,8 @@ public class ImagePanel extends JPanel{
     public ImagePanel() {
         this.setSize(200, 200);
        try {
+//           para pegar uma imagem dentro da aplicacao, pode ser ponto ou barra (n sei ao certo)
+//          image = ImageIO.read(getClass().getClassLoader().getResource("epucjr/engyos/imagem/biometria5.png"));
           image = ImageIO.read(new File("E:/Downloads/biometria5.png"));
        } catch (IOException ex) {
             ex.printStackTrace();
