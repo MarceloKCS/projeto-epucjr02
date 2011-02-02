@@ -1,6 +1,7 @@
 package com.epucjr.engyos.aplicacao.webcontrole;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,18 +28,32 @@ public class CongregacaoRegisterServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.validator = new ValidadorDeFormularioDeCongregacao();
-		
-		
 		String nome = (String)request.getParameter("Nome");
 		String endereco = (String)request.getParameter("Endereco");
-		this.congregacao = new Congregacao(nome, endereco);
+		
+		validator = new ValidadorDeFormularioDeCongregacao();
+		validator.verificarCamposValidos(nome, endereco);
+		
+		HashMap<String, String> map = validator.getErrors();
+		if (map.isEmpty()) {
+			//TODO verifica se existe congragacao,cadastra congragacao e vai p/ proxima pagina
+			this.congregacao = new Congregacao(nome, endereco);
+		} else {
+			String erroNome = validator.obterCampoComErro("Nome");
+			String erroEndereco = validator.obterCampoComErro("Endereco");
+			request.setAttribute("Nome", nome);
+			request.setAttribute("Endereco", endereco);
+			request.setAttribute("ErroNome", erroNome);
+			request.setAttribute("ErroEndereco", erroEndereco);
+			RequestDispatcher view = request.getRequestDispatcher("CadastrarCongregacao.jsp");
+			view.forward(request, response);
+		}
 		//this.controleDeCongregacao.cadastrarCongregacao(request, this.congregacao);
 		
-		this.validator.verificarCamposValidos(this.congregacao);
-		this.formularioDeCongregacao = new FormularioDeCongregacao(this.congregacao);
+		/*this.validator.verificarCamposValidos(this.congregacao);
+		this.formularioDeCongregacao = new FormularioDeCongregacao(this.congregacao);*/
 		
-		if(!this.validator.isFormularioValido()){
+		/*if(!this.validator.isFormularioValido()){
 			this.formularioDeCongregacao.setStatus("Erro ao Cadastrar");
 			request.setAttribute("viewCongregacao", this.formularioDeCongregacao);
 			request.setAttribute("errorCongregacao", this.validator);
@@ -55,7 +70,7 @@ public class CongregacaoRegisterServlet extends HttpServlet {
 			//RequestDispatcher view = request.getRequestDispatcher("home.jsp");
 			RequestDispatcher view = request.getRequestDispatcher("CadastrarCongregacao.jsp");
 			view.forward(request, response);
-		}
+		}*/
 	}
 
 }

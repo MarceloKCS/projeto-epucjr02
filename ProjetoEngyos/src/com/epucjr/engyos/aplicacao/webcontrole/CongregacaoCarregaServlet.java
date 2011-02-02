@@ -34,8 +34,21 @@ public class CongregacaoCarregaServlet extends HttpServlet {
 		
 		DataAccessObjectManager daom = new DataAccessObjectManager();
 		Congregacao c = daom.obterCongregacao(id);
+		
+		String mensagem = daom.getMensagemStatus();
+		boolean ok = daom.isOperacaoEfetuada();
+		
+		if (ok) {
+			request.setAttribute("Nome", c.getNome());
+			request.setAttribute("Endereco", c.getEndereco());
+			request.setAttribute("IdCongregacao", c.getIdCongregacao());
+		} else {
+			request.setAttribute("Nome", "");
+			request.setAttribute("Endereco", "");
+			request.setAttribute("IdCongregacao", -1);
+		}
 
-		request.setAttribute("viewCongregacao", new FormularioDeCongregacao(c));
+		request.setAttribute("Mensagem", mensagem);
 		
 		RequestDispatcher view = request.getRequestDispatcher("EditarCongregacao.jsp");
 		view.forward(request, response);

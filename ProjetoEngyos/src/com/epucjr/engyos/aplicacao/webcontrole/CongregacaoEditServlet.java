@@ -30,17 +30,38 @@ public class CongregacaoEditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.validator = new ValidadorDeFormularioDeCongregacao();
 		
-		
+		long idCongregacao = Long.parseLong(request.getParameter("IdCongregacao"));
 		String nome = (String)request.getParameter("Nome");
 		String endereco = (String)request.getParameter("Endereco");
-		long idCongregacao = Long.parseLong(request.getParameter("idCongregacao"));
-		DataAccessObjectManager daom = new DataAccessObjectManager();
-		this.congregacao = daom.obterCongregacao(idCongregacao);
-		this.congregacao.setNome(nome);
-		this.congregacao.setEndereco(endereco);
+		validator.verificarCamposValidos(nome, endereco);
+		
+		if (validator.isFormularioValido()) {
+			DataAccessObjectManager daom = new DataAccessObjectManager();
+			this.congregacao = daom.obterCongregacao(idCongregacao);
+			this.congregacao.setNome(nome);
+			this.congregacao.setEndereco(endereco);
+			daom.mergeDataObjeto(congregacao);
+			
+			request.setAttribute("Mensagem", daom.getMensagemStatus());
+			request.setAttribute("Nome", nome);
+			request.setAttribute("Endereco", endereco);
+			request.setAttribute("IdCongregacao", idCongregacao);
+		} else {
+			request.setAttribute("ErroNome", validator.verificarCampoComErro("Nome"));
+			request.setAttribute("ErroEndereco", validator.verificarCampoComErro("Endereco"));
+			
+			request.setAttribute("Mensagem", "Contém campos inválidos !!!");
+			request.setAttribute("Nome", nome);
+			request.setAttribute("Endereco", endereco);
+			request.setAttribute("IdCongregacao", idCongregacao);
+		}
+		
+		RequestDispatcher view = request.getRequestDispatcher("EditarCongregacao.jsp");
+		view.forward(request, response);
+		
 		//this.controleDeCongregacao.editarCongregacao(request, this.congregacao);
 		
-		this.validator.verificarCamposValidos(this.congregacao);
+		/*this.validator.verificarCamposValidos(this.congregacao);
 		this.formularioDeCongregacao = new FormularioDeCongregacao(this.congregacao);
 		request.setAttribute("viewCongregacao", this.formularioDeCongregacao);
 		request.setAttribute("Congregacao", congregacao);
@@ -57,7 +78,7 @@ public class CongregacaoEditServlet extends HttpServlet {
 			hibernate.mergeDataObjeto(this.congregacao);
 			RequestDispatcher view = request.getRequestDispatcher("EditarCongregacao.jsp");
 			view.forward(request, response);
-		}
+		}*/
 	}
 
 }
