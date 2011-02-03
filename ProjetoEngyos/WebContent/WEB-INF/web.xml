@@ -10,15 +10,6 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>CongregacaoRegisterServlet</servlet-name>
-    <servlet-class>
-		com.epucjr.engyos.aplicacao.webcontrole.CongregacaoRegisterServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CongregacaoRegisterServlet</servlet-name>
-    <url-pattern>/registrarCongregacao</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>ObreiroRegisterServlet</servlet-name>
     <servlet-class>
 		com.epucjr.engyos.aplicacao.webcontrole.ObreiroRegisterServlet</servlet-class>

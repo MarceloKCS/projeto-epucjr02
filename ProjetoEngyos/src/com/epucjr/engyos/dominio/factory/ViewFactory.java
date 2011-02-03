@@ -55,6 +55,9 @@ public class ViewFactory {
 		this.adicionaView("buscar_reuniao", "Busca Realizada", "BuscarReuniao.jsp");
 		this.adicionaView("buscar_reuniao", "Não existem registros no banco de dados", "BuscarReuniao.jsp");
 		
+		this.adicionaView("ActionLogin", "Sucesso Login", "Principal.jsp");
+		this.adicionaView("ActionLogin", "Erro Login", "TelaLogin.jsp");
+		
 	}
 
 }
