@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeObreiro;
 import com.epucjr.engyos.dominio.crud.ValidatorCpf;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
+import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
 public class FormularioDeObreiro {
@@ -141,13 +142,15 @@ public class FormularioDeObreiro {
 		}
 	}
 	
-public void definirCamposPreenchidos(String nome, String cpf, String cargo, String idCongregacaoEscolhido, String congregacao, ){
+public void definirCamposPreenchidos(Obreiro obreiro){
 		
-		String nome = httpServletRequest.getParameter("Nome");
-		String cpf = httpServletRequest.getParameter("Cpf");
-		String cargo = httpServletRequest.getParameter("Cargo");
-		String idCongregacaoEscolhido = httpServletRequest.getParameter("Congregacao");
-		String congregacao = httpServletRequest.getParameter(idCongregacaoEscolhido);
+		String nome = obreiro.getNome();
+		String cpf = obreiro.getCpf();
+		String cargo = obreiro.getCargo();
+		String idCongregacaoEscolhido = obreiro.getCongregacao().getIdCongregacao() + "";
+		String congregacao = obreiro.getCongregacao().getNome();
+		String senha = obreiro.getIdentificacao().getSenha();
+		String digital = obreiro.getIdentificacao().getImpressaoDigital();
 				
 		
 		//TODO talvez não seja necessário pos o validador já faz isso
@@ -176,6 +179,12 @@ public void definirCamposPreenchidos(String nome, String cpf, String cargo, Stri
 		
 		if(congregacao != null && !congregacao.equals("")){
 			this.definirCampoPreenchido("Congregacao", congregacao);
+		}
+		if(senha != null && !senha.equals("")){
+			this.definirCampoPreenchido("Senha", senha);
+		}
+		if(digital != null && !digital.equals("")){
+			this.definirCampoPreenchido("Digital", digital);
 		}
 	}
 	
