@@ -17,37 +17,37 @@ public class GerenciadorDeReuniao {
 	}
 	
 	public void cadastrarReuniao(HttpServletRequest request, Reuniao reuniao){
-		this.validator.verificarCamposValidos(reuniao);
-		this.formularioDeReuniao = new FormularioDeReuniao(reuniao);
-		if(!this.validator.isFormularioValido()){
-			HttpSession session = request.getSession();
-			session.setAttribute("viewReuniao", this.formularioDeReuniao);
-			session.setAttribute("reuniao", reuniao);
-			session.setAttribute("errorReuniao", this.validator);
-			System.out.println("!ok");
-		}
-		else{
-			//DataAccessObjectManager hibernate = new DataAccessObjectManager();
-			//hibernate.persistirObjeto(this.congregacao);
-			System.out.println("ok");
-		}
+//		this.validator.verificarCamposValidos(reuniao);
+//		this.formularioDeReuniao = new FormularioDeReuniao(reuniao);
+//		if(!this.validator.isFormularioValido()){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("viewReuniao", this.formularioDeReuniao);
+//			session.setAttribute("reuniao", reuniao);
+//			session.setAttribute("errorReuniao", this.validator);
+//			System.out.println("!ok");
+//		}
+//		else{
+//			//DataAccessObjectManager hibernate = new DataAccessObjectManager();
+//			//hibernate.persistirObjeto(this.congregacao);
+//			System.out.println("ok");
+//		}
 	}
 	
 	public void editarReuniao(HttpServletRequest request, Reuniao reuniao){
-		this.validator.verificarCamposValidos(reuniao);
-		this.formularioDeReuniao = new FormularioDeReuniao(reuniao);
-		if(!this.validator.isFormularioValido()){
-			HttpSession session = request.getSession();
-			session.setAttribute("viewReuniao", this.formularioDeReuniao);
-			session.setAttribute("reuniao", reuniao);
-			session.setAttribute("errorReuniao", this.validator.getErrors());
-			System.out.println("!ok");
-		}
-		else{
-			//DataAccessObjectManager hibernate = new DataAccessObjectManager();
-			//hibernate.margeObjeto(this.congregacao);
-			System.out.println("ok");
-		}
+//		this.validator.verificarCamposValidos(reuniao);
+//		this.formularioDeReuniao = new FormularioDeReuniao(reuniao);
+//		if(!this.validator.isFormularioValido()){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("viewReuniao", this.formularioDeReuniao);
+//			session.setAttribute("reuniao", reuniao);
+//			session.setAttribute("errorReuniao", this.validator.getErrors());
+//			System.out.println("!ok");
+//		}
+//		else{
+//			//DataAccessObjectManager hibernate = new DataAccessObjectManager();
+//			//hibernate.margeObjeto(this.congregacao);
+//			System.out.println("ok");
+//		}
 	}
 
 }

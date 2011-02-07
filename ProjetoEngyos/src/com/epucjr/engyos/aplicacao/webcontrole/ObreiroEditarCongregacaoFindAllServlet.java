@@ -28,14 +28,14 @@ public class ObreiroEditarCongregacaoFindAllServlet extends HttpServlet {
 
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view;
-		HttpSession session = request.getSession();
-		
-		this.congregacao = this.buscaAvancada.buscarTodasCongregacoes();
-		session.setAttribute("listaDeCongregacao", this.congregacao);
-		request.setAttribute("listaDeCongregacao", this.congregacao);
-		view = request.getRequestDispatcher("EditarObreiro.jsp");
-		view.forward(request, response);
+//		RequestDispatcher view;
+//		HttpSession session = request.getSession();
+//
+//		this.congregacao = this.buscaAvancada.buscarTodasCongregacoes();
+//		session.setAttribute("listaDeCongregacao", this.congregacao);
+//		request.setAttribute("listaDeCongregacao", this.congregacao);
+//		view = request.getRequestDispatcher("EditarObreiro.jsp");
+//		view.forward(request, response);
 	}
 
 	

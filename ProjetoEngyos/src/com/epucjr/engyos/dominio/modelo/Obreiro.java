@@ -33,7 +33,7 @@ public class Obreiro {
 	@Fields(
 			{@Field(index=Index.TOKENIZED, store=Store.YES),
 			@Field(name="nomeobr_sort",
-			index=Index.UN_TOKENIZED),
+			index=Index.UN_TOKENIZED)
 			})
 	private String nome;
 

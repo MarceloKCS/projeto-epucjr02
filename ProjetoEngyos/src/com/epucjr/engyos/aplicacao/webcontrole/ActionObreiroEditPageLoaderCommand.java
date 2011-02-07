@@ -24,7 +24,7 @@ public class ActionObreiroEditPageLoaderCommand implements Command{
 		//Carregando os dados necessários para a edição de obreiro
 		
 		if(dataAccessObjectManager.isOperacaoEfetuada()){
-			formulario
+			//formulario
 		}
 		
 		

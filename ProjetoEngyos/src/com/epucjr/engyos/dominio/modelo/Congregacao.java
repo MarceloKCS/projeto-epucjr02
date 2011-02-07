@@ -31,7 +31,7 @@ public class Congregacao {
 	@Fields(
 			{@Field(index=Index.TOKENIZED, store=Store.YES),
 			@Field(name="nomecong_sort",
-			index=Index.UN_TOKENIZED),
+			index=Index.UN_TOKENIZED)
 			})
 	private String nome;
 	@Id

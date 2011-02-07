@@ -81,7 +81,7 @@ public class FormularioDeObreiro {
     	}
     }
 	
-	private void carregarDadosDoFormulario(){
+	public void carregarDadosDoFormulario(){
 		
 		//Carregando a lista de Congregações utilizada para cadastro de obreiros
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();		
@@ -89,19 +89,7 @@ public class FormularioDeObreiro {
 		
 		this.setListaDeCongregacoes(listaDeCongregacao);
 		this.setMensagemStatus("Formulario Carregado");
-		/*
-		if (obreiro.getNome() != null && obreiro.getNome().trim().length() != 0){
-			this.definirCampoPreenchido("Nome", obreiro.getNome());
-		}
-		if (this.validadorCpf.valido(obreiro.getCpf())){
-			this.definirCampoPreenchido("Cpf", obreiro.getCpf());
-		}
-		if (obreiro.getCargo() != null && obreiro.getCargo().trim().length() != 0){
-			this.definirCampoPreenchido("Cargo", obreiro.getCargo());
-		}
-		if (obreiro.getCongregacao() != null && obreiro.getCongregacao().trim().length() != 0){
-			this.definirCampoPreenchido("Congregacao", obreiro.getCongregacao());
-		}*/
+		
 	}
 	
 	public void definirCamposPreenchidosPeloUsuario(HttpServletRequest httpServletRequest){

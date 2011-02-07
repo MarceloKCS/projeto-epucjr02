@@ -33,46 +33,46 @@ public class ObreiroEditServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.validator = new ValidadorDeFormularioDeObreiro();
-        
-		String nome = (String)request.getParameter("Nome");
-		String cpf = (String)request.getParameter("Cpf");
-		String cargo = (String)request.getParameter("Cargo");
-		String congregacao = (String)request.getParameter("Congregacao");
-//		String senha = (String)request.getParameter("Senha");
-//		String senhaConfirmacao = (String)request.getParameter("senhaConfirmacao");
-		DataAccessObjectManager daom = new DataAccessObjectManager();
-		this.obreiro = daom.obterObreiro(cpf);
-		this.obreiro.setNome(nome);
-		this.obreiro.setCargo(cargo);
-		this.obreiro.setCongregacao(congregacao);
-		//this.controleDeObreiro.cadastrarObreiro(request, this.obreiro);
-		//request.setAttribute("listaDeCongregacao", session.getAttribute("listaDeCongregacao"));
-		
-		this.validator.verificarCamposValidos(this.obreiro);
-		this.formularioDeObreiro = new FormularioDeObreiro(this.obreiro);
-		
-		BuscaAvancada ba = new BuscaAvancada();
-		List<Congregacao> listc = ba.buscarCongregacao("", "");
-		request.setAttribute("listaCongregacao", listc);
-		
-		if(!this.validator.isFormularioValido()){
-			this.formularioDeObreiro.setStatus("Erro ao Editar");
-			request.setAttribute("viewObreiro", this.formularioDeObreiro);
-			request.setAttribute("errorObreiro", this.validator);
-			RequestDispatcher view = request.getRequestDispatcher("EditarObreiro.jsp");
-			view.forward(request, response);
-		}
-		else{
-			DataAccessObjectManager hibernate = new DataAccessObjectManager();
-			hibernate.mergeDataObjeto(this.obreiro);
-			this.formularioDeObreiro = new FormularioDeObreiro(obreiro);
-			this.formularioDeObreiro.setStatus("Sucesso ao Editar");
-			request.setAttribute("viewObreiro", this.formularioDeObreiro);
-			request.setAttribute("obreiro", this.obreiro);
-			RequestDispatcher view = request.getRequestDispatcher("EditarObreiro.jsp");
-			view.forward(request, response);
-		}
+//		this.validator = new ValidadorDeFormularioDeObreiro();
+//
+//		String nome = (String)request.getParameter("Nome");
+//		String cpf = (String)request.getParameter("Cpf");
+//		String cargo = (String)request.getParameter("Cargo");
+//		String congregacao = (String)request.getParameter("Congregacao");
+////		String senha = (String)request.getParameter("Senha");
+////		String senhaConfirmacao = (String)request.getParameter("senhaConfirmacao");
+//		DataAccessObjectManager daom = new DataAccessObjectManager();
+//		this.obreiro = daom.obterObreiro(cpf);
+//		this.obreiro.setNome(nome);
+//		this.obreiro.setCargo(cargo);
+//		this.obreiro.setCongregacao(congregacao);
+//		//this.controleDeObreiro.cadastrarObreiro(request, this.obreiro);
+//		//request.setAttribute("listaDeCongregacao", session.getAttribute("listaDeCongregacao"));
+//
+//		this.validator.verificarCamposValidos(this.obreiro);
+//		this.formularioDeObreiro = new FormularioDeObreiro(this.obreiro);
+//
+//		BuscaAvancada ba = new BuscaAvancada();
+//		List<Congregacao> listc = ba.buscarCongregacao("", "");
+//		request.setAttribute("listaCongregacao", listc);
+//
+//		if(!this.validator.isFormularioValido()){
+//			this.formularioDeObreiro.setStatus("Erro ao Editar");
+//			request.setAttribute("viewObreiro", this.formularioDeObreiro);
+//			request.setAttribute("errorObreiro", this.validator);
+//			RequestDispatcher view = request.getRequestDispatcher("EditarObreiro.jsp");
+//			view.forward(request, response);
+//		}
+//		else{
+//			DataAccessObjectManager hibernate = new DataAccessObjectManager();
+//			hibernate.mergeDataObjeto(this.obreiro);
+//			this.formularioDeObreiro = new FormularioDeObreiro(obreiro);
+//			this.formularioDeObreiro.setStatus("Sucesso ao Editar");
+//			request.setAttribute("viewObreiro", this.formularioDeObreiro);
+//			request.setAttribute("obreiro", this.obreiro);
+//			RequestDispatcher view = request.getRequestDispatcher("EditarObreiro.jsp");
+//			view.forward(request, response);
+//		}
 	}
 
 }

@@ -59,8 +59,8 @@ public class TesteGrafico {
 	 * @param r
 	 */
 	public void addReuniao(Reuniao r) {
-		dataset0.addReuniao(r);
-		dataset1.addReuniao(r);
+//		dataset0.addReuniao(r);
+//		dataset1.addReuniao(r);
 	}
 	
 	/**
@@ -76,24 +76,24 @@ public class TesteGrafico {
 	}
 	
 	public static void main(String[] args) {
-		//instancia os DataSet
-		TesteGrafico tg = new TesteGrafico();
-		
-		//add as reunioes
-		Reuniao r;
-		String mes;
-		for (int k = 1; k <= 12; k++) {
-			
-			mes = "" + k;
-			if (mes.length() == 1) mes = "0" + mes;
-			r = new Reuniao("14" + mes + "2010","5:40");
-			
-			for (float i = 0; i < Math.random(); i = i + 0.02f) r.addObreiroListaDePresenca(new Obreiro());
-			
-			tg.addReuniao(r);
-		}
-		
-		tg.initComponentsTest();
+//		//instancia os DataSet
+//		TesteGrafico tg = new TesteGrafico();
+//
+//		//add as reunioes
+//		Reuniao r;
+//		String mes;
+//		for (int k = 1; k <= 12; k++) {
+//
+//			mes = "" + k;
+//			if (mes.length() == 1) mes = "0" + mes;
+//			r = new Reuniao("14" + mes + "2010","5:40");
+//
+//			for (float i = 0; i < Math.random(); i = i + 0.02f) r.addObreiroListaDePresenca(new Obreiro());
+//
+//			tg.addReuniao(r);
+//		}
+//
+//		tg.initComponentsTest();
 		
 	}
 }

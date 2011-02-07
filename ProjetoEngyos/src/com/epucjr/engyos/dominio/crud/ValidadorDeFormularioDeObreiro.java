@@ -77,28 +77,8 @@ public class ValidadorDeFormularioDeObreiro {
 			this.setFormularioValido(false);
 		}
 
-		this.verificarSenhaMatchSenhaConfirmacao(senha, senhaConfirmacao);		
-
-		/*		//Verificando validade dos dados de obreiro
-		if (obreiro.getNome() == null || obreiro.getNome().trim().length() == 0){
-			this.definirCampoComErro("Nome", "Nome Obrigatório");
-		}
-		if(!this.validadorCpf.valido(obreiro.getCpf())){
-			this.definirCampoComErro("Cpf", "CPF Inválido");
-		}
-		if (obreiro.getCargo() == null || obreiro.getCargo().trim().length() == 0){
-			this.definirCampoComErro("Cargo", "Cargo Inválido");
-		}
-
-		//Verificando a congregação associada
-		if (obreiro.getCongregacao() == null || obreiro.getCongregacao().trim().length() == 0){
-			this.errors.put("Congregacao", "Congregação Inválida");
-		}
-		else{
-			if((obreiro.getNome() != null && obreiro.getNome().trim().length() != 0) && (obreiro.getCargo() != null && obreiro.getCargo().trim().length() != 0) && (this.validadorCpf.valido(obreiro.getCpf())) && (obreiro.getCongregacao() != null && obreiro.getCongregacao().trim().length() != 0)){
-				this.setFormularioValido(true);
-			}
-		}*/
+		this.verificarSenhaMatchSenhaConfirmacao(senha, senhaConfirmacao);
+		
 	}
 
 	private void verificarSenhaMatchSenhaConfirmacao(String senha, String senhaConfirmacao){

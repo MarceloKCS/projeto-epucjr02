@@ -14,12 +14,12 @@
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ProjetoEngyos" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="nights" />
+			<property name="hibernate.connection.password" value="" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.connection.autocommit" value="false" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.search.default.indexBase" value="/home/notroot/Desktop/ProjetoEngyos"/>
+			<property name="hibernate.search.default.indexBase" value="/home/rogerio/Estudo_Teste/index/ProjetoEngyos"/>
 		</properties>
 	
 	</persistence-unit>

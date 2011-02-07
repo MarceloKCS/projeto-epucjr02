@@ -18,37 +18,37 @@ public class GerenciadorDeCongregacao {
 	}
 	
 	public void cadastrarCongregacao(HttpServletRequest request, Congregacao congregacao){
-		this.validator.verificarCamposValidos(congregacao);
-		this.formularioDeCongregacao = new FormularioDeCongregacao(congregacao);
-		if(!this.validator.isFormularioValido()){
-			HttpSession session = request.getSession();
-			session.setAttribute("viewCongregacao", this.formularioDeCongregacao);
-			session.setAttribute("congregacao", congregacao);
-			session.setAttribute("errorCongregacao", this.validator);
-			System.out.println("!ok");
-		}
-		else{
-			DataAccessObjectManager hibernate = new DataAccessObjectManager();
-			hibernate.persistirObjeto(congregacao);
-			System.out.println("ok");
-		}
+//		this.validator.verificarCamposValidos(congregacao);
+//		this.formularioDeCongregacao = new FormularioDeCongregacao(congregacao);
+//		if(!this.validator.isFormularioValido()){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("viewCongregacao", this.formularioDeCongregacao);
+//			session.setAttribute("congregacao", congregacao);
+//			session.setAttribute("errorCongregacao", this.validator);
+//			System.out.println("!ok");
+//		}
+//		else{
+//			DataAccessObjectManager hibernate = new DataAccessObjectManager();
+//			hibernate.persistirObjeto(congregacao);
+//			System.out.println("ok");
+//		}
 	}
 	
 	public void editarCongregacao(HttpServletRequest request, Congregacao congregacao){
-		this.validator.verificarCamposValidos(congregacao);
-		this.formularioDeCongregacao = new FormularioDeCongregacao(congregacao);
-		if(!this.validator.isFormularioValido()){
-			HttpSession session = request.getSession();
-			session.setAttribute("viewCongregacao", this.formularioDeCongregacao);
-			session.setAttribute("congregacao", congregacao);
-			session.setAttribute("errorCongregacao", this.validator.getErrors());
-			System.out.println("!ok");
-		}
-		else{
-			DataAccessObjectManager hibernate = new DataAccessObjectManager();
-			hibernate.persistirObjeto(congregacao);
-			System.out.println("ok");
-		}
+//		this.validator.verificarCamposValidos(congregacao);
+//		this.formularioDeCongregacao = new FormularioDeCongregacao(congregacao);
+//		if(!this.validator.isFormularioValido()){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("viewCongregacao", this.formularioDeCongregacao);
+//			session.setAttribute("congregacao", congregacao);
+//			session.setAttribute("errorCongregacao", this.validator.getErrors());
+//			System.out.println("!ok");
+//		}
+//		else{
+//			DataAccessObjectManager hibernate = new DataAccessObjectManager();
+//			hibernate.persistirObjeto(congregacao);
+//			System.out.println("ok");
+//		}
 	}
 	
 }

@@ -38,7 +38,7 @@ public class Reuniao {
 	@Fields(
 			{@Field(index=Index.TOKENIZED, store=Store.YES),
 			@Field(name="datareun_sort",
-			index=Index.UN_TOKENIZED),
+			index=Index.UN_TOKENIZED)
 			})
 	private String data;
 	

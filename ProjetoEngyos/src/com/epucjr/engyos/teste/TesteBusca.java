@@ -13,12 +13,12 @@ public class TesteBusca {
 	public static void main(String[] args) {
 		BuscaAvancada ba = new BuscaAvancada();
 
-		ArrayList<Obreiro> buscaObreiro;
-		ArrayList<Congregacao> buscaCongregacao;
-		ArrayList<Reuniao>buscaReuniao;
-		List<Congregacao> listarCongregacao;
+//		ArrayList<Obreiro> buscaObreiro;
+//		ArrayList<Congregacao> buscaCongregacao;
+//		ArrayList<Reuniao>buscaReuniao;
+//		List<Congregacao> listarCongregacao;
 
-		buscaObreiro = new ArrayList<Obreiro>(ba.buscarObreiros("", "", "", ""));
+		//buscaObreiro = new ArrayList<Obreiro>(ba.buscarObreiros("", "", "", ""));
 		//buscaCongregacao = new ArrayList<Congregacao>(ba.buscarCongregacao("Cotia" , ""));
 		//buscaReuniao = new ArrayList<Reuniao>(ba.buscarReuniao("", "", ""));
 
@@ -47,7 +47,7 @@ public class TesteBusca {
 		 *  
 		 ******************************************************************************/
 		
-		for(Obreiro obreiro : buscaObreiro){System.out.println("obreiro de nome:" + obreiro.getNome());}
+		//for(Obreiro obreiro : buscaObreiro){System.out.println("obreiro de nome:" + obreiro.getNome());}
 		
 		//for(Congregacao congregacao : buscaCongregacao){System.out.println("Nome da congregacao:" + congregacao.getNome());}
 		

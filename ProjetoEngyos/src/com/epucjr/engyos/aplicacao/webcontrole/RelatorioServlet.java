@@ -42,27 +42,27 @@ public class RelatorioServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ano = request.getParameter("ano");
-		
-		//TODO
-		List<Reuniao> listaReuniao = busca.buscarReuniao("0000"+ano, "", "");
-		//(intervalo)
-		
-		//TODO
-		int modo = 0;
-		DataSet dataset = new DataSet(modo);
-		//modo 0 ou 1 (ver teste)
-		
-		for (Reuniao r: listaReuniao) {
-			dataset.addReuniao(r);
-		}
-		
-		BufferedImage bi = Grafico.gerarGrafico3D(null, "Gráfico "+ano, "", "", 800, 600, 800, 600, dataset.getDcd(), 0.75f, null, modo);
-		
-		//TODO
-		Relatorio relatorio = new Relatorio();
-		relatorio.geraRelatorioPDF(bi);
-		//n implementado
+//		String ano = request.getParameter("ano");
+//
+//		//TODO
+//		List<Reuniao> listaReuniao = busca.buscarReuniao("0000"+ano, "", "");
+//		//(intervalo)
+//
+//		//TODO
+//		int modo = 0;
+//		DataSet dataset = new DataSet(modo);
+//		//modo 0 ou 1 (ver teste)
+//
+//		for (Reuniao r: listaReuniao) {
+//			dataset.addReuniao(r);
+//		}
+//
+//		BufferedImage bi = Grafico.gerarGrafico3D(null, "Gráfico "+ano, "", "", 800, 600, 800, 600, dataset.getDcd(), 0.75f, null, modo);
+//
+//		//TODO
+//		Relatorio relatorio = new Relatorio();
+//		relatorio.geraRelatorioPDF(bi);
+//		//n implementado
 	}
 
 }

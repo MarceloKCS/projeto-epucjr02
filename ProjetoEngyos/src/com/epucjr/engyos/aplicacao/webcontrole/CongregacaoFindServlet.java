@@ -38,24 +38,24 @@ public class CongregacaoFindServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view;
-		
-		this.nomeBusca = (String)request.getParameter("Nome");
-		this.congregacao = new ArrayList<Congregacao>(this.buscaAvancada.buscarCongregacao(this.nomeBusca, ""));
-		this.paginacaoDeBusca.paginarBusca(this.congregacao);
-		this.paginacaoDeBusca.setTipoDeBusca("congregacao");
-		
-		if (paginacaoDeBusca.getPaginaTotal() == 0) {
-			this.buscarCongregacao = new FormularioDeBuscaDaCongregacao(new ArrayList<Congregacao>(0), paginacaoDeBusca.getPaginaTotal());
-		} else this.buscarCongregacao = new FormularioDeBuscaDaCongregacao(this.paginacaoDeBusca.getPaginaListaPaginaBusca().get(0), paginacaoDeBusca.getPaginaTotal());
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("resultadoDaBusca", this.paginacaoDeBusca);
-		session.setAttribute("buscarCongregacao", this.buscarCongregacao);
-		
-		request.setAttribute("resultadoDaBusca", this.buscarCongregacao);
-		
-		view = request.getRequestDispatcher("BuscarCongregacao.jsp");
-		view.forward(request, response);
+//		RequestDispatcher view;
+//
+//		this.nomeBusca = (String)request.getParameter("Nome");
+//		this.congregacao = new ArrayList<Congregacao>(this.buscaAvancada.buscarCongregacao(this.nomeBusca, ""));
+//		this.paginacaoDeBusca.paginarBusca(this.congregacao);
+//		this.paginacaoDeBusca.setTipoDeBusca("congregacao");
+//
+//		if (paginacaoDeBusca.getPaginaTotal() == 0) {
+//			this.buscarCongregacao = new FormularioDeBuscaDaCongregacao(new ArrayList<Congregacao>(0), paginacaoDeBusca.getPaginaTotal());
+//		} else this.buscarCongregacao = new FormularioDeBuscaDaCongregacao(this.paginacaoDeBusca.getPaginaListaPaginaBusca().get(0), paginacaoDeBusca.getPaginaTotal());
+//
+//		HttpSession session = request.getSession();
+//		session.setAttribute("resultadoDaBusca", this.paginacaoDeBusca);
+//		session.setAttribute("buscarCongregacao", this.buscarCongregacao);
+//
+//		request.setAttribute("resultadoDaBusca", this.buscarCongregacao);
+//
+//		view = request.getRequestDispatcher("BuscarCongregacao.jsp");
+//		view.forward(request, response);
 	}
 }
