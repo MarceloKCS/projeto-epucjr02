@@ -1,0 +1,395 @@
+@CHARSET "ISO-8859-1";
+
+/* CSS Reset */
+/* v1.0 | 20080212 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* Fim CSS Reset */
+
+
+body {
+	background: url("imagens/background_gradient.png") repeat-x top #F4F4F4;
+	font-family: "Trebuchet MS", Arial, Verdana;
+	margin-bottom: 40px;
+}
+	
+div#all {
+	margin: 0 auto;
+	width: 780px;
+}
+
+
+
+/* Div Topo */
+div#topo {
+	height: 120px;
+	margin-top: 30px;
+}
+	div#topo div#logo {
+		float: left;
+		height: 100%;
+		width: 340px;
+	}
+	div#topo div#btn_topo {
+		float: right;
+		height: 100%;
+		margin-right: 20px;
+		text-align: right;
+		width: 230px;
+	}
+		
+		div#topo div#btn_topo p.usuarioLogado {
+			color: #666666;
+			font-size: 16px;
+			font-weight: bold;
+			margin-bottom: 12px;
+		}
+		div#topo div#btn_topo p.usuarioLogado img {
+			margin-right: 18px;
+		}
+		div#topo div#btn_topo a {
+			color: #AAAAAA;
+			font-size: 12px;
+			font-weight: bold;
+			letter-spacing: 0.5px;
+			line-heigh: 16px;
+			text-decoration: none;
+		}
+		div#topo div#btn_topo a:hover {
+			color: #666666;
+		}
+
+
+/* Div Menu */
+div#menu {
+	height: 140px;
+}	
+	div#menu ul#menu_principal {
+		height: 140px;
+	}
+		div#menu ul#menu_principal li {
+			display: inline;
+			height: 120px;
+		}
+		div#menu ul#menu_principal li a {
+			color: #777;
+			display: block;
+			font-size: 22px;
+			font-weight: bold;
+			font-style: italic;
+			float: left;
+			height: 112px;
+			width: 150px;
+			text-decoration: none;
+			text-shadow: 0px 0px 3px #BBBBBB;
+		}
+		div#menu ul#menu_principal li a:hover {
+			color: #333;
+		}
+		div#menu ul#menu_principal li a:active {
+			color: #555;
+			text-shadow: 0px 0px 7px #999999;
+		}
+		
+		div#menu ul#menu_principal li a span {
+			display: block;
+			margin-top: 110px;
+			margin-left: 30px;
+			
+		}
+		
+		/* menu - obreiros */
+		div#menu ul#menu_principal li.obreiros a {
+			background: url("imagens/obreiro_icon.png") no-repeat 0 -114px;
+			margin-left: 15px;
+			margin-right: 25px;
+		}
+		div#menu ul#menu_principal li.obreiros a:hover {
+			background-position: 0 -5px;
+		}
+		div#menu ul#menu_principal li.obreiros a span {
+			margin-left: 5px;
+		}
+		
+		/* menu - congregações */
+		div#menu ul#menu_principal li.congregacoes a {
+			background: url("imagens/congregacao_icon.png") no-repeat 0 -114px;
+			margin-right: 50px;
+		}
+		div#menu ul#menu_principal li.congregacoes a:hover {
+			background-position: 0 -5px;
+		}
+		div#menu ul#menu_principal li.congregacoes a span {
+			margin-left: 5px;
+		}
+		
+		/* menu - reuniões */
+		div#menu ul#menu_principal li.reunioes a {
+			background: url("imagens/reuniao_icon.png") no-repeat 0 -114px;
+			margin-right: 50px;
+		}
+		div#menu ul#menu_principal li.reunioes a:hover {
+			background-position: 0 -5px;
+		}
+		div#menu ul#menu_principal li.reunioes a span {
+			margin-left: 25px;
+		}
+		
+		/* menu - buscar */
+		div#menu ul#menu_principal li.buscar a {
+			background: url("imagens/buscar_icon.png") no-repeat 0 -114px;
+		}
+		div#menu ul#menu_principal li.buscar a:hover {
+			background-position: 0 -5px;
+		}
+		div#menu ul#menu_principal li.buscar a span {
+			margin-left: 44px;
+		}
+
+/* *** CSS Signature */
+
+body#principal div#topo div#logo img {
+	box-shadow: 0 0 10px #777;
+	-moz-box-shadow: 0 0 10px #777;
+	-webkit-box-shadow: 0 0 10px #777;
+}
+
+body#obreiros ul#menu_principal li.obreiros a {
+	background-position: 0 -5px;
+	color: #333333;
+}
+body#congregacoes ul#menu_principal li.congregacoes a {
+	background-position: 0 -5px;
+	color: #333333;
+}
+body#reunioes ul#menu_principal li.reunioes a {
+	background-position: 0 -5px;
+	color: #333333;
+}
+body#buscar ul#menu_principal li.buscar a {
+	background-position: 0 -5px;
+	color: #333333;
+}
+/* *** Fim CSS Signature */
+
+
+/* div contúdo */
+div#conteudo {
+	margin-top: 32px;
+	margin-bottom: 20px;
+}
+	div#conteudo div#colunaE, div#conteudo div#colunaD {
+		float: left;
+		height: 300px;
+		width: 360px;
+	}
+	
+	div#conteudo div#colunaD {
+		text-align: right;
+	}
+	
+	div#conteudo div#colunaD h2.h2_subtitulo {
+		color: #333;
+		font-size: 20px;
+		font-style: italic;
+	}
+	div#conteudo div#colunaD h2.proximasReunioes {
+		margin-right: 30px;
+	}
+	
+/* Div Rodapé */
+div#rodape {
+	clear: both;
+}
+	div#rodape p {
+		color: #999999;
+		text-align: center;
+	}
+	
+	
+/* TAB Menu - #tabmenu */
+ul#tabmenu {
+	display: block;
+	height: 40px;
+	width: 490px;
+}
+	ul#tabmenu li, li.tab_on {
+		background: #EEE;
+		border: 2px solid #CCC;
+		border-bottom: 2px solid #EEE;
+		display: block;
+		height: 40px;
+		float: left;
+		line-height: 40px;
+		margin-left: 5px;
+		text-align: center;
+		width: 140px;
+	}
+		ul#tabmenu li a, li.tab_on a {
+			color: #AAA;
+			font-weight: bold;
+			text-decoration: none;
+		}
+		ul#tabmenu li a:hover {
+			color: #333;
+		}
+		
+		ul#tabmenu li a, li.tab_off a {
+			color: #AAA;
+			font-weight: bold;
+			text-decoration: none;
+		}
+		
+	ul#tabmenu li.tab_off {
+		background-color: #CCC;
+	}
+	ul#tabmenu li.tab_off:hover {
+		background: #EEE;
+	}
+		ul#tabmenu li.tab_off:hover a {
+			color: #333;
+		}
+		ul#tabmenu li.tab_off a {
+			color: #999;
+		}
+/* Tab menu - Conteudo */	
+	
+div#conteudo_tabmenu {
+	background: #EEE;
+	border-top: 2px solid #CCC;
+	display: block;
+	height: auto;
+	padding: 6px;
+	width: 600px;
+}
+	div#conteudo_tabmenu form p {
+		margin-bottom: 10px;
+	}
+		div#conteudo_tabmenu form p label {
+			display: block;
+			padding: 5px;
+			width: 300px;
+		}
+		
+		div#conteudo_tabmenu form p input {
+			width: 360px;
+		}
+		
+		div#conteudo_tabmenu form p span.erroCampoFormulario {
+			background: transparent;
+			color: #DF0000;
+			font-size: 12px;
+		}
+		
+	div#mensagemRetorno {
+		background: #FFFFFF;
+		border: 1px solid #EF1D39;
+		display: none;
+		font-size: 12px;
+		padding: 7px;
+		width: 300px;
+		
+	}
+	
+	div#buscarCongregacoes, div#buscarReunioes, div#buscarObreiros {
+		margin-top: 20px;
+	}
+/* Fim #tabmenu */
+
+/* Tabela - resultados da busca */
+
+	table#resultadoBusca {
+		font-size: 12px;
+		width: 605px;
+	}
+		table#resultadoBusca tr.zebra1 {
+			background-color: #FEFEFE;
+		}
+			table#resultadoBusca th {
+				line-height: 30px;
+				text-align: left;
+			}
+			table#resultadoBusca td {
+				line-height: 15px;				
+			}
+
+
+	p.paginacao {
+		line-height: 15px;
+	}
+	p.paginacao a {
+		color: #555555;
+		text-decoration: underline;
+	}
+	p.paginacao a:hover {
+		font-weight: bold;
+		text-decoration: none;
+	}
+/* fim Tabela Resultados*/
+
+/*Paginação*/
+
+#paginacaoPaginas{
+	width:800px;
+	margin: 0 0 0 30px;
+}
+
+.pagina:hover{
+	text-decoration: underline;
+	color: #BEBEBE;
+}
+
+.paginaAtual {
+	font: 16px Calibri, Arial, Times, serif;
+	color: #000000;
+	font-weight: bold;
+	text-decoration: underline;
+}
