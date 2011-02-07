@@ -9,7 +9,7 @@ public class DataSet {
 	
 	private DefaultCategoryDataset dcd;
 	private int modo; //modo, 0 sem legenda com uma cor, 1 com legenda multicores
-	private static final String[] mes = {"Janeiro", "Fevereiro", "Mar"+(char)0x00e7+"o", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outobro", "Novembro", "Dezembro"};
+	public static final String[] mes = {"Janeiro", "Fevereiro", "Mar"+(char)0x00e7+"o", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outobro", "Novembro", "Dezembro"};
 	
 	public DataSet(int modo) {
 		dcd = new DefaultCategoryDataset();
@@ -48,6 +48,14 @@ public class DataSet {
 
 	protected void setDcd(DefaultCategoryDataset dcd) {
 		this.dcd = dcd;
+	}
+	
+	public void addValor(int mesIndex, Number valor) {
+		if (modo == 1) {
+			dcd.addValue(valor, DataSet.mes[mesIndex], "");
+		} else if (modo == 0) {
+			dcd.addValue(valor, "", DataSet.mes[mesIndex]);
+		}
 	}
 
 }
