@@ -60,7 +60,9 @@ public class ActionCongregacaoRegisterCommand implements Command{
 		String respostaOperacao = formularioDeCongregacao.getMensagemStatus();
 		request.setAttribute("formularioDeCongregacao", formularioDeCongregacao);
 		
+		System.out.println("Resposta = " + respostaOperacao);
 		return respostaOperacao;
+		
 	}
 	
 }
