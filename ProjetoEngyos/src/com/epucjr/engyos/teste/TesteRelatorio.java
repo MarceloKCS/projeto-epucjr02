@@ -23,8 +23,8 @@ public class TesteRelatorio {
         
         public TesteRelatorio() {
                 super();
-                dataset0 = new DataSet(0);
-                dataset1 = new DataSet(1);
+                dataset0 = new DataSet(0, DataSet.DATASET_MES);
+                dataset1 = new DataSet(1, DataSet.DATASET_MES);
         }
         
         /**
@@ -91,8 +91,8 @@ public class TesteRelatorio {
          * @return
          */
         public BufferedImage gerarGrafico3D(int modo, Color cor) {
-                if (modo == 0) return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês", "presença", 800, 500, 800, 500, dataset0.getDcd(), 0.75f, cor, modo);
-                if (modo == 1) return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês", "presença", 800, 500, 800, 500, dataset1.getDcd(), 0.75f, null, modo);
+                if (modo == 0) return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês", "presença", 800, 500, 800, 500, dataset0.getDcd(), 0.75f, cor, modo, true);
+                if (modo == 1) return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês", "presença", 800, 500, 800, 500, dataset1.getDcd(), 0.75f, null, modo, true);
                 return null;
         }
         
