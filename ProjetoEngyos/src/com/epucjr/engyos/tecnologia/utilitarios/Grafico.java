@@ -39,12 +39,13 @@ public class Grafico {
 	 * @param alpha, Transparencia das barras(0.75f default)
 	 * @param cor, Cor para grafico modo 0(null default = RED)
 	 * @param modo, 0 sem legenda com uma cor, 1 com legenda multicores
+	 * @param inteiro, valor inteiro
 	 * @return BufferedImage
 	 */
-	public static BufferedImage gerarGrafico3D(Font titleFont, String titulo, String textox, String textoy,int width, int height, int scaledWidth, int scaledHeight, DefaultCategoryDataset dataset, float alpha, Color cor, int modo) {
+	public static BufferedImage gerarGrafico3D(Font titleFont, String titulo, String textox, String textoy,int width, int height, int scaledWidth, int scaledHeight, DefaultCategoryDataset dataset, float alpha, Color cor, int modo, boolean inteiro) {
 		CategoryAxis categoryAxis = new CategoryAxis3D(textox);
 		ValueAxis valueAxis = new NumberAxis3D(textoy);
-		valueAxis.setStandardTickUnits(NumberAxis3D.createIntegerTickUnits());
+		if (inteiro) valueAxis.setStandardTickUnits(NumberAxis3D.createIntegerTickUnits());
 
 		BarRenderer3D renderer = new BarRenderer3D();
 
@@ -97,12 +98,13 @@ public class Grafico {
 	 * @param alpha, Transparencia das barras(0.75f default)
 	 * @param cor, Cor para grafico modo 0(null default = RED)
 	 * @param modo, 0 sem legenda com uma cor, 1 com legenda multicores
+	 * @param inteiro, valor inteiro
 	 * @return BufferedImage
 	 */
-	public static BufferedImage gerarGrafico2D(Font titleFont, String titulo, String textox, String textoy,int width, int height, int scaledWidth, int scaledHeight, DefaultCategoryDataset dataset, float alpha, Color cor, int modo) {
+	public static BufferedImage gerarGrafico2D(Font titleFont, String titulo, String textox, String textoy,int width, int height, int scaledWidth, int scaledHeight, DefaultCategoryDataset dataset, float alpha, Color cor, int modo, boolean inteiro) {
 		CategoryAxis categoryAxis = new CategoryAxis(textox);
 		ValueAxis valueAxis = new NumberAxis(textoy);
-		valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		if (inteiro) valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
 		BarRenderer renderer = new BarRenderer();
 
