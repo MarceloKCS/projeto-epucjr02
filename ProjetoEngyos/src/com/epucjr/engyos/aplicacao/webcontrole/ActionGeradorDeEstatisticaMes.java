@@ -15,7 +15,7 @@ import com.epucjr.engyos.tecnologia.utilitarios.DataSet;
 import com.epucjr.engyos.tecnologia.utilitarios.GeradorPDF;
 import com.epucjr.engyos.tecnologia.utilitarios.Grafico;
 
-public class ActionGeradorDeEstatistica implements Command {
+public class ActionGeradorDeEstatisticaMes implements Command {
 
 	/**
 	 * 0-request
@@ -42,7 +42,7 @@ public class ActionGeradorDeEstatistica implements Command {
 		
 		
 		//cria o dataset
-		DataSet dataSet = new DataSet(modo);
+		DataSet dataSet = new DataSet(modo, DataSet.DATASET_MES);
 		
 		//insere os dados do bd no dataset
 		for (long id: listaReuniao) {
@@ -55,8 +55,8 @@ public class ActionGeradorDeEstatistica implements Command {
 		
 		//cria o grafico
 		BufferedImage bi = null;
-		if (modo == 0) bi = Grafico.gerarGrafico3D(null, "Presença "+ano, "Mês", "Presença", 800, 500, 800, 500, dataSet.getDcd(), 0.75f, cor, modo);
-		if (modo == 1) bi = Grafico.gerarGrafico3D(null, "Presença "+ano, "Mês", "Presença", 800, 500, 800, 500, dataSet.getDcd(), 0.75f, null, modo);
+		if (modo == 0) bi = Grafico.gerarGrafico3D(null, "Presença "+ano, "Mês", "Presença", 800, 500, 800, 500, dataSet.getDcd(), 0.75f, cor, modo, true);
+		if (modo == 1) bi = Grafico.gerarGrafico3D(null, "Presença "+ano, "Mês", "Presença", 800, 500, 800, 500, dataSet.getDcd(), 0.75f, null, modo, true);
 		
 		//gera o pdf
 		try {
