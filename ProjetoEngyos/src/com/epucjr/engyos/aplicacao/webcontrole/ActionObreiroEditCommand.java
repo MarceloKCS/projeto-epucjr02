@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.epucjr.engyos.aplicacao.webcontrole;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
@@ -14,11 +10,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ *Classe que tem como finalidade executar a ação que cumpra a promessa de editar um obreiro 
+ * cadastrado no sistema
  *
- * @author Rogerio
+ * @author Projeto Engyos Team
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public class ActionObreiroEditCommand implements Command {
 
+    /**
+     * Método que executa a requisição de ediç~ão do formulário de obreiro
+     *
+     * @param arg O <code>HttpServletRequest</code> e o <code>HttpServletResponse</code>
+     * @return o Objeto com o resultado da acao requisitada, utilizada pela view
+     *factory no <code>FrontControllerServlet</code>
+     *
+     * @see FrontControlerServlet#servico(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse
+     * @see CommandFactory
+     * @see ViewFactory
+     * @see Obreiro
+     * @see ValidadorDeFormularioDeObreiro
+     * @see Identificacao
+     * @see DataAccessObjectManager
+     * @see FormularioDeObreiro
+     */
     @Override
     public Object execute(Object... arg) {
         //Instanciação de objetos e variáveis necessários para a realização do cadastro
@@ -56,10 +74,9 @@ public class ActionObreiroEditCommand implements Command {
             digitalLida = (String) session.getAttribute("DigitalObtida");
         }
 
-        if(cpf.equals("88436038339")){
+        if (cpf.equals("88436038339")) {
             System.out.println("igual");
-        }
-        else{
+        } else {
             System.out.println("tem coisa ai");
             System.out.println("cpf =" + cpf + "___");
         }
@@ -80,7 +97,7 @@ public class ActionObreiroEditCommand implements Command {
         //Não adequado definir mensagens de retorno aqui, mas...
         if (!senha.equals("") && !senha.equals(obreiro.getIdentificacao().getSenha())) {
             obreiro.getIdentificacao().setSenha(senha);
-             msgSenha = "Senha Alterada";
+            msgSenha = "Senha Alterada";
         } else {
             senha = obreiro.getIdentificacao().getSenha();
             senhaConfirmacao = obreiro.getIdentificacao().getSenha();
@@ -90,10 +107,10 @@ public class ActionObreiroEditCommand implements Command {
         //Não adequado definir mensagens de retorno aqui, mas...
         if (digitalLida != null && !digitalLida.equals("")) {
             obreiro.getIdentificacao().setImpressaoDigital(digitalLida);
-             msgDigital = "Digital Alterada";
+            msgDigital = "Digital Alterada";
         } else {
             digitalLida = obreiro.getIdentificacao().getImpressaoDigital();
-             msgDigital = "Digital Não Alterada";
+            msgDigital = "Digital Não Alterada";
         }
 
         if (idCongregacao != 0 && idCongregacao != obreiro.getCongregacao().getIdCongregacao()) {
@@ -110,7 +127,7 @@ public class ActionObreiroEditCommand implements Command {
 
             //Identificacao identificacao = new Identificacao(impressaoDigital, senha);
             //TODO para teste, aós o recebimento dos parâmetros da página alterar  
-           
+
             dataAccessObjectManager.mergeDataObjeto(obreiro);
 
             //Realização de passos para caso de sucesso ou fracasso por ocorrência de um erro interno
@@ -119,7 +136,7 @@ public class ActionObreiroEditCommand implements Command {
                 //Instanciação e Carregar dados do obreiro registrado para apresentação
                 formularioDeObreiro = new FormularioDeObreiro();
                 formularioDeObreiro.definirDadosDeConfirmacaoDeEdicaoObreiro(dataAccessObjectManager.getMensagemStatus(), nome, cpf, cargo, congregacao, msgSenha, msgDigital);
-         
+
                 //Define mensagem de sucesso ao cadastrar
                 formularioDeObreiro.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
 
