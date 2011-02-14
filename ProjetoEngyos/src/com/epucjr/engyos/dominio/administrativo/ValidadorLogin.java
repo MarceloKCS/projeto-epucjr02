@@ -1,4 +1,4 @@
-package com.epucjr.engyos.dominio.crud;
+package com.epucjr.engyos.dominio.administrativo;
 
 
 public class ValidadorLogin {

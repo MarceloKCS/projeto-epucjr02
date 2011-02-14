@@ -11,8 +11,36 @@ import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeObreiro;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
+/**
+ *Classe que executa a acao solicitada de realizar o cadastro de um obreiro a 
+ * partir dos dados necessários fornecidos no formulário de cadastro
+ * 
+ * @author Projeto Engyos Team
+ *
+ * @version 1.1
+ *
+ * @since 1.0
+ */
+
 public class ActionObreiroRegisterCommand implements Command{
-	
+
+    /**
+     * Método que executa a requisição de cadastro de oberiro no banco de dados
+     *
+     * @param arg O <code>HttpServletRequest</code> e o <code>HttpServletResponse</code>     *
+     *
+     * @return o Objeto com o resultado da acao requisitada, utilizada pela view
+     *factory no <code>FrontControllerServlet</code>
+     *
+     * @see FrontControlerServlet#servico(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse
+     * @see CommandFactory
+     * @see ViewFactory
+     * @see Obreiro
+     * @see ValidadorDeFormularioDeObreiro
+     * @see Identificacao
+     * @see DataAccessObjectManager
+     * @see FormularioDeObreiro
+     */
 	public Object execute(Object... arg) {
 		
 		//Instanciação de objetos e variáveis necessários para a realização do cadastro
@@ -30,7 +58,7 @@ public class ActionObreiroRegisterCommand implements Command{
 		String senhaConfirmacao = request.getParameter("SenhaConfirmacao");
 			
 		long idCongregacao = 0;
-		if(idCongregacaoEscolhido != null && idCongregacaoEscolhido != ""){
+		if(idCongregacaoEscolhido != null && !idCongregacaoEscolhido.equals("")){
 			idCongregacao = Long.parseLong(idCongregacaoEscolhido);
 		}
 		
@@ -74,6 +102,9 @@ public class ActionObreiroRegisterCommand implements Command{
 				
 				//Define mensagem de sucesso ao cadastrar
 				formularioDeObreiro.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+
+                                //Encerra o atributo na session para digital
+                                session.removeAttribute("DigitalObtida");
 				
 			}
 			//Ocorreu um erro de cadastro

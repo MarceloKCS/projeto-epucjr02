@@ -120,7 +120,7 @@ public class DataAccessObjectManager {
 				entityManager.merge(objeto);		
 				transaction.commit();
 				this.setOperacaoEfetuada(true);
-				this.setMensagemStatus("Item Inserido");		
+				this.setMensagemStatus("Operação Realizada com Sucesso!");
 			}catch(Exception e){
 				e.printStackTrace();
 				this.setOperacaoEfetuada(false);

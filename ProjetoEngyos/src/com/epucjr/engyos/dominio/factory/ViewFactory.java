@@ -55,6 +55,13 @@ public class ViewFactory {
 		this.adicionaView("buscar_reuniao", "Busca Realizada", "BuscarReuniao.jsp");
 		this.adicionaView("buscar_reuniao", "Não existem registros no banco de dados", "BuscarReuniao.jsp");
 		
+                this.adicionaView("obreiro_editformload", "Formulario Carregado", "EditarObreiro.jsp");
+
+                this.adicionaView("obreiro_editer", "Erro ao Editar", "EditarObreiro.jsp");
+                this.adicionaView("obreiro_editer", "Operação Realizada com Sucesso!", "EditarObreiro.jsp");
+		this.adicionaView("obreiro_editer", "Erro interno na operação", "EditarObreiro.jsp");
+
+
 		this.adicionaView("ActionLogin", "Sucesso Login", "Principal.jsp");
 		this.adicionaView("ActionLogin", "Erro Login", "TelaLogin.jsp");
 		
