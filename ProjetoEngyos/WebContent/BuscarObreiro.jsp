@@ -63,7 +63,7 @@
 						<td>|<% out.println(obreiro.getCargo()); %></td>
 						<td>|<% out.println(obreiro.getCongregacao().getNome()); %></td>
 						<!-- <td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a> | <a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td> -->
-						<td><a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
+                                                <td><a href="Controller?acao=obreiro_editformload&cpfObreiro=<% out.print(obreiro.getCpf()); %>"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
 						<td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a></td>
 					</tr>
 				<% 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.dominio.crud.BuscaAvancada;
-import com.epucjr.engyos.dominio.crud.ValidadorLogin;
+import com.epucjr.engyos.dominio.administrativo.ValidadorLogin;
 
 /**
  * Servlet implementation class LoginServlet

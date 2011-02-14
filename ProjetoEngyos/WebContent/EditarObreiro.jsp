@@ -77,27 +77,29 @@
 							out.println("Nome: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_nome") + "<br />");
 							out.println("Cargo: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cargo") + "<br />");
 							out.println("CPF: "+ formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cpf") + "<br />");
-							out.println("Congregação: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_congregacao"));
-						}
+							out.println("Congregação: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_congregacao") + "<br />");
+                                                        out.println("Condição Senha: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_senha") + "<br />");
+                                                        out.println("Condição Impressão Digital: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_digital"));
+						}                                               
 					}
 				%>
 			</div>
 	
 	
-		<form name="formularioObreiro" method="post" action="Controller?acao=obreiro_edit" id="formularioObreiro">
+		<form name="formularioObreiro" method="post" action="Controller" id="formularioObreiro">
 			<p>
 				<label for="Nome">Nome: </label>
 				<input type="text" name="Nome" value="
 				<%if (formularioDeObreiro != null
 					&& formularioDeObreiro.verificarCampoPreenchido("Nome")) {
-				out.println(formularioDeObreiro.obterCampoPreenchido("Nome"));
+				out.print(formularioDeObreiro.obterCampoPreenchido("Nome"));
 			}%>
 				" id="Nome" />
 				<span class="erroCampoFormulario">
 					<%
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("Nome")) {
-							out.println(validadorDeObreiro.obterCampoComErro("Nome"));
+							out.print(validadorDeObreiro.obterCampoComErro("Nome"));
 						}
 					%>
 				</span>
@@ -107,32 +109,36 @@
 				<input type="text" name="Cargo" value="
 				<%if (formularioDeObreiro != null
 					&& formularioDeObreiro.verificarCampoPreenchido("Cargo")) {
-				out.println(formularioDeObreiro.obterCampoPreenchido("Cargo"));
+				out.print(formularioDeObreiro.obterCampoPreenchido("Cargo"));
 			}%>
 				"id="Cargo" />
 				<span class="erroCampoFormulario">
 					<%
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("Cargo")) {
-							out.println(validadorDeObreiro.obterCampoComErro("Cargo"));
+							out.print(validadorDeObreiro.obterCampoComErro("Cargo"));
 						}
 					%>
 				</span>
 			</p>
 			<p>
 				<label for="Cpf">CPF: </label>
-				<input type="text" name="Cpf" maxlength="11" value="
+				<input type="text" name="CpfVisual" maxlength="11" disabled="disabled" readonly value="
 				<%if (formularioDeObreiro != null
 					&& formularioDeObreiro.verificarCampoPreenchido("Cpf")) {
-				out.println(formularioDeObreiro.obterCampoPreenchido("Cpf"));
+				out.print(formularioDeObreiro.obterCampoPreenchido("Cpf"));
 			}%>
-				" id="Cpf" onfocus="mostrarTooltip('toolTip_cpf', 'Somente números.');" onblur="mostrarTooltip('toolTip_cpf', '');" />
+                        " id="Cpf" />
+                                <input type="hidden" name="Cpf" value="<%if (formularioDeObreiro != null && formularioDeObreiro.verificarCampoPreenchido("Cpf")){ out.print(formularioDeObreiro.obterCampoPreenchido("Cpf")); }%>">
+                                
+                                <!-- onfocus="mostrarTooltip('toolTip_cpf', 'Somente números.');" onblur="mostrarTooltip('toolTip_cpf', '');"/> -->
+                                
 				<span class="erroCampoFormulario">
 				<span id="toolTip_cpf"></span>
 				<%
 					if (validadorDeObreiro != null
 							&& validadorDeObreiro.verificarCampoComErro("Cpf")) {
-						out.println(validadorDeObreiro.obterCampoComErro("Cpf"));
+						out.print(validadorDeObreiro.obterCampoComErro("Cpf"));
 					}
 				%>
 				</span>
@@ -146,7 +152,7 @@
 					<% 
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("Senha")) {
-							out.println(validadorDeObreiro.obterCampoComErro("Senha"));
+							out.print(validadorDeObreiro.obterCampoComErro("Senha"));
 						}
 						
 					%>
@@ -155,7 +161,7 @@
 					<% 
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("SenhaMatch")) {
-							out.println(validadorDeObreiro.obterCampoComErro("SenhaMatch"));
+							out.print(validadorDeObreiro.obterCampoComErro("SenhaMatch"));
 						}
 						
 					%>
@@ -169,7 +175,7 @@
 					<%
 						if (validadorDeObreiro != null
 								&& validadorDeObreiro.verificarCampoComErro("SenhaConfirmacao")) {
-							out.println(validadorDeObreiro.obterCampoComErro("SenhaConfirmacao"));
+							out.print(validadorDeObreiro.obterCampoComErro("SenhaConfirmacao"));
 						}
 						
 					%>
@@ -177,8 +183,9 @@
 			</p>
 			<p>
 				<label for="Digital">Digital: </label>
-				<input type="button" name="digital" onClick="AbreAppletPopUp()" id="digital" value="InserirDigital"/>
-			</p>		
+				<input type="button" name="digital" onClick="AbreAppletPopUp()" id="digital" value="Editar/Inserir Digital"/>
+
+                        </p>
 			
 			<p>
 				<label for="Congregacao">Congregação</label>
@@ -220,7 +227,7 @@
 					<!-- Hidden Input dos campos para retrieve -->
 					<%
 					for(Congregacao congregacao : listaDeCongregacao){
-						out.println("<input type=\"hidden\" name=\"" + congregacao.getIdCongregacao() + "\" value=\"" + congregacao.getNome() + "\"/>");
+						out.print("<input type=\"hidden\" name=\"" + congregacao.getIdCongregacao() + "\" value=\"" + congregacao.getNome() + "\"/>");
 					}
 					
 					%>
@@ -232,13 +239,13 @@
 				<%
 					if (validadorDeObreiro != null
 							&& validadorDeObreiro.verificarCampoComErro("Congregacao")) {
-						out.println(validadorDeObreiro.obterCampoComErro("Congregacao"));
+						out.print(validadorDeObreiro.obterCampoComErro("Congregacao"));
 					}
 				%>
 				</span>
 			</p>
 			<p>
-			<button type="submit" name="botao_action" value="Editar">Editar</button>
+			<button type="submit" name="acao" value="obreiro_editer">Editar</button>
 			</p>
 		</form>
 

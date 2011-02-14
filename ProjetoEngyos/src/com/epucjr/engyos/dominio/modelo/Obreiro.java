@@ -54,7 +54,7 @@ public class Obreiro {
 	@IndexedEmbedded
 	@JoinColumn (name="congregacao_fk")
 	//@ContainedIn
-	private Congregacao congregacao;	
+	private Congregacao congregacao;
 
 	/******************************
 	 *	CONSTRUTOR

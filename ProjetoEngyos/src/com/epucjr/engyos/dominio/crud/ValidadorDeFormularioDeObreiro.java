@@ -47,14 +47,14 @@ public class ValidadorDeFormularioDeObreiro {
 	}
 
 	public void verificarCamposValidos(String nome, String cpf, String cargo, String congregacao, String senha, String senhaConfirmacao){
-		ValidatorCpf validadorCpf = new ValidatorCpf();
+		
 		this.setFormularioValido(true);
 
 		if (nome == null || nome.trim().length() == 0){
 			this.definirCampoComErro("Nome", "Nome Obrigatório");
 			this.setFormularioValido(false);
 		}
-		if (!validadorCpf.valido(cpf)){
+		if (!ValidatorCpf.valido(cpf)){
 			this.definirCampoComErro("Cpf", "CPF Inválido");
 			this.setFormularioValido(false);
 		}
