@@ -80,11 +80,32 @@ public class Obreiro {
 		setCongregacao(congregacao);
 		this.identificacao = identificacao;
 	}
-	
-	/******************************
-	 *	METODOS
-	 ******************************/
-	
+
+    /******************************
+     *	METODOS
+     ******************************/
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Obreiro other = (Obreiro) obj;
+        if ((this.cpf == null) ? (other.cpf != null) : !this.cpf.equals(other.cpf)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.cpf != null ? this.cpf.hashCode() : 0);
+        return hash;
+    }
+
 
 	/******************************
 	 *	GETTERS AND SETTERS

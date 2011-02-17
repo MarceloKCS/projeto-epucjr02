@@ -58,8 +58,8 @@ public class ObreiroReuniaoPresencaTest {
 		Obreiro obreiro = dataAccessObjectManager.obterObreiro("31273800893");
 		Obreiro obreiro2 = dataAccessObjectManager.obterObreiro("45261946972");
 		
-		reuniao.adicionarObreiroNaLista(obreiro);
-		reuniao.adicionarObreiroNaLista(obreiro2);
+		reuniao.adicionarObreiroNaListaDePresenca(obreiro);
+		reuniao.adicionarObreiroNaListaDePresenca(obreiro2);
 		
 		dataAccessObjectManager.persistirObjeto(reuniao);
 		
@@ -76,9 +76,9 @@ public class ObreiroReuniaoPresencaTest {
 	public static void adicionarObreiroNaLista_Novo(){
 		
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
-		Reuniao reuniao = dataAccessObjectManager.obterReuniao(1);		
+		Reuniao reuniao = dataAccessObjectManager.obterReuniao(1);
 		Obreiro obreiro = dataAccessObjectManager.obterObreiro("29675850507");
-		reuniao.adicionarObreiroNaLista(obreiro);
+		reuniao.adicionarObreiroNaListaDePresenca(obreiro);
 		
 		
 		dataAccessObjectManager.mergeDataObjeto(reuniao);
@@ -96,7 +96,7 @@ public class ObreiroReuniaoPresencaTest {
 public static void removerObreiroNaLista_Novo(){
 		
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
-		Reuniao reuniao = dataAccessObjectManager.obterReuniao(2);		
+		Reuniao reuniao = dataAccessObjectManager.obterReuniao(2);
 		//Obreiro obreiro = dataAccessObjectManager.obterObreiro("29675850507");
 		//reuniao.adicionarObreiroNaLista(obreiro);
 		
