@@ -116,7 +116,7 @@ public class TesteRelatorio2 {
 			obreiros[i] = new Obreiro("Ob" + i, "Carg" + i, "" + i,
 					congregacaos[idc], new Identificacao("" + i));
 			congregacaos[idc].addObreiro(obreiros[i]);
-			reuniao.adicionarObreiroNaLista(obreiros[i]);
+			reuniao.adicionarObreiroNaListaDePresenca(obreiros[i]);
 		}
 
 		ArrayList<PresencaObreiro> listaPresencaObreiros = new ArrayList<PresencaObreiro>(

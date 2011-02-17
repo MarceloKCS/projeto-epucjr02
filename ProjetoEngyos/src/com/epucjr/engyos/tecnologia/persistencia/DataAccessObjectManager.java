@@ -191,7 +191,7 @@ public class DataAccessObjectManager {
 			this.entityManager = EmFactory.getEntityManager();
 		}
 
-		Reuniao reuniao = entityManager.find(Reuniao.class, idDaReuniao);		
+		Reuniao reuniao = entityManager.find(Reuniao.class, idDaReuniao);
 
 		if(reuniao == null){
 			this.setOperacaoEfetuada(false);

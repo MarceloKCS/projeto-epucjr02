@@ -23,7 +23,7 @@ import com.epucjr.engyos.tecnologia.utilitarios.DateUtils;
 
 @Entity
 @Indexed
-public class Reuniao {
+public class Reuniao implements IReuniao{
 	
 	/******************************
 	 *	ATRIBUTOS
@@ -79,15 +79,27 @@ public class Reuniao {
 	/******************************
 	 *	METODOS
 	 ******************************/
-	
-	public void adicionarObreiroNaLista(Obreiro obreiro){
+
+        /**
+         * Adiciona um obreiro na lista de presença em uma reunião
+         *
+         * @param obreiro O obreiro a ser adicionado na lista de presença
+         */
+        @Override
+	public void adicionarObreiroNaListaDePresenca(Obreiro obreiro){
 		PresencaObreiro presencaObreiro = new PresencaObreiro(obreiro);
-		if(!this.isObreiroNaLista(obreiro)){
+		if(!this.verificaObreiroNaLista(obreiro)){
 			this.getListaDePresencaObreiro().add(presencaObreiro);
 		}		
 	}
-	
-	public boolean isObreiroNaLista(Obreiro obreiro){
+
+        /**
+         * Verifica se o obreiro está na lista de presença
+         * @param obreiro O obreiro a ser verificado se está na lista
+         * @return O resultado da verificação, false se o obeiro não estiver na lista
+         */
+        @Override
+	public boolean verificaObreiroNaLista(Obreiro obreiro){
 		boolean obreiroNaLista = false;
 		for(PresencaObreiro presencaObreiro : this.getListaDePresencaObreiro()){
 			if(presencaObreiro.getObreiro().getCpf().equals(obreiro.getCpf())){
@@ -97,6 +109,53 @@ public class Reuniao {
 		}
 		return obreiroNaLista;
 	}
+
+    @Override
+    public boolean verificaObreiroNaListaPelaDigital(String digitalObreiro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean verificaObreiroNaListaPelaSenha(String senhaObreiro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void marcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void marcarPresencaDeObreiroNaListaPelaSenha(String senhaObreiro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void definirNovaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int obterQuantidadeTotalDeObreirosNaLista() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int obterTotalDePresentesNaReunião() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean verificarObreiroEstevePresenteNaReuniao(String cpf) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean verificarObreiroEstevePresenteNaReuniaoPelaSenha(String senha) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
 	
 	/******************************
 	 *	GETTERS AND SETTERS

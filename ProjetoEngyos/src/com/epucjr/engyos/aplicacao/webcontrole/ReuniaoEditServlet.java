@@ -18,7 +18,7 @@ import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
  */
 public class ReuniaoEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Reuniao reuniao;	
+	private Reuniao reuniao;
 	private ValidadorDeFormularioDeReuniao validator;
 	private FormularioDeReuniao formularioDeReuniao;
        
