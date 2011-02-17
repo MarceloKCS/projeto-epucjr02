@@ -66,22 +66,18 @@ public class Administrador implements IUsuario{
     //TODO
 
 
-    @Override
     public String obterNome() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public String obterNomeCompleto() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public String obterSenha() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public String obterSobrenome() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
