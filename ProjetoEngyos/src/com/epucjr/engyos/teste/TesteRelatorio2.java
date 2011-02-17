@@ -7,31 +7,36 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.epucjr.engyos.aplicacao.webcontrole.ActionGeradorDeEstatisticaCongregacao;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Identificacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
-import com.epucjr.engyos.tecnologia.utilitarios.DataSet;
-import com.epucjr.engyos.tecnologia.utilitarios.Grafico;
 import com.epucjr.engyos.tecnologia.utilitarios.GeradorPDF;
 
 public class TesteRelatorio2 {
 
-	private DataSet dataset0;
 	private JLabel label0;
 	private JFrame tela0;
+	private BufferedImage bi;
+	
+	public BufferedImage getBi() {
+		return bi;
+	}
+
+	public void setBi(BufferedImage bi) {
+		this.bi = bi;
+	}
 
 	public TesteRelatorio2() {
 		super();
-		dataset0 = new DataSet(0, DataSet.DATASET_VAZIO);
 	}
 
 	/**
@@ -41,14 +46,12 @@ public class TesteRelatorio2 {
 		// Gera os graficos
 		Color c = Color.getHSBColor((float) Math.random(), 1f, 1f);// gera cor
 																	// aleatorio
-
-		BufferedImage bi0 = gerarGrafico3D(0, c);
-		label0 = new JLabel(new ImageIcon(bi0));
+		label0 = new JLabel(new ImageIcon(bi));
 
 		try {
 			FileOutputStream fos0 = new FileOutputStream(new File(
 					"c:\\arquiv\\testRelatorio2.pdf"));
-			GeradorPDF.gerarPDF(bi0, fos0);
+			GeradorPDF.gerarPDF(bi, fos0);
 			fos0.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -73,30 +76,6 @@ public class TesteRelatorio2 {
 		tela0.setVisible(true);
 	}
 
-	/**
-	 * Adiciona reuniao no DataSet
-	 * 
-	 * @param r
-	 */
-	public void addValor(String elemento, double valor) {
-		dataset0.addValor(elemento, valor);
-	}
-
-	/**
-	 * Retorna a imagem do grafico
-	 * 
-	 * @param modo
-	 * @param cor
-	 * @return
-	 */
-	public BufferedImage gerarGrafico3D(int modo, Color cor) {
-		if (modo == 0)
-			return Grafico.gerarGrafico3D(null, "Presenca 2010", "mês",
-					"presença", 800, 500, 800, 500, dataset0.getDcd(), 0.75f,
-					cor, modo, false);
-		return null;
-	}
-
 	public static void main(String[] args) {
 		// instancia os DataSet
 		TesteRelatorio2 tg = new TesteRelatorio2();
@@ -104,21 +83,24 @@ public class TesteRelatorio2 {
 		// cria situacao
 		Reuniao reuniao = new Reuniao("Aki", "20/20/2020", "20:20:20");
 		Obreiro[] obreiros = new Obreiro[20];
-		Congregacao[] congregacaos = new Congregacao[2];
+		ArrayList<Congregacao> congregacaos = new ArrayList<Congregacao>(2);
 
-		congregacaos[0] = new Congregacao("Cong 0", "");
-		congregacaos[1] = new Congregacao("Cong 1", "");
-		congregacaos[0].setIdCongregacao(0);
-		congregacaos[1].setIdCongregacao(1);
+		// instancia congergracoes
+		congregacaos.add(new Congregacao("Cong 0", ""));
+		congregacaos.add(new Congregacao("Cong 1", ""));
+		congregacaos.get(0).setIdCongregacao(0);
+		congregacaos.get(1).setIdCongregacao(1);
 
+		// instancia obreiros, insere na congregacao e na lista de presenca
 		for (int i = 0; i < obreiros.length; i++) {
 			int idc = i < 10 ? 0 : 1;
 			obreiros[i] = new Obreiro("Ob" + i, "Carg" + i, "" + i,
-					congregacaos[idc], new Identificacao("" + i));
-			congregacaos[idc].addObreiro(obreiros[i]);
+					congregacaos.get(idc), new Identificacao("" + i));
+			congregacaos.get(idc).addObreiro(obreiros[i]);
 			reuniao.adicionarObreiroNaListaDePresenca(obreiros[i]);
 		}
 
+		// pega a lista de presenca
 		ArrayList<PresencaObreiro> listaPresencaObreiros = new ArrayList<PresencaObreiro>(
 				reuniao.getListaDePresencaObreiro());
 
@@ -128,32 +110,14 @@ public class TesteRelatorio2 {
 			listaPresencaObreiros.get(i).setObreiroPresente(x < (0.5d + (double)obreiros[i].getCongregacao().getIdCongregacao()/4d));
 		}
 
-		// copia do command
-		HashMap<Long, Integer> mapPresenca = new HashMap<Long, Integer>();
+		// lista de reuniao
+		LinkedList<Reuniao> r = new LinkedList<Reuniao>();
+		r.add(reuniao);
 		
-		for (Congregacao c:congregacaos) {
-			mapPresenca.put(c.getIdCongregacao(), 0);
-		}
-		
-		// List<PresencaObreiro> listaPresencaObreiros =
-		// reuniao.getListaDePresencaObreiro();
-		for (PresencaObreiro po : listaPresencaObreiros) {
-			if (po.isObreiroPresente()) { // ???? TODO
-				long id = po.getObreiro().getCongregacao().getIdCongregacao();
-				int valor = mapPresenca.get(id) + 1;
-				mapPresenca.put(id, valor);
-			}
-		}
-
-		for (Congregacao c : congregacaos) {
-			long id = c.getIdCongregacao();
-			double valor = mapPresenca.get(id);
-			double porcentagem = valor / c.getQtdObreiros();
-			
-			//seta de 0-100, remova para gerar de 0-1
-			porcentagem = porcentagem * 100;
-			tg.addValor(c.getNome(), porcentagem);
-		}
+		// Action command
+		ActionGeradorDeEstatisticaCongregacao actionGeradorDeEstatisticaCongregacao = new ActionGeradorDeEstatisticaCongregacao();
+		BufferedImage bi = actionGeradorDeEstatisticaCongregacao.criarGrafico(r, congregacaos, "Teste");
+		tg.setBi(bi);
 
 		tg.initComponentsTest();
 
