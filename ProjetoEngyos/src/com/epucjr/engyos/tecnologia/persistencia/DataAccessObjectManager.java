@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
+import com.epucjr.engyos.dominio.modelo.Administrador;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
@@ -237,6 +238,24 @@ public class DataAccessObjectManager {
 
 		}
 
+	}
+	
+	public Administrador obterAdministrador(String login){
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+
+		Administrador administrador = entityManager.find(Administrador.class, login);
+
+		if(administrador == null){
+			this.setOperacaoEfetuada(false);
+			this.setMensagemStatus("Administrador não inexistente no sistema");
+		}
+		else{
+			this.setOperacaoEfetuada(true);
+			this.setMensagemStatus("Administrador encontrado");
+		}		
+		return administrador;
 	}
 
 	public Obreiro obterObreiro(String cpf){

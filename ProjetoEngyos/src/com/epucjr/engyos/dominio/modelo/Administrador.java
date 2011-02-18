@@ -67,19 +67,30 @@ public class Administrador implements IUsuario{
 
 
     public String obterNome() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return nome;
     }
 
     public String obterNomeCompleto() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return nome + ' ' + sobrenome;
     }
 
     public String obterSenha() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return identificacao.getSenha();
     }
 
     public String obterSobrenome() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return sobrenome;
     }
 
+    public String obterEmail() {
+    	return email;
+    }
+    
+    public String obterCPF() {
+        return cpf;
+    }
+    
+    public String obterLogin() {
+        return email;
+    }
 }
