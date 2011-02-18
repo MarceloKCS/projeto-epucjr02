@@ -59,11 +59,13 @@ public class Main extends Applet {
             URL url = new URL(getCodeBase(), "/applet/ServletControler");
             sdm = new ServletDataManager(url);
         } catch(NumberFormatException e) {
+            e.printStackTrace();
             cor = Color.red;
             idReuniao = -1;
             acao = 1;
             mensagem = "Erro no servidor!!!";
         } catch(MalformedURLException e) {
+            e.printStackTrace();
             cor = Color.red;
             idReuniao = -1;
             acao = 1;

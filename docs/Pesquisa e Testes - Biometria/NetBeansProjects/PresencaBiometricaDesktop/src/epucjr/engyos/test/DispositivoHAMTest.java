@@ -16,7 +16,7 @@ public class DispositivoHAMTest {
         // DispositivoHAMTest.captureDigitalTextTest();
         //DispositivoHAMTest.capturaEVerificaTest();
         //DispositivoHAMTest.capturaEVerificaBinDataTest();
-        DispositivoHAMTest.verificarMAtchClientServerTest();
+        DispositivoHAMTest.verificarMAtchClientServerTestString();
     }
 
     public static void captureDigitalTextTest() {
@@ -85,6 +85,35 @@ public class DispositivoHAMTest {
         Object digitalInseridaPeloUsuario = controleBioDeviceHardware.capturarDigitalModoString();
 
         controleBioDeviceHardware.verificarMatchDigital(digitalSalvaNoBD, digitalInseridaPeloUsuario);
+
+        if (controleBioDeviceHardware.isOperacaoExecutada()) {
+            if (controleBioDeviceHardware.isUsuarioValido()) {
+                System.out.println("msgStatusSucesso = " + controleBioDeviceHardware.getMensagemStatus());
+            } else {
+                System.out.println("msgStatusErro = " + controleBioDeviceHardware.getMensagemStatus());
+            }
+        } else {
+            System.out.println("msg Erro = " + controleBioDeviceHardware.getMensagemStatus());
+        }
+
+
+        controleBioDeviceHardware.fecharDispositivo();
+
+    }
+
+     public static void verificarMAtchClientServerTestString(){
+
+        ControleBioDeviceHardware controleBioDeviceHardware = new ControleBioDeviceHardware();
+        controleBioDeviceHardware.inicializaHardware();
+        controleBioDeviceHardware.abrirDispositivo();
+        controleBioDeviceHardware.capturarDigitalModoString();
+        String digitalSalvaNoBD = controleBioDeviceHardware.getDigitalModoTexto();
+
+        controleBioDeviceHardware.capturarDigitalModoString();
+        String digitalInseridaPeloUsuario = controleBioDeviceHardware.getDigitalModoTexto();
+
+
+        controleBioDeviceHardware.verificarMatchDigitalString(digitalSalvaNoBD, digitalInseridaPeloUsuario);
 
         if (controleBioDeviceHardware.isOperacaoExecutada()) {
             if (controleBioDeviceHardware.isUsuarioValido()) {
