@@ -5,7 +5,6 @@
 package epucjr.engyos.devicemanager;
 
 import com.nitgen.SDK.BSP.NBioBSPJNI;
-import com.nitgen.SDK.BSP.NBioBSPJNI.FIR_HANDLE;
 
 /**
  *
@@ -19,6 +18,9 @@ public class ControleBioDeviceHardware {
     private boolean operacaoExecutada;
     private String mensagemStatus;
     private boolean usuarioValido;
+    private int digitalCapturadaStatusDispositivo; // se valor for igual a zero quer dizer OK
+    private String digitalModoTexto;
+    private byte[] digitalModoBinario;
 
     public ControleBioDeviceHardware() {
         this.nBioBSPJNI = null;
@@ -27,10 +29,11 @@ public class ControleBioDeviceHardware {
         this.operacaoExecutada = false;
         this.mensagemStatus = "";
         this.usuarioValido = false;
+        this.digitalCapturadaStatusDispositivo = 0;
     }
 
     public void inicializaHardware() {
-        //Inicializações e instanciações
+        //Inicializações e instancianciações
         this.nBioBSPJNI = new NBioBSPJNI();
 
         //Enumera o dispositivo
@@ -48,14 +51,13 @@ public class ControleBioDeviceHardware {
 
         //Verifica se as apis necessárias ao acesso do hardware estão inicializadas
 
-        if(isHardwareInicializado()){
+        if (isHardwareInicializado()) {
             //Abre o dispositivo
             nBioBSPJNI.OpenDevice(device_enum_info.DeviceInfo[0].NameID, device_enum_info.DeviceInfo[0].Instance);
+        } else {
+            this.setMensagemStatus("Ocorreu erro de hardware ou hardware nÃ£o inicializado");
         }
-        else{
-            this.setMensagemStatus("Ocorreu erro de hardware ou hardware não inicializado");
-        }
-        
+
     }
 
     public void fecharDispositivo() {
@@ -65,25 +67,25 @@ public class ControleBioDeviceHardware {
 
     //TODO - captura 0 (Zero) e porque a captura diz texto mas devolve int?
     public Object capturarDigitalModoString() {
-        //Inicialização e instanciações
+        //Inicializações e instancianciações
         NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
         NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = null;
-        int digitalCapturada = 0;
-        String digitalTexto = "";
 
         //Captura a digital
         this.nBioBSPJNI.Capture(fir_handle);
 
-        //Obtém a digital capturada em modo texto
+        //Obtémm a digital capturada em modo texto
         if (!this.nBioBSPJNI.IsErrorOccured()) {
             textSavedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
-            digitalCapturada = this.nBioBSPJNI.GetTextFIRFromHandle(fir_handle, textSavedFIR);
-            
+
+            this.setDigitalCapturadaStatusDispositivo(this.nBioBSPJNI.GetTextFIRFromHandle(fir_handle, textSavedFIR));
+            this.setDigitalModoTexto(textSavedFIR.TextFIR);
+
             this.setOperacaoExecutada(true);
             this.setMensagemStatus("Digital capturada");
         } else {
             this.setOperacaoExecutada(false);
-            this.setMensagemStatus("Erro na cptura e/ou dispositivo");
+            this.setMensagemStatus("Erro na captura e/ou dispositivo");
         }
 
 
@@ -91,11 +93,37 @@ public class ControleBioDeviceHardware {
 
     }
 
+    public String capturarDigitalModoTextString() {
+        //Inicializações e instancianciações
+        NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
+        NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = null;
+
+        //Captura a digital
+        this.nBioBSPJNI.Capture(fir_handle);
+
+        //Obtémm a digital capturada em modo texto
+        if (!this.nBioBSPJNI.IsErrorOccured()) {
+            textSavedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
+
+            this.setDigitalCapturadaStatusDispositivo(this.nBioBSPJNI.GetTextFIRFromHandle(fir_handle, textSavedFIR));            
+
+            this.setOperacaoExecutada(true);
+            this.setMensagemStatus("Digital capturada");
+        } else {
+            this.setOperacaoExecutada(false);
+            this.setMensagemStatus("Erro na captura e/ou dispositivo");
+        }
+
+
+        return textSavedFIR.TextFIR;
+
+    }
+
     public Object capturarDigitalModoBinario() {
-        //Inicialização e instanciações
+        //Inicializações e instancianciações
         NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
         NBioBSPJNI.FIR binSavedFIR = null;
-        int digitalCapturada = 0;
+
 
         //Captura a digital
         this.nBioBSPJNI.Capture(fir_handle);
@@ -103,13 +131,14 @@ public class ControleBioDeviceHardware {
         //Obtém a digital capturada em modo binário
         if (!this.nBioBSPJNI.IsErrorOccured()) {
             binSavedFIR = this.nBioBSPJNI.new FIR();
-            digitalCapturada = this.nBioBSPJNI.GetFIRFromHandle(fir_handle, binSavedFIR);
 
+            this.setDigitalCapturadaStatusDispositivo(this.nBioBSPJNI.GetFIRFromHandle(fir_handle, binSavedFIR));
+            this.setDigitalModoBinario(binSavedFIR.Data);
             this.setOperacaoExecutada(true);
             this.setMensagemStatus("Digital capturada");
         } else {
             this.setOperacaoExecutada(false);
-            this.setMensagemStatus("Erro na cptura e/ou dispositivo");
+            this.setMensagemStatus("Erro na captura e/ou dispositivo");
         }
 
         return binSavedFIR;
@@ -117,7 +146,7 @@ public class ControleBioDeviceHardware {
     }
 
     public void testeVerificarDigitalStringValida(Object digitalTextMode) {
-        //Inicialização e instanciações
+        //Inicializações e instancianciações
         NBioBSPJNI.INPUT_FIR inputFir = this.nBioBSPJNI.new INPUT_FIR();
         Boolean verificacaoValida = new Boolean(false);
         NBioBSPJNI.FIR_PAYLOAD firPayload = this.nBioBSPJNI.new FIR_PAYLOAD();
@@ -125,98 +154,135 @@ public class ControleBioDeviceHardware {
 
         inputFir.SetTextFIR(textSavedFIR);
 
-       this.nBioBSPJNI.Verify(inputFir, verificacaoValida, firPayload);       
+        this.nBioBSPJNI.Verify(inputFir, verificacaoValida, firPayload);
 
-        if(!this.nBioBSPJNI.IsErrorOccured()){
+        if (!this.nBioBSPJNI.IsErrorOccured()) {
 
-            if(verificacaoValida){
+            if (verificacaoValida) {
                 this.setMensagemStatus(firPayload.GetText());
-                if(this.getMensagemStatus() == null){
+                if (this.getMensagemStatus() == null) {
                     this.setMensagemStatus("Usuário válido");
                 }
                 this.setUsuarioValido(true);
-            }
-            else{
-                this.setMensagemStatus("Verificacao Falhou...");
+            } else {
+                this.setMensagemStatus("Verificação Falhou...");
                 this.setUsuarioValido(false);
             }
 
             this.setOperacaoExecutada(true);
 
-        }
-        else{
+        } else {
             this.setOperacaoExecutada(false);
             this.setMensagemStatus("Erro na leitura e/ou dispositivo");
         }
     }
 
     public void testeVerificarDigitalValidaBinData(Object digitalTextMode) {
-        //Inicialização e instanciações
+        //Inicializações e instancianciações
         NBioBSPJNI.INPUT_FIR inputFir = this.nBioBSPJNI.new INPUT_FIR();
         Boolean verificacaoValida = new Boolean(false);
         NBioBSPJNI.FIR_PAYLOAD firPayload = this.nBioBSPJNI.new FIR_PAYLOAD();
-        NBioBSPJNI.FIR binSavedFIR  = (NBioBSPJNI.FIR) digitalTextMode;
+        NBioBSPJNI.FIR binSavedFIR = (NBioBSPJNI.FIR) digitalTextMode;
 
         inputFir.SetFullFIR(binSavedFIR);
 
-       this.nBioBSPJNI.Verify(inputFir, verificacaoValida, firPayload);
+        this.nBioBSPJNI.Verify(inputFir, verificacaoValida, firPayload);
 
-        if(!this.nBioBSPJNI.IsErrorOccured()){
+        if (!this.nBioBSPJNI.IsErrorOccured()) {
 
-            if(verificacaoValida){
+            if (verificacaoValida) {
                 this.setMensagemStatus(firPayload.GetText());
-                if(this.getMensagemStatus() == null){
+                if (this.getMensagemStatus() == null) {
                     this.setMensagemStatus("Usuário válido");
                 }
                 this.setUsuarioValido(true);
-            }
-            else{
+            } else {
                 this.setMensagemStatus("Verificacao Falhou...");
                 this.setUsuarioValido(false);
             }
 
             this.setOperacaoExecutada(true);
 
-        }
-        else{
+        } else {
             this.setOperacaoExecutada(false);
             this.setMensagemStatus("Erro na leitura e/ou dispositivo");
         }
     }
 
-    public void verificarMatchDigital(Object digitalSavedTextMode, Object digitalCapturedTextMode){
+    public void verificarMatchDigital(Object digitalSavedTextMode, Object digitalCapturedTextMode) {
         NBioBSPJNI.INPUT_FIR inputFIR = this.nBioBSPJNI.new INPUT_FIR();
         NBioBSPJNI.INPUT_FIR inputFIR2 = this.nBioBSPJNI.new INPUT_FIR();
+
         Boolean verificacaoValida = new Boolean(false);
-         NBioBSPJNI.FIR_PAYLOAD firPayload = this.nBioBSPJNI.new FIR_PAYLOAD();
+        NBioBSPJNI.FIR_PAYLOAD firPayload = this.nBioBSPJNI.new FIR_PAYLOAD();
 
-         NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = (NBioBSPJNI.FIR_TEXTENCODE) digitalSavedTextMode;
-         NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR = (NBioBSPJNI.FIR_TEXTENCODE) digitalCapturedTextMode;
+        NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = (NBioBSPJNI.FIR_TEXTENCODE) digitalSavedTextMode;
+        NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR = (NBioBSPJNI.FIR_TEXTENCODE) digitalCapturedTextMode;
 
 
-         inputFIR.SetTextFIR(textSavedFIR);
-         inputFIR2.SetTextFIR(textCapturedFIR);
+        inputFIR.SetTextFIR(textSavedFIR);
+        inputFIR2.SetTextFIR(textCapturedFIR);
 
-         this.nBioBSPJNI.VerifyMatch(inputFIR, inputFIR2, verificacaoValida, firPayload);
+        this.nBioBSPJNI.VerifyMatch(inputFIR, inputFIR2, verificacaoValida, firPayload);
 
-          if(!this.nBioBSPJNI.IsErrorOccured()){
+        if (!this.nBioBSPJNI.IsErrorOccured()) {
 
-            if(verificacaoValida){
+            if (verificacaoValida) {
                 this.setMensagemStatus(firPayload.GetText());
-                if(this.getMensagemStatus() == null){
+                if (this.getMensagemStatus() == null) {
                     this.setMensagemStatus("Usuário válido");
                 }
                 this.setUsuarioValido(true);
-            }
-            else{
+            } else {
                 this.setMensagemStatus("Usuário Inválido no sistema");
                 this.setUsuarioValido(false);
             }
 
             this.setOperacaoExecutada(true);
 
+        } else {
+            this.setOperacaoExecutada(false);
+            this.setMensagemStatus("Erro na leitura e/ou dispositivo");
         }
-        else{
+
+
+    }
+
+     public void verificarMatchDigitalString(String digitalSavedTextMode, String digitalCapturedTextMode) {
+        NBioBSPJNI.INPUT_FIR inputFIR = this.nBioBSPJNI.new INPUT_FIR();
+        NBioBSPJNI.INPUT_FIR inputFIR2 = this.nBioBSPJNI.new INPUT_FIR();
+
+        Boolean verificacaoValida = new Boolean(false);
+        NBioBSPJNI.FIR_PAYLOAD firPayload = this.nBioBSPJNI.new FIR_PAYLOAD();
+
+        NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
+        NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
+        NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR3 = this.nBioBSPJNI.new FIR_TEXTENCODE();
+
+        textSavedFIR.TextFIR = digitalSavedTextMode;
+        textCapturedFIR.TextFIR = digitalCapturedTextMode;
+  
+        inputFIR.SetTextFIR(textSavedFIR);
+        inputFIR2.SetTextFIR(textCapturedFIR);
+
+        this.nBioBSPJNI.VerifyMatch(inputFIR, inputFIR2, verificacaoValida, firPayload);
+
+        if (!this.nBioBSPJNI.IsErrorOccured()) {
+
+            if (verificacaoValida) {
+                this.setMensagemStatus(firPayload.GetText());
+                if (this.getMensagemStatus() == null) {
+                    this.setMensagemStatus("Usuário válido");
+                }
+                this.setUsuarioValido(true);
+            } else {
+                this.setMensagemStatus("Usuário Inválido no sistema");
+                this.setUsuarioValido(false);
+            }
+
+            this.setOperacaoExecutada(true);
+
+        } else {
             this.setOperacaoExecutada(false);
             this.setMensagemStatus("Erro na leitura e/ou dispositivo");
         }
@@ -256,5 +322,27 @@ public class ControleBioDeviceHardware {
         this.usuarioValido = usuarioValido;
     }
 
+    public int getDigitalCapturadaStatusDispositivo() {
+        return digitalCapturadaStatusDispositivo;
+    }
 
+    public void setDigitalCapturadaStatusDispositivo(int digitalCapturadaStatusDispositivo) {
+        this.digitalCapturadaStatusDispositivo = digitalCapturadaStatusDispositivo;
+    }
+
+    public byte[] getDigitalModoBinario() {
+		return digitalModoBinario;
+	}
+
+	public void setDigitalModoBinario(byte[] digitalModoBinario) {
+		this.digitalModoBinario = digitalModoBinario;
+	}
+
+	public String getDigitalModoTexto() {
+        return digitalModoTexto;
+    }
+
+    public void setDigitalModoTexto(String digitalModoTexto) {
+        this.digitalModoTexto = digitalModoTexto;
+    }
 }
