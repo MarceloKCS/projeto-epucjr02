@@ -1,5 +1,7 @@
 package com.epucjr.engyos.dominio.modelo;
 
+import com.epucjr.engyos.tecnologia.ferramentas.ControleBioDeviceHardware;
+import com.epucjr.engyos.tecnologia.ferramentas.DispositivoBioDeviceInterface;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +139,8 @@ public class Reuniao implements IReuniao{
 
     @Override
     public int obterQuantidadeTotalDeObreirosNaLista() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return this.getListaDePresencaObreiro().size();
     }
 
     @Override
@@ -147,7 +150,9 @@ public class Reuniao implements IReuniao{
 
     @Override
     public boolean verificarObreiroEstevePresenteNaReuniao(String cpf) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpf, 0, this.listaDePresencaObreiro.size() - 1);
+
+        return presencaObreiro.isObreiroPresente();
     }
 
     @Override
@@ -155,6 +160,97 @@ public class Reuniao implements IReuniao{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public void marcarPresencaDeObreiroNaListaPeloCPF(String cpfObreiro) {
+         PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpfObreiro, 0, this.listaDePresencaObreiro.size() - 1);
+
+         presencaObreiro.setObreiroPresente(true);
+    }
+
+    @Override
+    public boolean verificaObreiroNaListaPeloCPF(String cpfObreiro) {
+
+        Obreiro obreiro = this.buscarObreiroNaListaDePresenca(this.listaDePresencaObreiro, cpfObreiro, 0, this.listaDePresencaObreiro.size() - 1);
+
+        if(obreiro != null){
+            return true;
+        }
+
+        return false;
+    }
+
+     /**
+     * Busca por um obreiro utilizando um algoritmo de busca binária
+     *
+     * @param listaDePresencaObreiro A lista de presença de obreiros da reunião
+     * @param valorCPFProcurado O CPF do pbreiro que estamos procurando na lista
+     * @param left O indice do limite da lista à esquerda
+     * @param right O indice do limite da lista à direira
+      *
+     * @return o valor procurado, se presenta na lista ou null, se
+     *  não for encontrado
+     */
+    @Override
+    public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado, int left, int right) {
+
+        if (left > right) {
+            return null;
+        }
+
+        int middle = (left + right) / 2;
+
+        if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().equals(valorCPFProcurado)){
+            return listaDePresencaObreiro.get(middle).getObreiro();
+        } else if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().compareTo(valorCPFProcurado) > 0) {
+            return buscarObreiroNaListaDePresenca(listaDePresencaObreiro, valorCPFProcurado, left, middle - 1);
+        } else {
+            return buscarObreiroNaListaDePresenca(listaDePresencaObreiro, valorCPFProcurado, middle + 1, right);
+        }
+
+    }
+
+    public PresencaObreiro obterPresencaDeObreiroDaLista(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado, int left, int right) {
+
+        if (left > right) {
+            return null;
+        }
+
+        int middle = (left + right) / 2;
+
+        if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().equals(valorCPFProcurado)){
+            return listaDePresencaObreiro.get(middle);
+        } else if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().compareTo(valorCPFProcurado) > 0) {
+            return obterPresencaDeObreiroDaLista(listaDePresencaObreiro, valorCPFProcurado, left, middle - 1);
+        } else {
+            return obterPresencaDeObreiroDaLista(listaDePresencaObreiro, valorCPFProcurado, middle + 1, right);
+        }
+
+    }
+
+    public Obreiro buscarObreiroNaListaDePresenca(String digitalObreiro) {
+        //Utiliza o algoritmo de comparacao da Implementaçaõ da Interface ControleBioDeviceHardware
+        //Busca sequencial
+        DispositivoBioDeviceInterface dispositivoBioApi = new ControleBioDeviceHardware();
+        //TODO Refatorar - Não inicializar hardware e dispositivo aqui uma vez que estão execução nem precisa do hardware
+
+        dispositivoBioApi.inicializaHardware();
+        dispositivoBioApi.abrirDispositivo();
+        boolean obreiroEncontrado = false;
+
+        for (PresencaObreiro presencaObreiro : listaDePresencaObreiro) {
+            System.out.println("Presenca = " + presencaObreiro.getObreiro().getNome());
+            System.out.println("Presenca = " + presencaObreiro.getObreiro().getIdentificacao().getImpressaoDigital());
+            dispositivoBioApi.verificarMatchDigitalString(presencaObreiro.getObreiro().getIdentificacao().getImpressaoDigital(), digitalObreiro);
+            obreiroEncontrado = dispositivoBioApi.isUsuarioValido();
+            if (obreiroEncontrado) {
+                return presencaObreiro.getObreiro();
+
+            }
+        }
+
+        return null;
+
+    }
 
 	
 	/******************************

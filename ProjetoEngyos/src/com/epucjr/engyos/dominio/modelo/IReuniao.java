@@ -17,7 +17,11 @@ public interface IReuniao {
 
     public boolean verificaObreiroNaListaPelaDigital(String digitalObreiro);
 
+    public boolean verificaObreiroNaListaPeloCPF(String cpfObreiro);
+
     public void marcarPresencaDeObreiroNaListaPelaSenha(String senhaObreiro);
+
+    public void marcarPresencaDeObreiroNaListaPeloCPF(String senhaObreiro);
 
     public void marcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro);
 
@@ -30,4 +34,12 @@ public interface IReuniao {
     public boolean verificarObreiroEstevePresenteNaReuniao(String cpf);
 
     public boolean verificarObreiroEstevePresenteNaReuniaoPelaSenha(String senha);
+
+    //public para teste, alterar para private
+
+    public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado, int left, int right);
+
+    public List<PresencaObreiro> getListaDePresencaObreiro() ;
+
+    public Obreiro buscarObreiroNaListaDePresenca(String digitalObreiro);
 }

@@ -10,7 +10,7 @@ import com.nitgen.SDK.BSP.NBioBSPJNI;
  *
  * @author Rogerio
  */
-public class ControleBioDeviceHardware {
+public class ControleBioDeviceHardware implements DispositivoBioDeviceInterface{
 
     private NBioBSPJNI nBioBSPJNI;
     private NBioBSPJNI.DEVICE_ENUM_INFO device_enum_info;
@@ -43,8 +43,8 @@ public class ControleBioDeviceHardware {
         this.setHardwareInicializado(true);
     }
 
-    public void encerrarHardware(NBioBSPJNI nBioBSPJNI) {
-        nBioBSPJNI.dispose();
+    public void encerrarHardware() {
+        this.nBioBSPJNI.dispose();
     }
 
     public void abrirDispositivo() {
@@ -66,6 +66,13 @@ public class ControleBioDeviceHardware {
     }
 
     //TODO - captura 0 (Zero) e porque a captura diz texto mas devolve int?
+    /**
+     * Devolve o objeto com a captura da digital em modo Texto, ao mesmo tempo que define
+     * o atributio <code>digitalModoTexto</code> no formato String como opção para
+     * uma posteriro captura
+     *
+     * @return O objeto capturado pelo dispositivo
+     */
     public Object capturarDigitalModoString() {
         //Inicializações e instancianciações
         NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
@@ -73,7 +80,7 @@ public class ControleBioDeviceHardware {
 
         //Captura a digital
         this.nBioBSPJNI.Capture(fir_handle);
-       
+
         //Obtémm a digital capturada em modo texto
         if (!this.nBioBSPJNI.IsErrorOccured()) {
             textSavedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
@@ -93,11 +100,43 @@ public class ControleBioDeviceHardware {
 
     }
 
+    /**
+     * Método que devolve a String pura da digital, por isso não há a necessidade
+     * de definir aqui o atributo local
+     *
+     * @return A string com o padrão de digital reconhecido pela api do dispositivo
+     */
+    public String capturarDigitalModoTextString() {
+        //Inicializações e instancianciações
+        NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
+        NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = null;
+
+        //Captura a digital
+        this.nBioBSPJNI.Capture(fir_handle);
+
+        //Obtémm a digital capturada em modo texto
+        if (!this.nBioBSPJNI.IsErrorOccured()) {
+            textSavedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
+
+            this.setDigitalCapturadaStatusDispositivo(this.nBioBSPJNI.GetTextFIRFromHandle(fir_handle, textSavedFIR));
+
+            this.setOperacaoExecutada(true);
+            this.setMensagemStatus("Digital capturada");
+        } else {
+            this.setOperacaoExecutada(false);
+            this.setMensagemStatus("Erro na captura e/ou dispositivo");
+        }
+
+
+        return textSavedFIR.TextFIR;
+
+    }
+
     public Object capturarDigitalModoBinario() {
         //Inicializações e instancianciações
         NBioBSPJNI.FIR_HANDLE fir_handle = this.nBioBSPJNI.new FIR_HANDLE();
         NBioBSPJNI.FIR binSavedFIR = null;
-        
+
 
         //Captura a digital
         this.nBioBSPJNI.Capture(fir_handle);
@@ -105,7 +144,7 @@ public class ControleBioDeviceHardware {
         //Obtém a digital capturada em modo binário
         if (!this.nBioBSPJNI.IsErrorOccured()) {
             binSavedFIR = this.nBioBSPJNI.new FIR();
-           
+
             this.setDigitalCapturadaStatusDispositivo(this.nBioBSPJNI.GetFIRFromHandle(fir_handle, binSavedFIR));
             this.setDigitalModoBinario(binSavedFIR.Data);
             this.setOperacaoExecutada(true);
@@ -222,20 +261,21 @@ public class ControleBioDeviceHardware {
 
     }
 
-     public void verificarMatchDigitalStringTest(Object digitalSavedTextMode, Object digitalCapturedTextMode) {
+     public void verificarMatchDigitalString(String digitalSavedTextMode, String digitalCapturedTextMode) {
         NBioBSPJNI.INPUT_FIR inputFIR = this.nBioBSPJNI.new INPUT_FIR();
         NBioBSPJNI.INPUT_FIR inputFIR2 = this.nBioBSPJNI.new INPUT_FIR();
 
         Boolean verificacaoValida = new Boolean(false);
         NBioBSPJNI.FIR_PAYLOAD firPayload = this.nBioBSPJNI.new FIR_PAYLOAD();
 
-        NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = (NBioBSPJNI.FIR_TEXTENCODE) digitalSavedTextMode;
-        NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR = (NBioBSPJNI.FIR_TEXTENCODE) digitalCapturedTextMode;
-        NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR3 = this.nBioBSPJNI.new FIR_TEXTENCODE();
-        String aux = textCapturedFIR.TextFIR;
-        textCapturedFIR3.TextFIR = aux;
+        NBioBSPJNI.FIR_TEXTENCODE textSavedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();
+        NBioBSPJNI.FIR_TEXTENCODE textCapturedFIR = this.nBioBSPJNI.new FIR_TEXTENCODE();       
+
+        textSavedFIR.TextFIR = digitalSavedTextMode;
+        textCapturedFIR.TextFIR = digitalCapturedTextMode;
+
         inputFIR.SetTextFIR(textSavedFIR);
-        inputFIR2.SetTextFIR(textCapturedFIR3);
+        inputFIR2.SetTextFIR(textCapturedFIR);
 
         this.nBioBSPJNI.VerifyMatch(inputFIR, inputFIR2, verificacaoValida, firPayload);
 
@@ -258,8 +298,6 @@ public class ControleBioDeviceHardware {
             this.setOperacaoExecutada(false);
             this.setMensagemStatus("Erro na leitura e/ou dispositivo");
         }
-
-
     }
 
     public boolean isHardwareInicializado() {
@@ -301,7 +339,7 @@ public class ControleBioDeviceHardware {
     public void setDigitalCapturadaStatusDispositivo(int digitalCapturadaStatusDispositivo) {
         this.digitalCapturadaStatusDispositivo = digitalCapturadaStatusDispositivo;
     }
-    
+
     public byte[] getDigitalModoBinario() {
 		return digitalModoBinario;
 	}
