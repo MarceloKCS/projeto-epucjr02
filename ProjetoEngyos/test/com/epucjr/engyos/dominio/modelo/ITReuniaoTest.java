@@ -1,9 +1,7 @@
 package com.epucjr.engyos.dominio.modelo;
 
 import com.epucjr.engyos.tecnologia.ferramentas.ControleBioDeviceHardware;
-import com.epucjr.engyos.tecnologia.ferramentas.DispositivoBioDeviceInterface;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
-import java.util.List;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -30,7 +28,7 @@ public class ITReuniaoTest {
     //Uso do JMock com JUnity, em estudo
     Mockery context = new JUnit4Mockery();
     DataAccessObjectManager dataAccessObjectManager;
-    DispositivoBioDeviceInterface dispositivoBioDeviceInterface;
+    ControleBioDeviceHardware dispositivoBioDeviceInterface;
     IReuniao reuniao;
 
     @Before
@@ -65,5 +63,103 @@ public class ITReuniaoTest {
 
     }
 
+    @Test
+    public void marcarPresencaDeObreiroPelaDigital(){
+        String impressaoCadastradaProcurada = "AQAAABQAAADkAAAAAQASAAEAWgAAAAAA3AAAAP3z69XeWa03lS9qvZ*Stk5f2L6Wgq73t0KxQbnpJ4FSGRgers2UmkP4vajjG3TCoCruIFcjZYGZ1K2vIq9U7pG5DS3On6ptG7Xbw4oMBSycZTPiiGJpQZvkprTvk*MKdjxV0hoHFaw5BQMwdVnPAnFLxBBb5Aigr06vMLNu*RmXzIDmb6gHXT2jqa3MQ9y9GbUSGzy8t9Wg37ksreklmhvkNTaulsjcZQSm5CW4w5uU6*jJY0/vAtMsQk1*9MUIcdWlnxEHyflRLoDUpBwQ9O4fIhBP91egsMALYo0z56fz";
+        
+       if(reuniao.verificaObreiroNaListaPelaDigital(impressaoCadastradaProcurada)){
+
+            reuniao.marcarPresencaDeObreiroNaListaPelaDigital(impressaoCadastradaProcurada);
+
+        }
+        
+        boolean obreiroPresente = reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoCadastradaProcurada);
+        
+        assertEquals(true, obreiroPresente);
+    }
+
+    @Test
+    public void persistirPresencaMarcada(){
+        String impressaoCadastradaProcurada = "AQAAABQAAADkAAAAAQASAAEAWgAAAAAA3AAAAP3z69XeWa03lS9qvZ*Stk5f2L6Wgq73t0KxQbnpJ4FSGRgers2UmkP4vajjG3TCoCruIFcjZYGZ1K2vIq9U7pG5DS3On6ptG7Xbw4oMBSycZTPiiGJpQZvkprTvk*MKdjxV0hoHFaw5BQMwdVnPAnFLxBBb5Aigr06vMLNu*RmXzIDmb6gHXT2jqa3MQ9y9GbUSGzy8t9Wg37ksreklmhvkNTaulsjcZQSm5CW4w5uU6*jJY0/vAtMsQk1*9MUIcdWlnxEHyflRLoDUpBwQ9O4fIhBP91egsMALYo0z56fz";
+
+       if(reuniao.verificaObreiroNaListaPelaDigital(impressaoCadastradaProcurada)){
+
+            reuniao.marcarPresencaDeObreiroNaListaPelaDigital(impressaoCadastradaProcurada);
+
+        }
+
+        boolean obreiroPresente = reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoCadastradaProcurada);
+
+        dataAccessObjectManager.mergeDataObjeto(reuniao);
+
+        assertEquals(true, dataAccessObjectManager.isOperacaoEfetuada());
+    }
+
+
+    @Test
+    public void verificaObreiroPresenteNaReuniao(){
+        String impressaoCadastradaProcurada = "AQAAABQAAADkAAAAAQASAAEAWgAAAAAA3AAAAP3z69XeWa03lS9qvZ*Stk5f2L6Wgq73t0KxQbnpJ4FSGRgers2UmkP4vajjG3TCoCruIFcjZYGZ1K2vIq9U7pG5DS3On6ptG7Xbw4oMBSycZTPiiGJpQZvkprTvk*MKdjxV0hoHFaw5BQMwdVnPAnFLxBBb5Aigr06vMLNu*RmXzIDmb6gHXT2jqa3MQ9y9GbUSGzy8t9Wg37ksreklmhvkNTaulsjcZQSm5CW4w5uU6*jJY0/vAtMsQk1*9MUIcdWlnxEHyflRLoDUpBwQ9O4fIhBP91egsMALYo0z56fz";
+
+        boolean obreiroPresente = reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoCadastradaProcurada);
+
+        assertEquals(true, obreiroPresente);
+    }
+
+
+    //Executar após marcar presença
+     @Test
+    public void verificarQuantidadeObreirosPresentesNaReuniao(){
+        int qtdPresentes = reuniao.obterTotalDePresentesNaReunião();
+
+        assertEquals(1, qtdPresentes);
+    }
+
+    @Test
+    public void desmarcarPresencaDeObreiroPelaDigital() {
+        String impressaoCadastradaProcurada = "AQAAABQAAADkAAAAAQASAAEAWgAAAAAA3AAAAP3z69XeWa03lS9qvZ*Stk5f2L6Wgq73t0KxQbnpJ4FSGRgers2UmkP4vajjG3TCoCruIFcjZYGZ1K2vIq9U7pG5DS3On6ptG7Xbw4oMBSycZTPiiGJpQZvkprTvk*MKdjxV0hoHFaw5BQMwdVnPAnFLxBBb5Aigr06vMLNu*RmXzIDmb6gHXT2jqa3MQ9y9GbUSGzy8t9Wg37ksreklmhvkNTaulsjcZQSm5CW4w5uU6*jJY0/vAtMsQk1*9MUIcdWlnxEHyflRLoDUpBwQ9O4fIhBP91egsMALYo0z56fz";
+
+        if (reuniao.verificaObreiroNaListaPelaDigital(impressaoCadastradaProcurada)) {
+
+            reuniao.desmarcarPresencaDeObreiroNaListaPelaDigital(impressaoCadastradaProcurada);
+
+        }
+
+        boolean obreiroPresente = reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoCadastradaProcurada);
+
+        assertEquals(false, obreiroPresente);
+    }
+
+    @Test
+    public void persistirPresencaDesmarcada() {
+        String impressaoCadastradaProcurada = "AQAAABQAAADkAAAAAQASAAEAWgAAAAAA3AAAAP3z69XeWa03lS9qvZ*Stk5f2L6Wgq73t0KxQbnpJ4FSGRgers2UmkP4vajjG3TCoCruIFcjZYGZ1K2vIq9U7pG5DS3On6ptG7Xbw4oMBSycZTPiiGJpQZvkprTvk*MKdjxV0hoHFaw5BQMwdVnPAnFLxBBb5Aigr06vMLNu*RmXzIDmb6gHXT2jqa3MQ9y9GbUSGzy8t9Wg37ksreklmhvkNTaulsjcZQSm5CW4w5uU6*jJY0/vAtMsQk1*9MUIcdWlnxEHyflRLoDUpBwQ9O4fIhBP91egsMALYo0z56fz";
+
+        if (reuniao.verificaObreiroNaListaPelaDigital(impressaoCadastradaProcurada)) {
+
+            reuniao.desmarcarPresencaDeObreiroNaListaPelaDigital(impressaoCadastradaProcurada);
+
+        }
+
+        boolean obreiroPresente = reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoCadastradaProcurada);
+
+        dataAccessObjectManager.mergeDataObjeto(reuniao);
+
+        assertEquals(true, dataAccessObjectManager.isOperacaoEfetuada());
+    }
+
+    @Test
+    public void verificaObreiroNaoPresenteNaReuniao() {
+        String impressaoCadastradaProcurada = "AQAAABQAAADkAAAAAQASAAEAWgAAAAAA3AAAAP3z69XeWa03lS9qvZ*Stk5f2L6Wgq73t0KxQbnpJ4FSGRgers2UmkP4vajjG3TCoCruIFcjZYGZ1K2vIq9U7pG5DS3On6ptG7Xbw4oMBSycZTPiiGJpQZvkprTvk*MKdjxV0hoHFaw5BQMwdVnPAnFLxBBb5Aigr06vMLNu*RmXzIDmb6gHXT2jqa3MQ9y9GbUSGzy8t9Wg37ksreklmhvkNTaulsjcZQSm5CW4w5uU6*jJY0/vAtMsQk1*9MUIcdWlnxEHyflRLoDUpBwQ9O4fIhBP91egsMALYo0z56fz";
+        boolean obreiroPresente = reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoCadastradaProcurada);
+
+        assertEquals(false, obreiroPresente);
+    }
+
+    //Executar depois de remover a presenca
+    @Test
+    public void verificarQuantidadeObreirosPresentesNaReuniaoAposRemocao(){
+        int qtdPresentes = reuniao.obterTotalDePresentesNaReunião();
+
+        assertEquals(0, qtdPresentes);
+    }
 
 }

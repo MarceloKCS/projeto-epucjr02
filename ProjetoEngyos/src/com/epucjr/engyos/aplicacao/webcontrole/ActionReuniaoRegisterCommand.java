@@ -12,7 +12,7 @@ import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeReuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
-import com.epucjr.engyos.tecnologia.utilitarios.DateUtils;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.ListUtilTokenizer;
 
 public class ActionReuniaoRegisterCommand implements Command{
@@ -55,8 +55,8 @@ public class ActionReuniaoRegisterCommand implements Command{
 			List<PresencaObreiro> listaDePresenca = this.inserirObreirosNaLista(listaDeObreirosSelecionados);
 			
 			//2.c. Preparando a data e hora
-			String data = DateUtils.converterDataBr(dia, mes, ano);
-			String horario = DateUtils.converterHorarioHHMM(hora, minuto);
+			String data = DateTimeUtils.converterDataBr(dia, mes, ano);
+			String horario = DateTimeUtils.converterHorarioHHMM(hora, minuto);
 			
 			//Instanciando a reunião para persistência
 			Reuniao reuniao = new Reuniao(local, data, horario);

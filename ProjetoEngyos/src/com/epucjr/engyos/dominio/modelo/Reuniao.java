@@ -1,7 +1,9 @@
 package com.epucjr.engyos.dominio.modelo;
 
 import com.epucjr.engyos.tecnologia.ferramentas.ControleBioDeviceHardware;
-import com.epucjr.engyos.tecnologia.ferramentas.DispositivoBioDeviceInterface;
+import com.epucjr.engyos.tecnologia.ferramentas.ControleBiometricoNBioBSPUtil;
+import com.epucjr.engyos.tecnologia.ferramentas.ControleBiometricoUtil;
+import com.epucjr.engyos.tecnologia.ferramentas.DispositivoBiometricoHardware;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,8 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
-import com.epucjr.engyos.tecnologia.utilitarios.DateUtils;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
+import com.epucjr.engyos.tecnologia.utilitarios.HoraUtil;
 
 @Entity
 @Indexed
@@ -52,9 +55,16 @@ public class Reuniao implements IReuniao{
 	private List<PresencaObreiro> listaDePresencaObreiro;
 	
 	private String reuniaoStatus;  //ATIVO-INATIVO
+
+        private String horárioInicioEfetivo;
+
+        private String horárioDeEncerramentoEsperado;
 	
 	@Transient
 	private int quantidadeMaxObreirosReuniao;
+
+        @Transient
+	private final int tempoEmMinutosDeTolerânciaContagemPresenca = 30;
 	
 		
 	/******************************
@@ -67,6 +77,8 @@ public class Reuniao implements IReuniao{
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = "ATIVO";
 		this.quantidadeMaxObreirosReuniao = 0;
+                this.horárioInicioEfetivo = "";
+                this.horárioDeEncerramentoEsperado = "";
 	}
 	
 	public Reuniao(String local, String data, String hora) {
@@ -76,6 +88,8 @@ public class Reuniao implements IReuniao{
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = "ATIVO";
 		this.quantidadeMaxObreirosReuniao = 0;
+                this.horárioInicioEfetivo = "";
+                this.horárioDeEncerramentoEsperado = "";
 	}
 	
 	/******************************
@@ -111,7 +125,13 @@ public class Reuniao implements IReuniao{
 	}
 
     public boolean verificaObreiroNaListaPelaDigital(String digitalObreiro) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Obreiro obreiro = this.buscarObreiroNaListaDePresenca(digitalObreiro);
+
+        if (obreiro != null) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean verificaObreiroNaListaPelaSenha(String senhaObreiro) {
@@ -119,7 +139,18 @@ public class Reuniao implements IReuniao{
     }
 
     public void marcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(digitalObreiro);
+        presencaObreiro.setMomentoPresenca(HoraUtil.obterTempoCorrente());
+        presencaObreiro.setDataPresenca(DateTimeUtils.obterDataCorrenteBr());
+        presencaObreiro.setObreiroPresente(true);
+    }
+
+    @Override
+    public void desmarcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro) {
+        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(digitalObreiro);
+        presencaObreiro.setMomentoPresenca("");
+        presencaObreiro.setDataPresenca("");
+        presencaObreiro.setObreiroPresente(false);
     }
 
     public void marcarPresencaDeObreiroNaListaPelaSenha(String senhaObreiro) {
@@ -136,11 +167,27 @@ public class Reuniao implements IReuniao{
     }
 
     public int obterTotalDePresentesNaReunião() {
+        int quantidadeDeObreirosPresente = 0;
+
+        for(PresencaObreiro presencaObreiro : listaDePresencaObreiro){
+            if(presencaObreiro.isObreiroPresente()){
+                quantidadeDeObreirosPresente++;
+            }
+        }
+
+        return quantidadeDeObreirosPresente;
+    }
+
+    //TODO
+    @Override
+    public int obterTempoDeDuracaoReuniao() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+
+
     public boolean verificarObreiroEstevePresenteNaReuniao(String cpf) {
-        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpf, 0, this.listaDePresencaObreiro.size() - 1);
+        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpf);
 
         return presencaObreiro.isObreiroPresente();
     }
@@ -150,16 +197,32 @@ public class Reuniao implements IReuniao{
     }
 
     @Override
-    public void marcarPresencaDeObreiroNaListaPeloCPF(String cpfObreiro) {
-         PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpfObreiro, 0, this.listaDePresencaObreiro.size() - 1);
+    public boolean verificarObreiroEstevePresenteNaReuniaoPelaDigital(String digitalObreiro) {
+        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(digitalObreiro);
 
-         presencaObreiro.setObreiroPresente(true);
+        return presencaObreiro.isObreiroPresente();
+    }
+
+    @Override
+    public void marcarPresencaDeObreiroNaListaPeloCPF(String cpfObreiro) {
+        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpfObreiro);
+        presencaObreiro.setMomentoPresenca(HoraUtil.obterTempoCorrente());
+        presencaObreiro.setDataPresenca(DateTimeUtils.obterDataCorrenteBr());
+        presencaObreiro.setObreiroPresente(true);
+    }
+
+    @Override
+    public void desmarcarPresencaDeObreiroNaLista(String cpf) {
+       PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpf);
+       presencaObreiro.setMomentoPresenca("");
+       presencaObreiro.setDataPresenca("");
+       presencaObreiro.setObreiroPresente(false);
     }
 
     @Override
     public boolean verificaObreiroNaListaPeloCPF(String cpfObreiro) {
 
-        Obreiro obreiro = this.buscarObreiroNaListaDePresenca(this.listaDePresencaObreiro, cpfObreiro, 0, this.listaDePresencaObreiro.size() - 1);
+        Obreiro obreiro = this.buscarObreiroNaListaDePresenca(this.listaDePresencaObreiro, cpfObreiro);
 
         if(obreiro != null){
             return true;
@@ -169,57 +232,41 @@ public class Reuniao implements IReuniao{
     }
 
      /**
-     * Busca por um obreiro utilizando um algoritmo de busca binária
+     * Busca por um obreiro utilizando um algoritmo de busca sequêncial
      *
      * @param listaDePresencaObreiro A lista de presença de obreiros da reunião
      * @param valorCPFProcurado O CPF do pbreiro que estamos procurando na lista
-     * @param left O indice do limite da lista à esquerda
-     * @param right O indice do limite da lista à direira
-      *
+     *
      * @return o valor procurado, se presenta na lista ou null, se
      *  não for encontrado
      */
     @Override
-    public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado, int left, int right) {
+    public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado) {
 
-        if (left > right) {
-            return null;
+        for(PresencaObreiro presencaObreiro : listaDePresencaObreiro){
+            if(presencaObreiro.getObreiro().getCpf().equals(valorCPFProcurado)){
+                return presencaObreiro.getObreiro();
+            }
         }
 
-        int middle = (left + right) / 2;
-
-        if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().equals(valorCPFProcurado)){
-            return listaDePresencaObreiro.get(middle).getObreiro();
-        } else if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().compareTo(valorCPFProcurado) > 0) {
-            return buscarObreiroNaListaDePresenca(listaDePresencaObreiro, valorCPFProcurado, left, middle - 1);
-        } else {
-            return buscarObreiroNaListaDePresenca(listaDePresencaObreiro, valorCPFProcurado, middle + 1, right);
-        }
-
+        return null;
     }
 
-    public PresencaObreiro obterPresencaDeObreiroDaLista(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado, int left, int right) {
+    public PresencaObreiro obterPresencaDeObreiroDaLista(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado) {
 
-        if (left > right) {
-            return null;
+         for(PresencaObreiro presencaObreiro : listaDePresencaObreiro){
+            if(presencaObreiro.getObreiro().getCpf().equals(valorCPFProcurado)){
+                return presencaObreiro;
+            }
         }
 
-        int middle = (left + right) / 2;
-
-        if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().equals(valorCPFProcurado)){
-            return listaDePresencaObreiro.get(middle);
-        } else if (listaDePresencaObreiro.get(middle).getObreiro().getCpf().compareTo(valorCPFProcurado) > 0) {
-            return obterPresencaDeObreiroDaLista(listaDePresencaObreiro, valorCPFProcurado, left, middle - 1);
-        } else {
-            return obterPresencaDeObreiroDaLista(listaDePresencaObreiro, valorCPFProcurado, middle + 1, right);
-        }
-
+        return null;
     }
 
     public Obreiro buscarObreiroNaListaDePresenca(String digitalObreiro) {
         //Utiliza o algoritmo de comparacao da Implementaçaõ da Interface ControleBioDeviceHardware
         //Busca sequencial
-        DispositivoBioDeviceInterface dispositivoBioApi = new ControleBioDeviceHardware();
+        DispositivoBiometricoHardware dispositivoBioApi = new ControleBioDeviceHardware();
         //TODO Refatorar - Não inicializar hardware e dispositivo aqui uma vez que estão execução nem precisa do hardware
 
         dispositivoBioApi.inicializaHardware();
@@ -227,18 +274,37 @@ public class Reuniao implements IReuniao{
         boolean obreiroEncontrado = false;
 
         for (PresencaObreiro presencaObreiro : listaDePresencaObreiro) {
-            System.out.println("Presenca = " + presencaObreiro.getObreiro().getNome());
-            System.out.println("Presenca = " + presencaObreiro.getObreiro().getIdentificacao().getImpressaoDigital());
             dispositivoBioApi.verificarMatchDigitalString(presencaObreiro.getObreiro().getIdentificacao().getImpressaoDigital(), digitalObreiro);
             obreiroEncontrado = dispositivoBioApi.isUsuarioValido();
             if (obreiroEncontrado) {
                 return presencaObreiro.getObreiro();
-
             }
         }
 
         return null;
+    }
 
+      public PresencaObreiro obterPresencaDeObreiroDaLista(String digitalObreiro) {
+        //Utiliza o algoritmo de comparacao da Implementaçaõ da Interface ControleBioDeviceHardware
+        //Busca sequencial
+        //DispositivoBiometricoHardware dispositivoBioApi = new ControleBioDeviceHardware();
+
+        ControleBiometricoUtil controleBiometricoUtil = new ControleBiometricoNBioBSPUtil();
+        //TODO Refatorar - Não inicializar hardware e dispositivo aqui uma vez que estão execução nem precisa do hardware
+
+//        dispositivoBioApi.inicializaHardware();
+//        dispositivoBioApi.abrirDispositivo();
+        boolean obreiroEncontrado = false;
+
+        for (PresencaObreiro presencaObreiro : listaDePresencaObreiro) {
+            controleBiometricoUtil.verificarMatchDigitalString(presencaObreiro.getObreiro().getIdentificacao().getImpressaoDigital(), digitalObreiro);
+            obreiroEncontrado = controleBiometricoUtil.isUsuarioValido();
+            if (obreiroEncontrado) {
+                return presencaObreiro;
+            }
+        }
+
+        return null;
     }
 
 	
@@ -248,7 +314,7 @@ public class Reuniao implements IReuniao{
 	
 	public String getDia(){
 		if(this.getData() != null && !this.getData().equals("") ){
-			return DateUtils.obterDiaDeDataBrasileira(this.getData());
+			return DateTimeUtils.obterDiaDeDataBrasileira(this.getData());
 		}
 		else{
 			return "";
@@ -257,7 +323,7 @@ public class Reuniao implements IReuniao{
 	
 	public String getMes(){
 		if(this.getData() != null && !this.getData().equals("") ){
-			return DateUtils.obterMesDeDataBrasileira(this.getData());
+			return DateTimeUtils.obterMesDeDataBrasileira(this.getData());
 		}
 		else{
 			return "";
@@ -266,7 +332,7 @@ public class Reuniao implements IReuniao{
 	
 	public String getAno(){
 		if(this.getData() != null && !this.getData().equals("") ){
-			return DateUtils.obterAnoDeDataBrasileira(this.getData());
+			return DateTimeUtils.obterAnoDeDataBrasileira(this.getData());
 		}
 		else{
 			return "";
@@ -275,7 +341,7 @@ public class Reuniao implements IReuniao{
 	
 	public String getHora(){
 		if(this.getHorario() != null && !this.getHorario().equals("") ){
-			return DateUtils.obterHora(this.getHorario());
+			return DateTimeUtils.obterHora(this.getHorario());
 		}
 		else{
 			return "";
@@ -284,7 +350,7 @@ public class Reuniao implements IReuniao{
 	
 	public String getMinuto(){
 		if(this.getHorario() != null && !this.getHorario().equals("") ){
-			return DateUtils.obterMinuto(this.getHorario());
+			return DateTimeUtils.obterMinuto(this.getHorario());
 		}
 		else{
 			return "";
@@ -343,5 +409,29 @@ public class Reuniao implements IReuniao{
 	public void setQuantidadeMaxObreirosReuniao(int quantidadeMaxObreirosReuniao) {
 		this.quantidadeMaxObreirosReuniao = quantidadeMaxObreirosReuniao;
 	}
+
+    public int getTempoEmMinutosDeTolerânciaContagemPresenca() {
+        return tempoEmMinutosDeTolerânciaContagemPresenca;
+    }
+
+    public String getHorárioDeEncerramentoEsperado() {
+        return horárioDeEncerramentoEsperado;
+    }
+
+    public void setHorárioDeEncerramentoEsperado(String horárioDeEncerramentoEsperado) {
+        this.horárioDeEncerramentoEsperado = horárioDeEncerramentoEsperado;
+    }
+
+    public String getHorárioInicioEfetivo() {
+        return horárioInicioEfetivo;
+    }
+
+    public void setHorárioInicioEfetivo(String horárioInicioEfetivo) {
+        this.horárioInicioEfetivo = horárioInicioEfetivo;
+    }
+
+
+    
+
 
 }
