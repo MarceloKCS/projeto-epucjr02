@@ -1,41 +1,43 @@
 package com.epucjr.engyos.teste;
 
-import com.epucjr.engyos.tecnologia.utilitarios.DateUtils;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
+import com.epucjr.engyos.tecnologia.utilitarios.HoraUtil;
 
 public class DateUtilTest {
 	
 	public static void main(String[] args){
-		DateUtilTest.obterDataAtual();
+		//DateUtilTest.obterDataAtual();
+                DateUtilTest.schedulerDateUtilTest();
 	}
 	
 	public static void obterDataAtual(){
 		
-		System.out.println(DateUtils.dataCorrente());
+		System.out.println(DateTimeUtils.dataCorrente());
 		
-		System.out.println(DateUtils.obterTempoCorrente());
+		System.out.println(DateTimeUtils.obterTempoCorrente());
 		
-		System.out.println(DateUtils.dataCorrenteSemTempo());
+		System.out.println(DateTimeUtils.dataCorrenteSemTempo());
 		
-		System.out.println(DateUtils.obterDataCorrenteBr());
+		System.out.println(DateTimeUtils.obterDataCorrenteBr());
 		
-		int compare = "12/10/2007".compareTo(DateUtils.obterDataCorrenteBr());
+		int compare = "12/10/2007".compareTo(DateTimeUtils.obterDataCorrenteBr());
 		
 		System.out.println("ValorMenor = " + compare);
 		
-		compare = "12/10/2015".compareToIgnoreCase(DateUtils.obterDataCorrenteBr());
+		compare = "12/10/2015".compareToIgnoreCase(DateTimeUtils.obterDataCorrenteBr());
 		
 		System.out.println("ValorMenor = " + compare);
 		
 		String dataObtida = "12/10/2007";
 		//for validator
 		
-		String diaCorrente = DateUtils.obterDiaDeDataBrasileira(DateUtils.obterDataCorrenteBr());
-		String mesCorrente = DateUtils.obterMesDeDataBrasileira(DateUtils.obterDataCorrenteBr());
-		String anoCorrente = DateUtils.obterAnoDeDataBrasileira(DateUtils.obterDataCorrenteBr());
+		String diaCorrente = DateTimeUtils.obterDiaDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String mesCorrente = DateTimeUtils.obterMesDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String anoCorrente = DateTimeUtils.obterAnoDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
 		
-		String diaObtido = DateUtils.obterDiaDeDataBrasileira(dataObtida);
-		String mesObtido = DateUtils.obterMesDeDataBrasileira(dataObtida);
-		String anoObtido = DateUtils.obterAnoDeDataBrasileira(dataObtida);
+		String diaObtido = DateTimeUtils.obterDiaDeDataBrasileira(dataObtida);
+		String mesObtido = DateTimeUtils.obterMesDeDataBrasileira(dataObtida);
+		String anoObtido = DateTimeUtils.obterAnoDeDataBrasileira(dataObtida);
 		
 		int diaCorrenteInt = Integer.parseInt(diaCorrente);
 		int mesCorrenteInt = Integer.parseInt(mesCorrente);
@@ -64,13 +66,13 @@ public class DateUtilTest {
 		}
 		
 		String horaObtida = "22:15:00";
-		String horaCorrente = DateUtils.obterHora(DateUtils.obterTempoCorrente());
-		String minutoCorrente = DateUtils.obterMinuto(DateUtils.obterTempoCorrente());
-		String segundoCorrente = DateUtils.obterSegundo(DateUtils.obterTempoCorrente());
+		String horaCorrente = DateTimeUtils.obterHora(DateTimeUtils.obterTempoCorrente());
+		String minutoCorrente = DateTimeUtils.obterMinuto(DateTimeUtils.obterTempoCorrente());
+		String segundoCorrente = DateTimeUtils.obterSegundo(DateTimeUtils.obterTempoCorrente());
 		
-		String horaObtido = DateUtils.obterHora(horaObtida);
-		String minutoObtido = DateUtils.obterMinuto(horaObtida);
-		String segundoObtido = DateUtils.obterSegundo(horaObtida);
+		String horaObtido = DateTimeUtils.obterHora(horaObtida);
+		String minutoObtido = DateTimeUtils.obterMinuto(horaObtida);
+		String segundoObtido = DateTimeUtils.obterSegundo(horaObtida);
 		
 		int horaCorrenteInt = Integer.parseInt(horaCorrente);
 		int minutoCorrenteInt = Integer.parseInt(minutoCorrente);
@@ -120,5 +122,13 @@ public class DateUtilTest {
 		
 		
 	}
+
+        public static void schedulerDateUtilTest(){
+            HoraUtil horaUtil = new HoraUtil();
+
+            System.out.println("Hora Marca Iniciada");
+            horaUtil.ReminderBeep(10);
+            System.out.println("Hora Marca Encerrada");
+        }
 
 }

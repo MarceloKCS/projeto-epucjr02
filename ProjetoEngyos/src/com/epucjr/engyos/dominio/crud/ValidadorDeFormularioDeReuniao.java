@@ -2,7 +2,7 @@ package com.epucjr.engyos.dominio.crud;
 
 import java.util.HashMap;
 
-import com.epucjr.engyos.tecnologia.utilitarios.DateUtils;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 
 public class ValidadorDeFormularioDeReuniao {
 
@@ -134,9 +134,9 @@ public class ValidadorDeFormularioDeReuniao {
 	 */
 	
 	private void validarDateFornecido(String dia, String mes, String ano){
-		String diaCorrente = DateUtils.obterDiaDeDataBrasileira(DateUtils.obterDataCorrenteBr());
-		String mesCorrente = DateUtils.obterMesDeDataBrasileira(DateUtils.obterDataCorrenteBr());
-		String anoCorrente = DateUtils.obterAnoDeDataBrasileira(DateUtils.obterDataCorrenteBr());
+		String diaCorrente = DateTimeUtils.obterDiaDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String mesCorrente = DateTimeUtils.obterMesDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String anoCorrente = DateTimeUtils.obterAnoDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
 		
 		int diaCorrenteInt = Integer.parseInt(diaCorrente);
 		int mesCorrenteInt = Integer.parseInt(mesCorrente);
@@ -184,9 +184,9 @@ public class ValidadorDeFormularioDeReuniao {
 	 */
 	
 	private void validarDateTimeFornecido(String dia, String mes, String ano, String hora, String minuto){
-		String diaCorrente = DateUtils.obterDiaDeDataBrasileira(DateUtils.obterDataCorrenteBr());
-		String mesCorrente = DateUtils.obterMesDeDataBrasileira(DateUtils.obterDataCorrenteBr());
-		String anoCorrente = DateUtils.obterAnoDeDataBrasileira(DateUtils.obterDataCorrenteBr());
+		String diaCorrente = DateTimeUtils.obterDiaDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String mesCorrente = DateTimeUtils.obterMesDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String anoCorrente = DateTimeUtils.obterAnoDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
 		
 		int diaCorrenteInt = Integer.parseInt(diaCorrente);
 		int mesCorrenteInt = Integer.parseInt(mesCorrente);
@@ -196,8 +196,8 @@ public class ValidadorDeFormularioDeReuniao {
 		int mesObtidoInt = Integer.parseInt(mes);
 		int anoObtidoInt = Integer.parseInt(ano);
 		
-		String horaCorrente = DateUtils.obterHora(DateUtils.obterTempoCorrente());
-		String minutoCorrente = DateUtils.obterMinuto(DateUtils.obterTempoCorrente());
+		String horaCorrente = DateTimeUtils.obterHora(DateTimeUtils.obterTempoCorrente());
+		String minutoCorrente = DateTimeUtils.obterMinuto(DateTimeUtils.obterTempoCorrente());
 		//String segundoCorrente = DateUtils.obterSegundo(DateUtils.obterTempoCorrente());
 		
 		int horaCorrenteInt = Integer.parseInt(horaCorrente);
