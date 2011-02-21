@@ -35,11 +35,43 @@ public interface IReuniao {
 
     public boolean verificarObreiroEstevePresenteNaReuniaoPelaSenha(String senha);
 
+    public boolean verificarObreiroEstevePresenteNaReuniaoPelaDigital(String digitalObreiro);
+
+    public void desmarcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro);
+
+    public void desmarcarPresencaDeObreiroNaLista(String cpf);
+
+    public String getDia();
+
+    public String getMes();
+
+    public String getAno();
+
+    public String getMinuto();
+
+    public String getLocal();
+
+    public String getData();
+
+    public String getHorario();
+
+    public long getIdReuniao();
+
+    public String getReuniaoStatus();  
+
+    public int getQuantidadeMaxObreirosReuniao();
+
+    public int getTempoEmMinutosDeTolerânciaContagemPresenca();
+
+    public int obterTempoDeDuracaoReuniao();
+
     //public para teste, alterar para private
 
-    public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado, int left, int right);
+    public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado);
 
     public List<PresencaObreiro> getListaDePresencaObreiro() ;
 
     public Obreiro buscarObreiroNaListaDePresenca(String digitalObreiro);
+
+   
 }

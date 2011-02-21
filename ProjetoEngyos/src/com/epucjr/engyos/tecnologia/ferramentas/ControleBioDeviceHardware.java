@@ -8,9 +8,9 @@ import com.nitgen.SDK.BSP.NBioBSPJNI;
 
 /**
  *
- * @author Rogerio
+ * @author Projeto Engyos Team
  */
-public class ControleBioDeviceHardware implements DispositivoBioDeviceInterface{
+public class ControleBioDeviceHardware implements DispositivoBiometricoHardware{
 
     private NBioBSPJNI nBioBSPJNI;
     private NBioBSPJNI.DEVICE_ENUM_INFO device_enum_info;
@@ -53,9 +53,14 @@ public class ControleBioDeviceHardware implements DispositivoBioDeviceInterface{
 
         if (isHardwareInicializado()) {
             //Abre o dispositivo
+        try{
             nBioBSPJNI.OpenDevice(device_enum_info.DeviceInfo[0].NameID, device_enum_info.DeviceInfo[0].Instance);
+        }catch(NullPointerException ex){
+            //TODO put in Log
+             this.setHardwareInicializado(false);
+        }
         } else {
-            this.setMensagemStatus("Ocorreu erro de hardware ou hardware n√£o inicializado");
+            this.setMensagemStatus("Ocorreu erro de hardware ou hardware n„o inicializado");
         }
 
     }
