@@ -56,6 +56,7 @@ public class Main extends Applet {
         try {
             System.out.println(getParameter("idReuniao"));
             idReuniao = Integer.parseInt(getParameter("idReuniao"));
+            //TODO localização do servlet
             URL url = new URL(getCodeBase(), "/applet/ServletControler");
             sdm = new ServletDataManager(url);
         } catch(NumberFormatException e) {

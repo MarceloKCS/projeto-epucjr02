@@ -46,9 +46,9 @@ public class Digital {
             deviceEnumInfo.DeviceInfo[0].Instance);
             bsp.dispose();
         } catch(java.lang.UnsatisfiedLinkError e) {
-
+            capt = 1;
         } catch(java.lang.NoClassDefFoundError e) {
-
+            capt = 1;
         }
 
         if (capt == 513) r = "-1";
