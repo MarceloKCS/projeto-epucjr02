@@ -118,12 +118,46 @@ public class ReuniaoTest {
 
         List<PresencaObreiro> listPresencaObreiro = reuniao.getListaDePresencaObreiro();
 
-        Obreiro obreiro = reuniao.buscarObreiroNaListaDePresenca(listPresencaObreiro, cPFProcurado, 0, listPresencaObreiro.size() - 1);
+        Obreiro obreiro = reuniao.buscarObreiroNaListaDePresenca(listPresencaObreiro, cPFProcurado);
 
         Obreiro obreiroEsperado = new Obreiro("Carlos Neves", "Publicitário", "55744297734", congregacao, identificacao1);
 
         assertEquals(obreiroEsperado, obreiro);
 
     }
+
+    @Test
+    public void verificarQuantidadeDeObreirosPresentes(){
+        //Inicializa a lista de presença
+        this.inicializarListaDePresenca();
+
+        //Pego três obreiros da lista e marco como presente
+        String cpf1, cpf2, cpf3;
+        cpf1 = "55744297734";
+        cpf2 = "32455558657";
+        cpf3 = "51247712320";
+
+        reuniao.marcarPresencaDeObreiroNaListaPeloCPF(cpf1);
+        reuniao.marcarPresencaDeObreiroNaListaPeloCPF(cpf2);
+        reuniao.marcarPresencaDeObreiroNaListaPeloCPF(cpf3);
+
+        int qtdPresentes = reuniao.obterTotalDePresentesNaReunião();
+
+        assertEquals(3, qtdPresentes);
+    }
+
+    @Test
+    public void obterTempoDeDuracaoDaReuniao(){
+        int tempoDeDuracao = reuniao.obterTempoDeDuracaoReuniao();
+
+        boolean tempoContabilizado = false;
+
+        if(tempoDeDuracao > 0){
+            tempoContabilizado = true;
+        }
+
+        assertTrue(tempoContabilizado);
+    }
+
 
 }

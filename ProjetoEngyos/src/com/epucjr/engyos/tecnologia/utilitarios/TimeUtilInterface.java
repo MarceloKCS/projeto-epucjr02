@@ -7,4 +7,7 @@ package com.epucjr.engyos.tecnologia.utilitarios;
  */
 public interface TimeUtilInterface {
 
+    public boolean verificarTempoEncerrado();
+
+
 }
