@@ -1,4 +1,4 @@
-package marcapresenca;
+package App;
 
 /*
  * To change this template, choose Tools | Templates
@@ -6,12 +6,17 @@ package marcapresenca;
  */
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,25 +24,16 @@ import java.net.URLConnection;
  */
 public class ServletDataManager implements InterfaceDataManager {
 
-    URL url;
-    /**
-     * Construtor
-     * @param url url do servlet
-     */
+    URL r;
     public ServletDataManager(URL r) {
-        this.url = r;
+        this.r = r;
     }
 
-    /**
-     * inicia conexao
-     * @param urlServlet localizaçao do servlet
-     * @return
-     */
     public URLConnection conectar() {
         URLConnection urlConn = null;
 
         try {
-            urlConn = url.openConnection();
+            urlConn = r.openConnection();
             urlConn.setDoInput(true);
             urlConn.setDoOutput(true);
             urlConn.setUseCaches(false);
@@ -52,38 +48,50 @@ public class ServletDataManager implements InterfaceDataManager {
         return urlConn;
     }
 
-    public String marcarPresencaDigital(long idReuniao, String digital) {
-        URLConnection urlConn = conectar();
+    public String marcarPresenca(long idReuniao, String senha) {
+        URLConnection urlConn = conectar();//http://localhost:8080/MyServlet
 
         try {
-            //inicia o buffer out
             ObjectOutputStream objectOutputStream;
             objectOutputStream = new ObjectOutputStream(urlConn.getOutputStream());
-
-            //escreve o comando
-            objectOutputStream.writeUTF("marcarPresencaDigital");
-
-            //escreve o id da reuniao q foi selecionada, isso deve ser passado via jsp/param
+            objectOutputStream.writeUTF("marcarPresencaSenha");
             objectOutputStream.writeLong(idReuniao);
-
-            //escreve a digital em utf
-            objectOutputStream.writeUTF(digital);
-
+            objectOutputStream.writeUTF(senha);
             objectOutputStream.flush();
             objectOutputStream.close();
 
             String nome;
-            //inicia o buffer in
             ObjectInputStream objectInputStream = new ObjectInputStream(urlConn.getInputStream());
-
-            //pega o nome do obreiro da digital, "" caso n tenha encontrado
             nome = objectInputStream.readUTF();
 
             objectInputStream.close();
 
             return nome;//"" caso n tenha encontrado
         } catch (IOException ex) {
-            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public String marcarPresencaDigital(long idReuniao, String digital) {
+        URLConnection urlConn = conectar();//http://localhost:8080/MyServlet
+
+        try {
+            ObjectOutputStream objectOutputStream;
+            objectOutputStream = new ObjectOutputStream(urlConn.getOutputStream());
+            objectOutputStream.writeUTF("marcarPresencaDigital");
+            objectOutputStream.writeLong(idReuniao);
+            objectOutputStream.writeUTF(digital);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+
+            String nome;
+            ObjectInputStream objectInputStream = new ObjectInputStream(urlConn.getInputStream());
+            nome = objectInputStream.readUTF();
+
+            objectInputStream.close();
+
+            return nome;//"" caso n tenha encontrado
+        } catch (IOException ex) {
             return null;
         }
     }

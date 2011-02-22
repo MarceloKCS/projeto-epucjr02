@@ -9,6 +9,8 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionLogin;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaDigital;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaSenha;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroEditCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroEditPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroFindCommand;
@@ -57,7 +59,11 @@ public class CommandFactory {
 		mapaCommand.put("buscar_congregacao", new ActionCongregacaoFindCommand());
 		mapaCommand.put("buscar_reuniao", new ActionReuniaoFindCommand());
 		mapaCommand.put("RegistrarDigital", new ActionCommandCapturarDigital());
+		//login
 		mapaCommand.put("ActionLogin", new ActionLogin());
+		//marcar presenca
+		mapaCommand.put("marcarPresencaDigital", new ActionMarcarPresencaDigital());
+		mapaCommand.put("marcarPresencaSenha", new ActionMarcarPresencaSenha());
 	}
 
 }
