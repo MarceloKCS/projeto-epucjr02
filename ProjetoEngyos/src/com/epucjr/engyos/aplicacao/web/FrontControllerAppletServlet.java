@@ -58,6 +58,9 @@ public class FrontControllerAppletServlet extends HttpServlet {
 		String resposta = (String) comando.execute(request, response, objectInputStream, objectOutputStream);		
 		
 		System.out.println("resposta = " + resposta);
+		
+		objectInputStream.close();
+		objectOutputStream.close();
 		//response.setContentType("text/plain");
 		//objectOutputStream.write(resposta.getBytes());
 		/*String viewJsp = viewFactory.getView(acao, resposta);
