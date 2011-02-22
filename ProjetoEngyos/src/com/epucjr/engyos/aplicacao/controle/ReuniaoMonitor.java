@@ -11,30 +11,33 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
 
     private PaginaDeReuniao paginaDeReuniao;
     private boolean operacaoExecutada;
+    private IReuniao reuniao;
 
-
-    public ReuniaoMonitor() {
+    public ReuniaoMonitor(IReuniao reuniao) {
             paginaDeReuniao = new PaginaDeReuniao();
+            this.reuniao = reuniao;
             this.operacaoExecutada = false;
     }
 
     @Override
-    public void inicializaReuniao(IReuniao reuniao) {
+    public void inicializaReuniao() {
 
-       this.paginaDeReuniao.carregarDadosDaPagina(reuniao.getData() , reuniao.getLocal(), reuniao.getHorario());
+       this.paginaDeReuniao.carregarDadosDaPagina(this.reuniao.getData() , this.reuniao.getLocal(), this.reuniao.getHorario(), this.reuniao.getIdReuniao());
 
        
     }
 
     @Override
     public PaginaDeReuniao obterPaginaDeReuniaoInicializada() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.paginaDeReuniao;
     }
 
 
 
     @Override
-    public void marcarPresencaPelaDigital() {
+    public void marcarPresencaPelaDigital(String impressaoDigital) {
+
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

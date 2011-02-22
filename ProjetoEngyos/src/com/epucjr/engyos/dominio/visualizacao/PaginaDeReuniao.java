@@ -65,13 +65,12 @@ public class PaginaDeReuniao {
        
     }
 
-    public void carregarDadosDaPagina(String data, String local, String horarioDeInicio, String horarioFinal, String mensagemDeAviso){
+    public void carregarDadosDaPagina(String data, String local, String horarioDeInicio, long idReuniao){
         this.setData(data);
         this.setTempoDeInicio(horarioDeInicio);
         this.setLocal(local);
         this.setTempoDeInicio(horarioDeInicio);
-        this.setTempoFinal(horarioFinal);
-        this.setMensagemDeAviso(mensagemDeAviso);
+               
 
         this.setDia(DateTimeUtils.obterDiaDeDataBrasileira(data));
         this.setMes(DateTimeUtils.obterMesDeDataBrasileira(data));
@@ -81,8 +80,7 @@ public class PaginaDeReuniao {
         this.setMinuto(DateTimeUtils.obterMinuto(horarioDeInicio));
         this.setSegundo(DateTimeUtils.obterSegundo(horarioDeInicio));
 
-        this.setHoraFinal(DateTimeUtils.obterHora(horarioFinal));
-        this.setMinutoFinal(DateTimeUtils.obterMinuto(horarioFinal));
+        this.setIdReuniao(idReuniao);
 
     }
 
@@ -90,7 +88,7 @@ public class PaginaDeReuniao {
         return idReuniao;
     }
 
-    public void setIdReuniao(long idReuniao) {
+    private void setIdReuniao(long idReuniao) {
         this.idReuniao = idReuniao;
     }
 
