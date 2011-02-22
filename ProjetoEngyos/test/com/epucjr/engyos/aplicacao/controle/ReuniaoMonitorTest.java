@@ -79,9 +79,9 @@ public class ReuniaoMonitorTest {
     public void iniciarUmaReuniaoAgendadaPeloUsuario() {
         this.inicializarListaDePresenca();
 
-        reuniaoMonitor = new ReuniaoMonitor();
+        reuniaoMonitor = new ReuniaoMonitor(reuniao);
 
-        reuniaoMonitor.inicializaReuniao(reuniao);
+        reuniaoMonitor.inicializaReuniao();
 
 
         assertTrue(reuniaoMonitor.isOperacaoExecutada());
