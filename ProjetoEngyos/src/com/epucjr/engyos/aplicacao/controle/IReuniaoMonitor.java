@@ -9,11 +9,11 @@ import com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao;
  */
 
 public interface IReuniaoMonitor {
-    public void marcarPresencaPelaDigital();
+    public void marcarPresencaPelaDigital(String impressaoDigital);
 
     public void marcarPresencaPeloCPF();
 
-    public void inicializaReuniao(IReuniao reuniao);
+    public void inicializaReuniao();
 
     public PaginaDeReuniao obterPaginaDeReuniaoInicializada();
 
