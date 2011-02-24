@@ -123,16 +123,15 @@ public class ValidadorDeFormularioDeReuniao {
 		}
 		
 	}
+
 	/**
-	 * 
+	 * Validador de data, que a partir dos parametros inseridos verifica se
+	 * o evento verificado ocorre em uma data que não seja menor que a data corrente
+         * 
 	 * @param dia
 	 * @param mes
 	 * @param ano
-	 * 
-	 * Validador de data, que a partir dos parametros inseridos verifica se 
-	 * o evento verificado ocorre em uma data que não seja menor que a data corrente
 	 */
-	
 	private void validarDateFornecido(String dia, String mes, String ano){
 		String diaCorrente = DateTimeUtils.obterDiaDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
 		String mesCorrente = DateTimeUtils.obterMesDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
@@ -145,8 +144,6 @@ public class ValidadorDeFormularioDeReuniao {
 		int diaObtidInto = Integer.parseInt(dia);
 		int mesObtidoInt = Integer.parseInt(mes);
 		int anoObtidoInt = Integer.parseInt(ano);
-		
-		
 				
 		boolean dataValida = false;
 		
@@ -167,20 +164,17 @@ public class ValidadorDeFormularioDeReuniao {
 			this.definirCampoComErro("Data", "Data Inválida, é menor que a data corrente");
 			this.setFormularioValido(false);
 		}
-		
-				
 	}
 	
 	/**
+         * Método que verifica a hora registrada caso o evento marcado seja na data corrente,
+	 * e marca um aviso ao relatório caso o evento seja marcado em um horário menor que o horário corrente
 	 * 
 	 * @param dia
 	 * @param mes
 	 * @param ano
 	 * @param hora
 	 * @param minuto
-	 * 
-	 * Método que verifica a hora registrada caso o evento marcado seja na data corrente,
-	 * e marca um aviso ao relatório caso o evento seja marcado em um horário menor que o horário corrente
 	 */
 	
 	private void validarDateTimeFornecido(String dia, String mes, String ano, String hora, String minuto){

@@ -18,4 +18,6 @@ public interface IReuniaoMonitor {
     public PaginaDeReuniao obterPaginaDeReuniaoInicializada();
 
     public boolean isOperacaoExecutada();
+
+        public String getMensagemStatus();
 }

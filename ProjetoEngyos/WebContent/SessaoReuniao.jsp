@@ -3,8 +3,14 @@
     Created on : 20/02/2011, 22:49:56
     Author     : Rogerio
 --%>
-<%@page import="java.util.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao" %>
 <%@page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
+
+<%
+PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("paginaDeReuniao");
+
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -157,16 +163,42 @@
 
                 <form method="post" name="timeform" action="#">
 
-                    <label>Inicio de Raunião:</label> <input type="text" name="Inicio" value="13:00" readonly disabled>
-                    <br/>
-                    <br/>
-                    Tempo de Reunião: <input type=text name="timetextarea" value="00:00" size="10" style = "font-size:20px">
-                    <!-- Lap:<input type=text name="laptime" size="10" style = "font-size:20px">-->
-                    <br/>
-                    <br/>
-                    <input type=button name="start" value="Iniciar" onclick="time_start()">
-                    <input type=button name="stop" value="Parar" onclick="Stop()">
-                    <input type=button name="reset" value="Reset" onclick="Reset()">
+                    <div id="colunaE">
+                        <h2>Dados da Reunião</h2>
+                        <br/>
+                        <label>Inicio de Reunião:</label> <input type="text" name="Inicio" value="<%out.print(paginaDeReuniao != null ? paginaDeReuniao.getTempoDeInicio() : "");%>" readonly disabled>
+                        <br/>
+                        <br/>
+                        <label>Local: </label><%out.print(paginaDeReuniao != null ? paginaDeReuniao.getLocal() : "");%>
+                        <br/>
+                        <br/>
+                        
+                        Tempo de Reunião: <input type=text name="timetextarea" value="00:00" size="10" style = "font-size:15px">
+
+                        <!-- Lap:<input type=text name="laptime" size="10" style = "font-size:20px">-->
+                        <input type="hidden" name="idReuniao" value="<%out.print(paginaDeReuniao != null ? paginaDeReuniao.getIdReuniao() : "");%>">
+                        <div id="status">
+                            
+                        </div>
+                        <br/>
+                        <br/>
+                        <input type=button name="start" value="Iniciar" onclick="time_start()">
+                        <input type=button name="stop" value="Parar" onclick="Stop()">
+                        <input type=button name="reset" value="Reset" onclick="Reset()">
+
+                    </div>
+
+                    <div id="colunaD">
+                        <h2>Marcar Presença</h2>
+                        <br/>
+                        <label for="cpf">CPF</label>                        
+                        <input type="text" name="cpf" value="" id="cpf" size="35"/>
+                        <input type="button" name="acao" value="Marcar Presença"/>
+                         <div id="digital">
+
+                        </div>
+                    </div>
+
                 </form>
 
 

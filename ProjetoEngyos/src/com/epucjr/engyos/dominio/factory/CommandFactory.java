@@ -17,6 +17,7 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterPageLoader;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterPageLoader;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoStartPageLoader;
 
 
 public class CommandFactory {
@@ -57,7 +58,9 @@ public class CommandFactory {
 		mapaCommand.put("buscar_congregacao", new ActionCongregacaoFindCommand());
 		mapaCommand.put("buscar_reuniao", new ActionReuniaoFindCommand());
 		mapaCommand.put("RegistrarDigital", new ActionCommandCapturarDigital());
+                mapaCommand.put("iniciar_reuniao", new ActionReuniaoStartPageLoader());
 		mapaCommand.put("ActionLogin", new ActionLogin());
 	}
 
 }
+//iniciar_reuniao

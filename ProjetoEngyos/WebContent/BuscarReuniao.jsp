@@ -47,6 +47,7 @@
 						<th>Local</th>
 						<th>Editar</th>
 						<th>Excluir</th>
+                                                <th>Reunião</th>
 					</tr>
 				
 				<%
@@ -59,8 +60,9 @@
 						<td><% out.println(reuniao.getDia()+"/"+reuniao.getMes()+"/"+reuniao.getAno()+"</a>"); %></td>
 						<td><% out.println(reuniao.getHora()+":"+reuniao.getMinuto());%></td>
 						<td><% out.println(reuniao.getLocal()); %></td>
-						<td><a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
+						<td><a href="Controller?acao=alterarDados&idReuniao= <%out.print(reuniao.getIdReuniao());%> "><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
 						<td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a></td>
+                                                <td><a href="Controller?acao=iniciar_reuniao&idReuniao= <%out.print(reuniao.getIdReuniao());%> "><img src="imagens/reuniao.png" width="18" height="18" title="Iniciar Reunião"/></a></td>
 					</tr>
 				<% 
 				countVisual++;

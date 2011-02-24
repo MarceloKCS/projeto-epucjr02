@@ -244,6 +244,12 @@ div#conteudo {
 	div#conteudo div#colunaD h2.proximasReunioes {
 		margin-right: 30px;
 	}
+        div#conteudo div#colunaE div#status{
+                height: 75px;
+        }
+        div#conteudo div#colunaE div#digital{
+                height: 75px;
+        }
 	
 /* Div Rodapé */
 div#rodape {

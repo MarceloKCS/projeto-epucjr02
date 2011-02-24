@@ -315,10 +315,90 @@ public class DateTimeUtils {
 		}
 
 		return idade;
-
-
-
 	}
+
+
+        /**
+	 * Validador de data, que a partir dos parametros inseridos verifica se
+	 * o evento verificado ocorre em uma data que não seja menor que a data corrente
+         *
+	 * @param dia O dia da data fornecida a ser verificada
+	 * @param mes O mes da data fornecida a ser verificada
+	 * @param ano O ano da data fornecida a ser verificada
+	 */
+	public static boolean verificarDataMaiorQueDataCorrente(String dia, String mes, String ano){
+		String diaCorrente = DateTimeUtils.obterDiaDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String mesCorrente = DateTimeUtils.obterMesDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String anoCorrente = DateTimeUtils.obterAnoDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+
+		int diaCorrenteInt = Integer.parseInt(diaCorrente);
+		int mesCorrenteInt = Integer.parseInt(mesCorrente);
+		int anoCorrenteInt = Integer.parseInt(anoCorrente);
+
+		int diaObtidInto = Integer.parseInt(dia);
+		int mesObtidoInt = Integer.parseInt(mes);
+		int anoObtidoInt = Integer.parseInt(ano);
+
+		boolean dataValida = false;
+
+		if(anoObtidoInt > anoCorrenteInt){
+			dataValida = true;
+		}
+		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt > mesCorrenteInt)){
+			dataValida = true;
+		}
+		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt == mesCorrenteInt) && (diaObtidInto > diaCorrenteInt)){
+			dataValida = true;
+		}
+		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt == mesCorrenteInt) && (diaObtidInto == diaCorrenteInt)){
+			dataValida = true;
+		}
+
+		return dataValida;
+	}
+
+        /**
+	 * Validador de data, que a partir dos parametros inseridos verifica se
+	 * o evento verificado ocorre em uma data que não seja menor que a data corrente
+         *
+	 * @param data A data no formato DD/MM/AAAA a ser verificada
+	 */
+	public static boolean verificarDataMaiorQueDataCorrente(String data){
+
+                String dia = DateTimeUtils.obterDiaDeDataBrasileira(data);
+                String mes = DateTimeUtils.obterMesDeDataBrasileira(data);
+		String ano = DateTimeUtils.obterAnoDeDataBrasileira(data);
+
+		String diaCorrente = DateTimeUtils.obterDiaDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String mesCorrente = DateTimeUtils.obterMesDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+		String anoCorrente = DateTimeUtils.obterAnoDeDataBrasileira(DateTimeUtils.obterDataCorrenteBr());
+
+		int diaCorrenteInt = Integer.parseInt(diaCorrente);
+		int mesCorrenteInt = Integer.parseInt(mesCorrente);
+		int anoCorrenteInt = Integer.parseInt(anoCorrente);
+
+		int diaObtidInto = Integer.parseInt(dia);
+		int mesObtidoInt = Integer.parseInt(mes);
+		int anoObtidoInt = Integer.parseInt(ano);
+
+		boolean dataValida = false;
+
+		if(anoObtidoInt > anoCorrenteInt){
+			dataValida = true;
+		}
+		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt > mesCorrenteInt)){
+			dataValida = true;
+		}
+		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt == mesCorrenteInt) && (diaObtidInto > diaCorrenteInt)){
+			dataValida = true;
+		}
+		else if((anoObtidoInt == anoCorrenteInt) && (mesObtidoInt == mesCorrenteInt) && (diaObtidInto == diaCorrenteInt)){
+			dataValida = true;
+		}
+
+		return dataValida;
+	}
+
 
 }
 

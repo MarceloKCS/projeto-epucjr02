@@ -61,6 +61,8 @@ public class ViewFactory {
                 this.adicionaView("obreiro_editer", "Operação Realizada com Sucesso!", "EditarObreiro.jsp");
 		this.adicionaView("obreiro_editer", "Erro interno na operação", "EditarObreiro.jsp");
 
+                this.adicionaView("iniciar_reuniao", "Reuniao Inicializada", "SessaoReuniao.jsp");
+                this.adicionaView("iniciar_reuniao", "Erro na Inicialização", "SessaoReuniao.jsp");
 
 		this.adicionaView("ActionLogin", "Sucesso Login", "Principal.jsp");
 		this.adicionaView("ActionLogin", "Erro Login", "TelaLogin.jsp");

@@ -58,7 +58,7 @@ public class DataAccessObjectManager {
 				}
 				entityManager.persist(generico);		
 				transaction.commit();
-				entityManager.close();
+				//entityManager.close();
 				this.setOperacaoEfetuada(true);
 				this.setMensagemStatus("Operação Realizada com Sucesso!");
 			}catch(Exception e){
@@ -222,7 +222,7 @@ public class DataAccessObjectManager {
 				}
 				entityManager.remove(generico);		
 				transaction.commit();
-				entityManager.close();
+				//entityManager.close();
 				this.setOperacaoEfetuada(true);
 				this.setMensagemStatus("Operação Realizada com Sucesso!");
 			}catch(Exception e){

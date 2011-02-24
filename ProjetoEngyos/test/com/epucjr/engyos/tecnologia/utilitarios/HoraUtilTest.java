@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 /**
  *
- * @author Rogerio
+ * @author Projeto Engyos
  */
 public class HoraUtilTest {
 
