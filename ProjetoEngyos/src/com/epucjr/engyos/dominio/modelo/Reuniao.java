@@ -307,10 +307,44 @@ public class Reuniao implements IReuniao{
         return null;
     }
 
+    /**
+     * Obtém um obreiro da lista de presença
+     *
+     * @param impressaoDigital A impressão digital do obreiro
+     * @return O obreiro da lista, devolve null se o obreiro não está na lista
+     */
+    @Override
+    public Obreiro obterObreiroDaListaPelaDigital(String impressaoDigital) {
+        if(this.verificaObreiroNaListaPelaDigital(impressaoDigital)){
+            return this.buscarObreiroNaListaDePresenca(impressaoDigital);
+        }
+        else{
+            return null;
+        }
+    }
+
+    /**
+     * Obtém um obreiro da lista de presença
+     *
+     * @param cpfObreiro O CPF do obreiro
+     * @return O obreiro da lista, devolve null se o obreiro não está na lista
+     */
+    @Override
+    public Obreiro obterObreiroDaListaPeloCPF(String cpfObreiro) {
+        if(this.verificaObreiroNaListaPeloCPF(cpfObreiro)){
+            return this.buscarObreiroNaListaDePresenca(this.listaDePresencaObreiro, cpfObreiro);
+        }
+        else{
+            return null;
+        }
+    }
+
 	
 	/******************************
 	 *	GETTERS AND SETTERS
 	 ******************************/
+
+
 	
 	public String getDia(){
 		if(this.getData() != null && !this.getData().equals("") ){

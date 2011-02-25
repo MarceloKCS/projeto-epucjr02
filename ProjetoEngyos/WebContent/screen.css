@@ -245,7 +245,11 @@ div#conteudo {
 		margin-right: 30px;
 	}
         div#conteudo div#colunaE div#status{
+                margin-top: 15px;
+                padding-left: 15px;
+                padding-top: 15px;
                 height: 75px;
+                color: red;
         }
         div#conteudo div#colunaE div#digital{
                 height: 75px;

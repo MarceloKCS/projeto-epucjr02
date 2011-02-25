@@ -19,7 +19,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Reuniões - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
-
+        <script type='text/javascript' src="javascript/jquery-1.5.1.min.js"></script>
         <script type="text/javascript"> 
             
             var timercount = 0;
@@ -144,7 +144,16 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
             }
 
         </script>
-       
+
+        <script type="text/javascript">
+            $(document).ready(function() {                        // When the HTML DOM is ready loading, then execute the following function...
+                $('#acao_button').click(function() {               // Locate HTML DOM element with ID "somebutton" and assign the following function to its "click" event...
+                    $.get('frontcontrollerajax?acao=marcar_presenca_cpf&cpf=' + $('#cpf').val() + '&idReuniao=' + $('#idReuniao').val(), function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                        $('#status').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+                    });
+                });
+            });
+        </script>
     </head>
     <body id="reuniao">
 
@@ -176,7 +185,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         Tempo de Reunião: <input type=text name="timetextarea" value="00:00" size="10" style = "font-size:15px">
 
                         <!-- Lap:<input type=text name="laptime" size="10" style = "font-size:20px">-->
-                        <input type="hidden" name="idReuniao" value="<%out.print(paginaDeReuniao != null ? paginaDeReuniao.getIdReuniao() : "");%>">
+                        <input type="hidden" name="idReuniao" id="idReuniao" value="<%out.print(paginaDeReuniao != null ? paginaDeReuniao.getIdReuniao() : "");%>">
                         <div id="status">
                             
                         </div>
@@ -193,7 +202,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         <br/>
                         <label for="cpf">CPF</label>                        
                         <input type="text" name="cpf" value="" id="cpf" size="35"/>
-                        <input type="button" name="acao" value="Marcar Presença"/>
+                        <input type="button" id="acao_button" name="acao" value="Marcar Presença"/>
                          <div id="digital">
 
                         </div>
