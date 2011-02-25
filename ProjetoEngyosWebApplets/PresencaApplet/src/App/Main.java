@@ -12,18 +12,13 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Label;
 import java.awt.Point;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
 
 /**
  *
@@ -74,18 +69,17 @@ public class Main extends Applet {
         botaoDigital.setBounds(16, 64, getWidth()/2 - 24, 24);
         botaoDigital.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                marcarPresencaDigital();
+                iniciarLoop();
             }
         });
         add(botaoDigital);
 
         try {
-//            System.out.println(getParameterInfo()[0][0]);
-            System.out.println(getParameter("idReuniao"));
             idReuniao = Integer.parseInt(getParameter("idReuniao"));
-            //TODO
-//            URL url = new URL(getCodeBase(), "/ProjetoBiometria/ServletControler");
-            URL url = new URL("http://localhost:8080/ProjetoBiometria/ServletControler");
+
+            String host = getCodeBase().toString().split(getCodeBase().getPath())[0];
+            URL url = new URL(new URL(host), "AppletController");
+
             sdm = new ServletDataManager(url);
         } catch(NumberFormatException e) {
             cor = Color.red;
@@ -99,7 +93,23 @@ public class Main extends Applet {
             resposta = "Erro no servidor!!!";
         }
 
-        // TODO start asynchronous download of heavy resources
+        botaoDigital.setEnabled(acao <= 0);
+        senha.setEnabled(acao <= 0);
+
+    }
+
+    public void iniciarLoop() {
+        botaoDigital.setEnabled(false);
+        if (acao == -1) acao = 0;
+        while(acao == 0) {
+            marcarPresencaDigital();
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException ex) {
+                continue;
+            }
+        }
+        botaoDigital.setEnabled(acao <= 0);
     }
 
     Color cor;
@@ -122,7 +132,7 @@ public class Main extends Applet {
     }
 
     public void marcarPresenca() {
-        if (acao == 0) {
+        if (acao <= 0) {
             String nome = sdm.marcarPresenca(idReuniao, senha.getText());
             if (nome == null) {
                 cor = Color.red;
@@ -141,7 +151,7 @@ public class Main extends Applet {
     }
 
     public void marcarPresencaDigital() {
-        if (acao == 0) {
+        if (acao <= 0) {
             String nome = Digital.getNome(idReuniao, sdm);
             if (nome == null) {
                 cor = Color.red;
@@ -153,8 +163,10 @@ public class Main extends Applet {
             } else if (nome.equals("-2")) {
                 cor = Color.red;
                 resposta = "Erro no equipamento !!!";
+                acao = -1;
             } else if (nome.equals("-1")) {
                 resposta = "";
+                acao = -1;
             }
         }
         senha.setText("");
