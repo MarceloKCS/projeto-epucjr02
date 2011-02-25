@@ -41,6 +41,10 @@ public interface IReuniao {
 
     public void desmarcarPresencaDeObreiroNaLista(String cpf);
 
+    public Obreiro obterObreiroDaListaPeloCPF(String cpfObreiro);
+
+    public Obreiro obterObreiroDaListaPelaDigital(String impressaoDigital);
+
     public String getDia();
 
     public String getMes();

@@ -1,6 +1,5 @@
 package com.epucjr.engyos.aplicacao.controle;
 
-import com.epucjr.engyos.dominio.modelo.IReuniao;
 import com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao;
 
 /**
@@ -11,7 +10,7 @@ import com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao;
 public interface IReuniaoMonitor {
     public void marcarPresencaPelaDigital(String impressaoDigital);
 
-    public void marcarPresencaPeloCPF();
+    public void marcarPresencaPeloCPF(String cpfObreiro);
 
     public void inicializaReuniao();
 
@@ -19,5 +18,5 @@ public interface IReuniaoMonitor {
 
     public boolean isOperacaoExecutada();
 
-        public String getMensagemStatus();
+    public String getMensagemStatus();
 }

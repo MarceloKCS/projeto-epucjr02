@@ -1,6 +1,7 @@
 package com.epucjr.engyos.aplicacao.controle;
 
 import com.epucjr.engyos.dominio.modelo.IReuniao;
+import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
@@ -84,13 +85,59 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
     @Override
     public void marcarPresencaPelaDigital(String impressaoDigital) {
 
-
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Marca presença de obreiro - verificações > Overhead :-(
+     * @param cpfObreiro O cpf do obreiro
+     *
+     * @see DataAccessObjectManager#mergeDataObjeto(java.lang.Object)
+     * @see Obreiro
+     * @see Reuniao#verificaObreiroNaListaPeloCPF(java.lang.String)
+     * @see Reuniao#verificarObreiroEstevePresenteNaReuniao(java.lang.String)
+     * @see Reuniao#marcarPresencaDeObreiroNaListaPeloCPF(java.lang.String) 
+     */
     @Override
-    public void marcarPresencaPeloCPF() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void marcarPresencaPeloCPF(String cpfObreiro) {
+
+        //Para persistência imediata da presença pois a reunião não está persistente na seção
+
+        DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+
+        if (this.reuniao.verificaObreiroNaListaPeloCPF(cpfObreiro)) {
+
+            if(!this.reuniao.verificarObreiroEstevePresenteNaReuniao(cpfObreiro)){
+                this.reuniao.marcarPresencaDeObreiroNaListaPeloCPF(cpfObreiro);
+
+                Obreiro obreiroPresente = this.reuniao.obterObreiroDaListaPeloCPF(cpfObreiro);
+
+                dataAccessObjectManager.mergeDataObjeto(this.reuniao);
+
+                if(dataAccessObjectManager.isOperacaoEfetuada()){
+                    this.setMensagemStatus("Presença de " + obreiroPresente.getNome() + " marcada");
+                    this.setOperacaoExecutada(true);
+                }
+                else{
+                    this.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+                    this.setOperacaoExecutada(false);
+                }
+
+                
+            }
+            else{
+                Obreiro obreiroPresente = this.reuniao.obterObreiroDaListaPeloCPF(cpfObreiro);
+                this.setMensagemStatus("Presença de " + obreiroPresente.getNome() + " já foi marcada");
+            }
+
+            
+        }
+        else{
+            this.setMensagemStatus("Obreiro não se encontra na lista...");
+            this.setOperacaoExecutada(false);
+        }
+
+
     }
 
     @Override

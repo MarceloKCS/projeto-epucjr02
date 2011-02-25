@@ -61,7 +61,7 @@ public class ReuniaoMonitorTest {
         identificacao6 = new Identificacao("b1h9ar41b98j749841bht4jh98e45et1nq9qb19t", "alaska");
         obreiro6 = new Obreiro("CASAMA", "MIRAI", "51247712320", congregacao3, identificacao6);
 
-        reuniao = new Reuniao("Na minha casa", "17/02/2010", "18:00");
+        reuniao = new Reuniao("Na minha casa", "28/02/2011", "18:00:00");
 
     }
 
@@ -87,4 +87,5 @@ public class ReuniaoMonitorTest {
         assertTrue(reuniaoMonitor.isOperacaoExecutada());
         
     }
+
 }

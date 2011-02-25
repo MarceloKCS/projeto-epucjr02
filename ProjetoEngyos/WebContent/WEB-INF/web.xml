@@ -194,6 +194,16 @@
         <servlet-name>FrontControllerAppletServlet</servlet-name>
         <url-pattern>/AppletController</url-pattern>
     </servlet-mapping>
+
+     <servlet>
+        <servlet-name>frontcontrollerajax</servlet-name>
+        <servlet-class>com.epucjr.engyos.aplicacao.web.FrontControllerAjaxServlet</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>frontcontrollerajax</servlet-name>
+        <url-pattern>/frontcontrollerajax/*</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <description/>
         <display-name>TesteServlet</display-name>
@@ -203,5 +213,14 @@
     <servlet-mapping>
         <servlet-name>TesteServlet</servlet-name>
         <url-pattern>/TesteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>someservlet</display-name>
+        <servlet-name>someservlet</servlet-name>
+        <servlet-class>com.epucjr.engyos.aplicacao.web.SomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>someservlet</servlet-name>
+        <url-pattern>/someservlet/*</url-pattern>
     </servlet-mapping>
 </web-app>
