@@ -253,6 +253,8 @@ div#conteudo {
         }
         div#conteudo div#colunaE div#digital{
                 height: 75px;
+                padding-left: 15px;
+                margin-left: 15px;
         }
 	
 /* Div Rodapé */
