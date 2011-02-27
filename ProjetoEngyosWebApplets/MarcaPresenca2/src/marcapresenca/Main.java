@@ -57,7 +57,7 @@ public class Main extends Applet {
             System.out.println(getParameter("idReuniao"));
             idReuniao = Integer.parseInt(getParameter("idReuniao"));
             //TODO localização do servlet
-            URL url = new URL(getCodeBase(), "/ProjetoEngyos/AppletController");
+            URL url = new URL("http://localhost:8080/ProjetoEngyos/AppletController");
             sdm = new ServletDataManager(url);
         } catch(NumberFormatException e) {
             e.printStackTrace();

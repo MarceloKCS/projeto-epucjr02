@@ -11,7 +11,6 @@
 package epucjr.engyos.applet;
 
 import epucjr.engyos.applet.controle.RegistradorDeDigital;
-import epucjr.engyos.devicemanager.ControleBioDeviceHardware;
 import javax.swing.JApplet;
 import javax.swing.JOptionPane;
 
