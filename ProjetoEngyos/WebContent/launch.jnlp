@@ -12,9 +12,9 @@
 <security>
 <all-permissions/>
 </security>
-    <resources>
-<j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.5+"/>
-<jar href="CadastroDigitalObreiroApplet.jar" main="true"/>
+<resources>
+    <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.5+"/>
+    <jar href="CadastroDigitalObreiroApplet.jar" main="true"/>
 
     <jar href="lib/NBioBSPJNI.jar"/>
 </resources>

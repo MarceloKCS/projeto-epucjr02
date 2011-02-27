@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="" href="">
+    <information>
+        <title>Marcar Presença Digital</title>
+        <vendor>E-PUCJr.</vendor>
+    </information>
+    <resources>
+       <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.5+"/>
+       <jar href="MarcarPresencaDigitalApplet.jar" main="true"/>
+       <jar href="lib/NBioBSPJNI.jar"/>
+    </resources>
+    <applet-desc height="200" main-class="epucjr.engyos.applet.gui.DigitalCaptureAppletGUI" name="MarcaPresencaApplet" width="250">
+        <!-- Application Arguments -->
+   </applet-desc>
+</jnlp>

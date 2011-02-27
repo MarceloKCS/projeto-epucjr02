@@ -3,6 +3,7 @@ package com.epucjr.engyos.aplicacao.webcontrole;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.IReuniaoMonitor;
 import com.epucjr.engyos.aplicacao.controle.ReuniaoMonitor;
+import com.epucjr.engyos.aplicacao.controle.ReuniaoSessionControl;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -14,12 +15,16 @@ public class ActionMarcarPresencaPeloCPFCommand implements Command{
     @Override
     public Object execute(Object... arg) {
         HttpServletRequest request = (HttpServletRequest) arg[0];
-       
+        String resposta = "padrao";
+        //Carrega o controlador de ssessão da reunião que realizará os controles
+        //de uma reunião e suas regras quando da sua execução
+        ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
+
         String cpfObreiro = request.getParameter("cpf");
         String idReuniaoPagina = request.getParameter("idReuniao");
         long idReuniao = 0;
 
-        if(idReuniaoPagina != null && !idReuniaoPagina.equals("")){
+        if (idReuniaoPagina != null && !idReuniaoPagina.equals("")) {
             idReuniao = Long.parseLong(idReuniaoPagina.trim());
         }
 
@@ -27,17 +32,21 @@ public class ActionMarcarPresencaPeloCPFCommand implements Command{
         System.out.println("CPF = " + cpfObreiro);
         System.out.println("REUNIAO_ID = " + idReuniao);
 
-        IReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
+        //Uma presença não pode ser marcada caso a reunião não esteja iniciada.
 
-        //marca a presenca da reuniao pelo CPF
-        reuniaoMonitor.marcarPresencaPeloCPF(cpfObreiro);
+        if (reuniaoSessionControl.verificarSessaoReuniaoAberta()) {
+            IReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
+            //marca a presenca da reuniao pelo CPF
+            reuniaoMonitor.marcarPresencaPeloCPF(cpfObreiro);
 
-        //Manda a resposta da operação para a página
-        String reposta = reuniaoMonitor.getMensagemStatus();
+            //Manda a resposta da operação para a página
+            resposta = reuniaoMonitor.getMensagemStatus();
 
-        return reposta;
+        } else {
+            resposta = "Reunião não iniciada";
+        }
+        return resposta;
 
-      
     }
 
 
