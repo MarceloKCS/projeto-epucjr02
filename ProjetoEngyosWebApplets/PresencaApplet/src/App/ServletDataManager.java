@@ -20,8 +20,10 @@ import java.net.URLConnection;
 public class ServletDataManager implements InterfaceDataManager {
 
     URL r;
+    boolean status;
     public ServletDataManager(URL r) {
         this.r = r;
+        status = false;
     }
 
     public URLConnection conectar() {
@@ -56,7 +58,9 @@ public class ServletDataManager implements InterfaceDataManager {
             objectOutputStream.close();
 
             String nome;
+            
             ObjectInputStream objectInputStream = new ObjectInputStream(urlConn.getInputStream());
+            status = objectInputStream.readBoolean();
             nome = objectInputStream.readUTF();
 
             objectInputStream.close();
@@ -81,6 +85,7 @@ public class ServletDataManager implements InterfaceDataManager {
 
             String nome;
             ObjectInputStream objectInputStream = new ObjectInputStream(urlConn.getInputStream());
+            status = objectInputStream.readBoolean();
             nome = objectInputStream.readUTF();
 
             objectInputStream.close();

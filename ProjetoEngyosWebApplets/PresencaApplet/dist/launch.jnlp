@@ -3,7 +3,6 @@
     <information>
         <title>PresencaApplet</title>
         <vendor>Diego</vendor>
-        <homepage href=""/>
         <description>PresencaApplet</description>
         <description kind="short">PresencaApplet</description>
 
@@ -14,13 +13,11 @@
 </security>
     <resources>
 <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.5+"/>
-<jar href="PresencaApplet.jar" main="true"/>
+<jar href="MarcadorPresencaApplet/PresencaApplet.jar" main="true"/>
 
 
-    <jar href="lib/NBioBSPJNI.jar"/>
+    <jar href="MarcadorPresencaApplet/lib/NBioBSPJNI.jar"/>
 </resources>
     <applet-desc height="200" main-class="App.Main" name="PresencaApplet" width="250">
-
-    <param name="idReuniao" value="5"/>
 </applet-desc>
 </jnlp>

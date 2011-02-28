@@ -134,17 +134,8 @@ public class Main extends Applet {
     public void marcarPresenca() {
         if (acao <= 0) {
             String nome = sdm.marcarPresenca(idReuniao, senha.getText());
-            if (nome == null) {
-                cor = Color.red;
-                acao = 1;
-                resposta = "Erro no servidor!!!";
-            } else if (nome.length() == 0) {
-                cor = Color.red;
-                resposta = "Senha Incorreta !!!";
-            } else {
-                cor = new Color(0, 64, 0);
-                resposta = "Bem Vindo "+nome+" !!!";
-            }
+            cor = (sdm.status) ? Color.RED : corVerde;
+            resposta = nome;
         }
         senha.setText("");
         repaint();
@@ -153,23 +144,21 @@ public class Main extends Applet {
     public void marcarPresencaDigital() {
         if (acao <= 0) {
             String nome = Digital.getNome(idReuniao, sdm);
-            if (nome == null) {
-                cor = Color.red;
-                acao = 1;
-                resposta = "Erro no servidor!!!";
-            } else if (nome.length() == 0) {
-                cor = Color.red;
-                resposta = "Digital n"+0x00e3+"o identificada !!!";
-            } else if (nome.equals("-2")) {
+            cor = (sdm.status) ? Color.RED : corVerde;
+            if (nome.equals("-2")) {
                 cor = Color.red;
                 resposta = "Erro no equipamento !!!";
                 acao = -1;
             } else if (nome.equals("-1")) {
                 resposta = "";
                 acao = -1;
+            } else {
+                resposta = nome;
             }
         }
         senha.setText("");
         repaint();
     }
+
+    private static final Color corVerde = new Color(0, 64, 0);
 }
