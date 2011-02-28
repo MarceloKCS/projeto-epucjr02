@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>PresencaApplet</title>
+        <vendor>Diego</vendor>
+        <description>PresencaApplet</description>
+        <description kind="short">PresencaApplet</description>
+
+    </information>
+<update check="always"/>
+<security>
+<all-permissions/>
+</security>
+    <resources>
+<j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.5+"/>
+<jar href="MarcadorPresencaApplet/PresencaApplet.jar" main="true"/>
+
+
+    <jar href="MarcadorPresencaApplet/lib/NBioBSPJNI.jar"/>
+</resources>
+    <applet-desc height="200" main-class="App.Main" name="PresencaApplet" width="250">
+</applet-desc>
+</jnlp>
