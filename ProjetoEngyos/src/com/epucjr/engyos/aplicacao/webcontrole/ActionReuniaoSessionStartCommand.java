@@ -3,6 +3,7 @@ package com.epucjr.engyos.aplicacao.webcontrole;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.ReuniaoSessionControl;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,7 +38,7 @@ public class ActionReuniaoSessionStartCommand implements Command{
         } else {
             System.out.println("SESSION ALREADY OPENED");
             resposta = "Reunião já iniciada";
-        }
+        }       
 
         return resposta;
 

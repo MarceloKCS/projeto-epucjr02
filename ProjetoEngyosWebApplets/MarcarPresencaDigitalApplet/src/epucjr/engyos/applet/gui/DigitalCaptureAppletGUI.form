@@ -37,7 +37,7 @@
     <Container class="javax.swing.JPanel" name="painelDeFundo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="db" green="db" red="dd" type="rgb"/>
+          <Color blue="e6" green="e6" red="e7" type="rgb"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -51,15 +51,13 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="labelAviso" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="labelTitulo" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="labelTitulo" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelAviso" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="imagePanel" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

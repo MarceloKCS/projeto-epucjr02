@@ -55,8 +55,8 @@ public class ActionMarcarPresencaDigital implements Command {
             }
             System.out.println("Digital = " + digital);
             //System.out.println("idReuniao = "+idReuniao+"; digital = "+digital);
-
-            objectOutputStream.writeUTF("sucesso");
+            //response.getWriter().write("GET SOME");
+            objectOutputStream.writeUTF("sucesso%Digital de Marcada");
 
         } catch (IOException e) {
             e.printStackTrace();
