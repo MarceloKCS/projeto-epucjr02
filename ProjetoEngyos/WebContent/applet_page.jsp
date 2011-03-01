@@ -32,7 +32,7 @@
     </head>
     <body onload="closeMe();self.focus()">
         <h1>Insira a digital!</h1>
-         <script src="http://java.com/js/deployJava.js"></script>
+        <script src="http://java.com/js/deployJava.js"></script>
         <script>
             var attributes = {
                 code:       "epucjr.engyos.applet.CadastroDigital",

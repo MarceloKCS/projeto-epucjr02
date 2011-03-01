@@ -20,6 +20,8 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterPageLoader;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterPageLoader;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoSessionAppletResponse;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoSessionStartCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoStartPageLoader;
 
 
@@ -62,10 +64,14 @@ public class CommandFactory {
 		mapaCommand.put("buscar_reuniao", new ActionReuniaoFindCommand());
 		mapaCommand.put("RegistrarDigital", new ActionCommandCapturarDigital());
                 mapaCommand.put("iniciar_reuniao", new ActionReuniaoStartPageLoader());
+                //Commands usados pelo servlet que trata requisisoes ajax
                 mapaCommand.put("marcar_presenca_cpf", new ActionMarcarPresencaPeloCPFCommand());
+                mapaCommand.put("iniciar_session_reuniao", new ActionReuniaoSessionStartCommand());
+                mapaCommand.put("marcar_presenca", new ActionMarcarPresencaDigital());
+                mapaCommand.put("verificar_reuniao_status", new ActionReuniaoSessionAppletResponse());
 		mapaCommand.put("ActionLogin", new ActionLogin());
 		//marcar presenca
-		mapaCommand.put("marcarPresencaDigital", new ActionMarcarPresencaDigital());
+		//mapaCommand.put("marcarPresencaDigital", new ActionMarcarPresencaDigital());
 		mapaCommand.put("marcarPresencaSenha", new ActionMarcarPresencaSenha());
 	}
 
