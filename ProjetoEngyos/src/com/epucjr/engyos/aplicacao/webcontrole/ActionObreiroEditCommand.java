@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class ActionObreiroEditCommand implements Command {
 
     /**
-     * Método que executa a requisição de ediç~ão do formulário de obreiro
+     * Método que executa a requisição de edição do formulário de obreiro
      *
      * @param arg O <code>HttpServletRequest</code> e o <code>HttpServletResponse</code>
      * @return o Objeto com o resultado da acao requisitada, utilizada pela view

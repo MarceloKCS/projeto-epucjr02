@@ -20,6 +20,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
         <title>Reuniões - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
         <script type='text/javascript' src="javascript/jquery-1.5.1.min.js"></script>
+        <script type='text/javascript' src="javascript/deployJava.js"></script>
         <script type="text/javascript"> 
             
             var timercount = 0;
@@ -152,6 +153,12 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         $('#status').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
                     });
                 });
+
+                $('#start_button').click(function() {               // Locate HTML DOM element with ID "somebutton" and assign the following function to its "click" event...
+                    $.get('frontcontrollerajax?acao=iniciar_session_reuniao' + '&idReuniao=' + $('#idReuniao').val(), function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                        $('#status').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+                    });
+                });
             });
         </script>
     </head>
@@ -175,7 +182,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                     <div id="colunaE">
                         <h2>Dados da Reunião</h2>
                         <br/>
-                        <label>Inicio de Reunião:</label> <input type="text" name="Inicio" value="<%out.print(paginaDeReuniao != null ? paginaDeReuniao.getTempoDeInicio() : "");%>" readonly disabled>
+                        <label>Inicio da Reunião:</label> <%out.print(paginaDeReuniao != null ? paginaDeReuniao.getTempoDeInicio() : "");%> <!--<input type="text" name="Inicio" value="" readonly disabled> -->
                         <br/>
                         <br/>
                         <label>Local: </label><%out.print(paginaDeReuniao != null ? paginaDeReuniao.getLocal() : "");%>
@@ -191,7 +198,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         </div>
                         <br/>
                         <br/>
-                        <input type=button name="start" value="Iniciar" onclick="time_start()">
+                        <input type=button id="start_button" name="start" value="Iniciar" onclick="time_start()">
                         <input type=button name="stop" value="Parar" onclick="Stop()">
                         <input type=button name="reset" value="Reset" onclick="Reset()">
 
@@ -205,6 +212,18 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         <input type="button" id="acao_button" name="acao" value="Marcar Presença"/>
                          <div id="digital">
 
+                             <script type="text/javascript">
+                                var attributes = {
+                                    code:       "epucjr.engyos.applet.gui.DigitalCaptureAppletGUI",
+                                    archive:    "MarcarPresencaDigitalApplet.jar, lib/NBioBSPJNI.jar",
+                                    width:      389,
+                                    height:     189
+                                };
+                                var parameters = {idReuniao:<% out.println((int)(Math.random() * 5)); %>, jnlp_href:"marcar_presenca_digital.jnlp"}; <!-- Applet Parameters -->
+                                var version = "1.5"; <!-- Required Java Version -->
+                                deployJava.runApplet(attributes, parameters, version);
+                            </script>
+                                
                         </div>
                     </div>
 

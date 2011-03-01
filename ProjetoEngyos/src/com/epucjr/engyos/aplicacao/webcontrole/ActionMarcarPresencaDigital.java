@@ -3,6 +3,8 @@ package com.epucjr.engyos.aplicacao.webcontrole;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,21 +44,27 @@ public class ActionMarcarPresencaDigital implements Command {
 		return null;
 	}
 	
-	//TODO apagar
-	public String executeTeste(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
-		try {
-			long idReuniao = objectInputStream.readLong();
-			String digital = objectInputStream.readUTF();
-			
-			System.out.println("idReuniao = "+idReuniao+"; digital = "+digital);
+	   //TODO apagar
+    public String executeTeste(HttpServletRequest request, HttpServletResponse response, ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
+        try {
+            //long idReuniao =          
+            String digital = "";
+            try {
+                digital = (String) objectInputStream.readObject();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ActionMarcarPresencaDigital.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("EXCEPTION!!!!!!!!!!!!!");
+                digital = "for ass!!!";
+            }
+            System.out.println("Digital = " + digital);
+            //System.out.println("idReuniao = "+idReuniao+"; digital = "+digital);
+            //response.getWriter().write("GET SOME");
+            objectOutputStream.writeUTF("sucesso%Digital de Marcada");
 
-			objectOutputStream.writeBoolean(true);
-			objectOutputStream.writeUTF("sucesso");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "sucesso";
+    }
 
 }
