@@ -33,7 +33,7 @@ public class ReuniaoStatusRequest {
             return this.getMensagemStatus();
         }
 
-        String resposta = servletComunication.realizarRequestServlet("verificar_reuniao_aberta");
+        String resposta = servletComunication.realizarRequestServlet("verificar_reuniao_status");
 
         return resposta;
     }

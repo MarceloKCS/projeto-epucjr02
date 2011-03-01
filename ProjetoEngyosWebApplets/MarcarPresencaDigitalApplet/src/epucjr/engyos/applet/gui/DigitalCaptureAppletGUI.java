@@ -77,7 +77,7 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
         labelAviso = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        painelDeFundo.setBackground(new java.awt.Color(221, 219, 219));
+        painelDeFundo.setBackground(new java.awt.Color(231, 230, 230));
         //imagePanel.paint(this.getGraphics());
 
         javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
@@ -115,13 +115,12 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
             .addGroup(painelDeFundoLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(painelDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(labelAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(labelAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(39, 39, 39))
+                .addContainerGap())
         );
         painelDeFundoLayout.setVerticalGroup(
             painelDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

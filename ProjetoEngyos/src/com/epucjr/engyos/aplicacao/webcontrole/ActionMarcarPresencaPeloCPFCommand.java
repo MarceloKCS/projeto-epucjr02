@@ -15,7 +15,7 @@ public class ActionMarcarPresencaPeloCPFCommand implements Command{
     @Override
     public Object execute(Object... arg) {
         HttpServletRequest request = (HttpServletRequest) arg[0];
-        String resposta = "padrao";
+        String resposta = "";
         //Carrega o controlador de ssessão da reunião que realizará os controles
         //de uma reunião e suas regras quando da sua execução
         ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());

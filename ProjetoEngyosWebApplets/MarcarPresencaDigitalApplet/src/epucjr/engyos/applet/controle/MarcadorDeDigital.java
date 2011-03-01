@@ -7,6 +7,7 @@ package epucjr.engyos.applet.controle;
 
 import epucjr.engyos.comunicacao.ServletComunication;
 import epucjr.engyos.devicemanager.ControleBioDeviceHardware;
+import epucjr.engyos.util.ListUtilTokenizer;
 import java.net.MalformedURLException;
 import javax.swing.JOptionPane;
 
@@ -17,11 +18,13 @@ import javax.swing.JOptionPane;
 public class MarcadorDeDigital{
 
     private String mensagemStatus;
+    private String menasgemServerOperacao;
     private boolean operacaoExecutada;
     private boolean operacaoThreadEnd;
 
     public MarcadorDeDigital() {
         this.mensagemStatus = "";
+        this.menasgemServerOperacao = "";
         this.operacaoExecutada = false;
         this.operacaoThreadEnd = false;
     }
@@ -54,7 +57,13 @@ public class MarcadorDeDigital{
         
         if(this.isOperacaoExecutada() && servletComunication != null){
             String resposta = servletComunication.realizarRequestServlet("marcar_presenca", impressaoDigital);
-            this.setMensagemStatus(resposta);
+
+            //A resposta enviada pelo servlet vem separada em status operacao e mensagem, obtendo estes campos
+            String mensagemStatus = ListUtilTokenizer.obterArrayString(resposta)[0];
+            String mensagemServerOperacao = ListUtilTokenizer.obterArrayString(resposta)[1];
+
+            this.setMensagemStatus(mensagemStatus);
+            this.setMenasgemServerOperacao(mensagemServerOperacao);
             System.out.println("resposta = " + this.getMensagemStatus());
         }
     }
@@ -83,6 +92,16 @@ public class MarcadorDeDigital{
     public void setOperacaoThreadEnd(boolean operacaoThreadEnd) {
         this.operacaoThreadEnd = operacaoThreadEnd;
     }
+
+    public String getMenasgemServerOperacao() {
+        return menasgemServerOperacao;
+    }
+
+    public void setMenasgemServerOperacao(String menasgemServerOperacao) {
+        this.menasgemServerOperacao = menasgemServerOperacao;
+    }
+
+    
 
 
 }
