@@ -78,7 +78,7 @@ public class Main extends Applet {
             idReuniao = Integer.parseInt(getParameter("idReuniao"));
 
             String host = getCodeBase().toString().split(getCodeBase().getPath())[0];
-            URL url = new URL(new URL(host), "AppletController");
+            URL url = new URL(new URL(host), "ProjetoEngyos/AppletController");
 
             sdm = new ServletDataManager(url);
         } catch(NumberFormatException e) {
@@ -134,7 +134,7 @@ public class Main extends Applet {
     public void marcarPresenca() {
         if (acao <= 0) {
             String nome = sdm.marcarPresenca(idReuniao, senha.getText());
-            cor = (sdm.status) ? Color.RED : corVerde;
+            cor = (!sdm.status) ? Color.RED : corVerde;
             resposta = nome;
         }
         senha.setText("");
@@ -144,7 +144,7 @@ public class Main extends Applet {
     public void marcarPresencaDigital() {
         if (acao <= 0) {
             String nome = Digital.getNome(idReuniao, sdm);
-            cor = (sdm.status) ? Color.RED : corVerde;
+            cor = (!sdm.status) ? Color.RED : corVerde;
             if (nome.equals("-2")) {
                 cor = Color.red;
                 resposta = "Erro no equipamento !!!";
