@@ -7,7 +7,7 @@
         <script>
             var attributes = {
                 code:       "App.Main",
-                archive:    "MarcadorPresencaApplet/PresencaApplet.jar, MarcadorPresencaApplet/lib/NBioBSPJNI.jar",
+                archive:    "PresencaApplet.jar, lib/NBioBSPJNI.jar",
                 width:      350,
                 height:     200
             };
