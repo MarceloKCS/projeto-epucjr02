@@ -7,9 +7,9 @@ package epucjr.engyos.applet.controle;
 
 import epucjr.engyos.comunicacao.ServletComunication;
 import epucjr.engyos.devicemanager.ControleBioDeviceHardware;
+import epucjr.engyos.util.AppletClientMessenger;
 import epucjr.engyos.util.ListUtilTokenizer;
 import java.net.MalformedURLException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,7 +35,8 @@ public class MarcadorDeDigital{
         controleBioDeviceHardware.inicializaHardware();
         controleBioDeviceHardware.abrirDispositivo();
         String digital = controleBioDeviceHardware.capturarDigitalModoTextString();
-        controleBioDeviceHardware.fecharDispositivo();
+        //controleBioDeviceHardware.fecharDispositivo();
+        controleBioDeviceHardware.encerrarHardware();
         
         this.setMensagemStatus(controleBioDeviceHardware.getMensagemStatus());
         this.setOperacaoExecutada(controleBioDeviceHardware.isOperacaoExecutada());
@@ -43,7 +44,7 @@ public class MarcadorDeDigital{
       return digital;
     }
 
-    public synchronized void capturarArmazenarDigitalServlet(){
+    public synchronized void capturarArmazenarDigitalServlet(String idReuniao){
         ServletComunication servletComunication = null;
         try {
             servletComunication = new ServletComunication();
@@ -52,13 +53,23 @@ public class MarcadorDeDigital{
             this.setOperacaoExecutada(false);
             this.setMensagemStatus("ERRO:101:: Erro de sintaxe na url...");
         }
-       
+       //Captura a impressão digital pelo dispiositivo
         String impressaoDigital = this.capturarImpressaoDigital();
-        
-        if(this.isOperacaoExecutada() && servletComunication != null){
-            String resposta = servletComunication.realizarRequestServlet("marcar_presenca", impressaoDigital);
 
-            //A resposta enviada pelo servlet vem separada em status operacao e mensagem, obtendo estes campos
+        
+
+        //Verifica o sucesso da captura da digital pelo dispositivo e da inicialização do Comunicador do servlet
+        if (this.isOperacaoExecutada() && servletComunication != null) {
+
+            //Monta a mensagem em um modelo que será reconhecido no servlet
+            AppletClientMessenger appletRequestMessenger = new AppletClientMessenger();
+            appletRequestMessenger.setParameterGET("idReuniao", idReuniao);
+            appletRequestMessenger.setParameterGET("digital", impressaoDigital);
+
+            //Realiza a tentativa de enviar a mensagem montada, com a requisição de marcar presença
+            String resposta = servletComunication.realizarRequestServlet("marcar_presenca", appletRequestMessenger.obterRequestMessageParameters());
+
+            //A resposta recebida do servidor pelo servlet vem separada em status operacao e mensagem, obtendo estes campos
             String mensagemStatus = ListUtilTokenizer.obterArrayString(resposta)[0];
             String mensagemServerOperacao = ListUtilTokenizer.obterArrayString(resposta)[1];
 

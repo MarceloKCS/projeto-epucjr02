@@ -17,11 +17,12 @@ import javax.swing.SwingWorker;
 public class AcaoMarcarDigitalWorker extends SwingWorker<String, String>{
 
     private final Informable informable;
+    private final String idReuniao;
     
 
-    public AcaoMarcarDigitalWorker(Informable informable) {
+    public AcaoMarcarDigitalWorker(Informable informable, String idReuniao) {
         this.informable = informable;
-        
+        this.idReuniao = idReuniao;
     }
 
 
@@ -32,7 +33,7 @@ public class AcaoMarcarDigitalWorker extends SwingWorker<String, String>{
         String finalMessage = "";
         try {
             do {
-                marcadorDeDigital.capturarArmazenarDigitalServlet();
+                marcadorDeDigital.capturarArmazenarDigitalServlet(this.idReuniao);
 
                 //this.labelAviso.setText(marcadorDeDigital.getMensagemStatus());
                 publish(marcadorDeDigital.getMenasgemServerOperacao());

@@ -15,6 +15,8 @@ import epucjr.engyos.applet.worker.AcaoMarcarDigitalWorker;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import netscape.javascript.JSObject;
 
 /**
  *
@@ -24,9 +26,12 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
 
     private AcaoMarcarDigitalWorker acaoMarcarDigitalWorker = null;
     private Informable informable = null;
+
+    //Parametro da página passado através do parameter definido na carga do applet na página
+    private String pageParameter;
     /** Initializes the applet DigitalCaptureAppletGUI */
     public void init() {
-       
+         pageParameter = getParameter("idReuniao");
 //
         //this.paint(this.getGraphics());
         try {
@@ -51,16 +56,14 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
             @Override
             public void messageChanged(String message) {
                 labelAviso.setText(message);
+                publicarMensagemNaPaginaHtmlViaJavaScript(message);
             }
         };
 
      
        // ativarCapturaDeDigitalDevice(informable);
 
-
     }
-
-    
 
     /** This method is called from within the init() method to
      * initialize the form.
@@ -157,36 +160,47 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(informable != null){
-            this.ativarCapturaDeDigitalDevice(this.informable);
+            this.ativarCapturaDeDigitalDevice(this.informable, pageParameter);
             System.out.println("ALWAYS");
         }
         else{
-            System.out.println("TIRED");
+            JOptionPane.showMessageDialog(null, "TIRED");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void ativarCapturaDeDigitalDevice(Informable informable){
-
-        acaoMarcarDigitalWorker = new AcaoMarcarDigitalWorker(informable){
+    public void ativarCapturaDeDigitalDevice(Informable informable, String idReuniao){        
+        acaoMarcarDigitalWorker = new AcaoMarcarDigitalWorker(informable, idReuniao){
 
             @Override
             protected void done() {
                 try {
                     String resposta = get();
-                    labelAviso.setText(resposta);                  
+                    labelAviso.setText(resposta);
+                    publicarMensagemNaPaginaHtmlViaJavaScript(resposta);
                 } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(null, "APPLET EXCEPTION:183:: " + ex.getMessage());
                     Logger.getLogger(DigitalCaptureAppletGUI.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ExecutionException ex) {
+                    JOptionPane.showMessageDialog(null, "APPLET EXCEPTION:186:: " + ex.getMessage());
                     Logger.getLogger(DigitalCaptureAppletGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
         };
 
-        acaoMarcarDigitalWorker.execute();
+        acaoMarcarDigitalWorker.execute();       
+    }
 
-
-       
+    public void publicarMensagemNaPaginaHtmlViaJavaScript(String mensagem){
+        try{
+            JSObject jdJSObject = JSObject.getWindow(this);
+            // dynamically change HTML in page; write data summary            
+            jdJSObject.call("writeMessage", new Object[]{mensagem});
+        }
+        catch(netscape.javascript.JSException ex){
+            JOptionPane.showMessageDialog(null, "APPLET EXCEPTION204:: " + ex.getMessage());
+            Logger.getLogger(DigitalCaptureAppletGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
   
   

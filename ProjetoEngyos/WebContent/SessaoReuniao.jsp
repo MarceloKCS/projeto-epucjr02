@@ -147,6 +147,19 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
         </script>
 
         <script type="text/javascript">
+           
+            //Exibe um valor definido na applet no modelo ajax
+            function writeMessage(message) {
+                summaryElem = document.getElementById("status");
+                summaryElem.innerHTML = message;
+            }
+        </script>
+
+
+
+        <!-- Funções em javascript que implementam o Ajax usando o JQuery -->
+
+        <script type="text/javascript">
             $(document).ready(function() {                        // When the HTML DOM is ready loading, then execute the following function...
                 $('#acao_button').click(function() {               // Locate HTML DOM element with ID "somebutton" and assign the following function to its "click" event...
                     $.get('frontcontrollerajax?acao=marcar_presenca_cpf&cpf=' + $('#cpf').val() + '&idReuniao=' + $('#idReuniao').val(), function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
@@ -196,6 +209,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         <div id="status">
                             
                         </div>
+                        <p id="summary"/>
                         <br/>
                         <br/>
                         <input type=button id="start_button" name="start" value="Iniciar" onclick="time_start()">
@@ -219,7 +233,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                                     width:      389,
                                     height:     189
                                 };
-                                var parameters = {idReuniao:<% out.println((int)(Math.random() * 5)); %>, jnlp_href:"marcar_presenca_digital.jnlp"}; <!-- Applet Parameters -->
+                                var parameters = {idReuniao:<% out.print(paginaDeReuniao.getIdReuniao()); %>, jnlp_href:"marcar_presenca_digital.jnlp"}; <!-- Applet Parameters -->
                                 var version = "1.5"; <!-- Required Java Version -->
                                 deployJava.runApplet(attributes, parameters, version);
                             </script>
