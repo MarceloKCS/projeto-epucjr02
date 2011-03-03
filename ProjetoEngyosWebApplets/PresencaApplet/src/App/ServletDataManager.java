@@ -67,7 +67,9 @@ public class ServletDataManager implements InterfaceDataManager {
 
             return nome;//"" caso n tenha encontrado
         } catch (IOException ex) {
-            return null;
+            ex.printStackTrace();
+            status = false;
+            return "Erro no servidor !!!";
         }
     }
 
@@ -92,7 +94,9 @@ public class ServletDataManager implements InterfaceDataManager {
 
             return nome;//"" caso n tenha encontrado
         } catch (IOException ex) {
-            return null;
+            ex.printStackTrace();
+            status = false;
+            return "Erro no servidor !!!";
         }
     }
 }
