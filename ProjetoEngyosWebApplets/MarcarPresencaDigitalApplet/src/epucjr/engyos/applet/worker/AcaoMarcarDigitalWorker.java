@@ -36,14 +36,14 @@ public class AcaoMarcarDigitalWorker extends SwingWorker<String, String>{
                 marcadorDeDigital.capturarArmazenarDigitalServlet(this.idReuniao);
 
                 //this.labelAviso.setText(marcadorDeDigital.getMensagemStatus());
-                publish(marcadorDeDigital.getMenasgemServerOperacao());
+                publish(marcadorDeDigital.getMensagemServerOperacao());
             } while (marcadorDeDigital.getMensagemStatus().equals("sucesso"));
         } catch (NullPointerException ex) {
             finalMessage = "Leitura Encerrada";
             return finalMessage;
         }
 
-        return marcadorDeDigital.getMensagemStatus() + "&acao=encerrar";
+        return marcadorDeDigital.getMensagemServerOperacao();
     }
 
 //    @Override
