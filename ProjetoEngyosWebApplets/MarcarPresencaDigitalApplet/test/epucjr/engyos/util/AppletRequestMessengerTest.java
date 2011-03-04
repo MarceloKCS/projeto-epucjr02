@@ -23,4 +23,15 @@ public class AppletRequestMessengerTest {
         assertEquals(valorEsperado, appletRequestMessenger.obterRequestMessageParameters());
     }
 
+    @Test
+    public void decodificarMensagemRecebida(){
+        AppletClientMessenger appletClientMessenger = new AppletClientMessenger();
+        String messageQuery = "resposta=Reuniao Cancelada";
+        appletClientMessenger.setMessageQuery(messageQuery);
+
+        String valorEsperado = "Reuniao Cancelada";
+
+        assertEquals(valorEsperado, appletClientMessenger.obterValorCampo("resposta"));
+    }
+
 }

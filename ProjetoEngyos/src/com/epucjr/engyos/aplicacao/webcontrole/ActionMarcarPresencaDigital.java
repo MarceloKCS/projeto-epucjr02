@@ -45,23 +45,24 @@ public class ActionMarcarPresencaDigital implements Command {
 
 	   //TODO apagar
     public String executeTeste(HttpServletRequest request, HttpServletResponse response, ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
+        String resposta = "";
+        String requestData = "";
         try {
-            //long idReuniao =
-            String requestData = "";
-            try {
-                requestData = (String) objectInputStream.readObject();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ActionMarcarPresencaDigital.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("EXCEPTION!!!!!!!!!!!!!");
-                requestData = "for ass!!!";
-            }
-
+            requestData = (String) objectInputStream.readObject();
+            //Mensageiro com a função de reconhecer as mensagens no formato
+            //semelhante a uma requisição GET
             AppletServerMessenger appletServerMessenger = new AppletServerMessenger(requestData);
 
+            //Controlador da sessão de reunião
+            ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
+
+
+            //O applet envia 2 campos necessário para o registro de uma digital
             String idReuniaoString = appletServerMessenger.obterValorCampo("idReuniao");
             String impressaoDigital = appletServerMessenger.obterValorCampo("digital");
             long idReuniao = 0;
-            if(idReuniaoString != null && !idReuniaoString.equals("")){
+            if (idReuniaoString != null && !idReuniaoString.equals("")) {
+                System.out.println("idReuniao = " + idReuniao);
                 idReuniao = Long.parseLong(idReuniaoString.trim());
             }
 
@@ -70,30 +71,40 @@ public class ActionMarcarPresencaDigital implements Command {
             System.out.println("idReuniao = " + idReuniao);
 
             System.out.println("Digital = " + requestData);
-            
-            ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
+
 
             if (reuniaoSessionControl.verificarSessaoReuniaoAberta()) {
-            //IReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
-            //marca a presenca da reuniao pelo CPF
-            //reuniaoMonitor.marcarPresencaPeloCPF(cpfObreiro);
+                IReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
+                //marca a presenca da reuniao pela digital
+                reuniaoMonitor.marcarPresencaPelaDigital(impressaoDigital);
 
-            //Manda a resposta da operação para a página
-           // resposta = reuniaoMonitor.getMensagemStatus();
-                System.out.println("Sessao de reuniao aberta");
+                //Manda a resposta da operação para a página
+                resposta = reuniaoMonitor.getMensagemStatus();
 
-        } else {
-                System.out.println("Reunião não iniciada");
-            //resposta = "Reunião não iniciada";
-        }
-            //System.out.println("idReuniao = "+idReuniao+"; requestData = "+requestData);
-            //response.getWriter().write("GET SOME");
-            objectOutputStream.writeUTF("sucesso%Digital de Marcada");
+            //Armazena a mensagem no formato adequando no envio para applet
+            appletServerMessenger.setParameterGET("mensagemStatus", (reuniaoMonitor != null && reuniaoMonitor.isOperacaoExecutada()) ? "sucesso" : "fracasso");
+
+            } else {
+                resposta = "Reunião não iniciada";
+            }
+
+
+            appletServerMessenger.setParameterGET("resposta", resposta);
+
+            System.out.println("MESSAGE = " + appletServerMessenger.obterRequestMessageParameters());
+
+             objectOutputStream.writeUTF(appletServerMessenger.obterRequestMessageParameters());
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+             ex.printStackTrace();
+            Logger.getLogger(ActionMarcarPresencaDigital.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "sucesso";
+
+
+
+        return resposta;
     }
 
 }

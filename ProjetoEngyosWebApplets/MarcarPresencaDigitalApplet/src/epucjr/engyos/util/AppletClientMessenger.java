@@ -1,5 +1,8 @@
 package epucjr.engyos.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Classe que ajuda a padronizar o modo como a applet envia as mensagens para
  * o servidor, tentando seguir um modelo de requisição das mensagens realizadas
@@ -10,9 +13,29 @@ package epucjr.engyos.util;
 public class AppletClientMessenger {
 
     private String valorStringGet;
+    private Map<String, String> map;
 
     public AppletClientMessenger() {
         this.valorStringGet = "";
+        this.map = new HashMap<String, String>();
+    }
+
+     private void processMessageQueryMap(String query) {
+        String[] params = query.split("&");
+        for (String param : params) {
+            String name = param.split("=")[0];
+            String value = param.split("=")[1];
+            map.put(name, value);
+        }
+    }
+
+    public String obterValorCampo(String campo){
+        if(map.containsKey(campo)){
+            return map.get(campo);
+        }
+        else{
+            return "";
+        }
     }
 
     /**
@@ -24,11 +47,10 @@ public class AppletClientMessenger {
      * @param campo Nome do campo
      * @param valor Valor do campo que deseja armazenar
      */
-    public void setParameterGET(String campo, String valor){
-        if(this.valorStringGet.length() == 0 &&  this.valorStringGet.equals("")){
+    public void setParameterGET(String campo, String valor) {
+        if (this.valorStringGet.length() == 0 && this.valorStringGet.equals("")) {
             this.valorStringGet = campo + "=" + valor;
-        }
-        else{
+        } else {
             this.valorStringGet = this.valorStringGet + "&" + campo + "=" + valor;
         }
     }
@@ -38,8 +60,11 @@ public class AppletClientMessenger {
      *
      * @return A String com as mensagem de requisição no modelo GET
      */
-    public String obterRequestMessageParameters(){
+    public String obterRequestMessageParameters() {
         return this.valorStringGet;
     }
 
+    public void setMessageQuery(String messageQuery){
+        this.processMessageQueryMap(messageQuery);
+    }
 }

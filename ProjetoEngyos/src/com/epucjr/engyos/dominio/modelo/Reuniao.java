@@ -464,8 +464,4 @@ public class Reuniao implements IReuniao{
         this.horárioInicioEfetivo = horárioInicioEfetivo;
     }
 
-
-    
-
-
 }

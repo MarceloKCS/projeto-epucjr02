@@ -85,7 +85,31 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
     @Override
     public void marcarPresencaPelaDigital(String impressaoDigital) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        //Para persistência imediata da presença pois a reunião não está persistente na seção
+        DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+        if (this.reuniao.verificaObreiroNaListaPelaDigital(impressaoDigital)) {
+            if (!this.reuniao.verificarObreiroEstevePresenteNaReuniaoPelaDigital(impressaoDigital)) {
+                this.reuniao.marcarPresencaDeObreiroNaListaPelaDigital(impressaoDigital);
+                Obreiro obreiroPresente = this.reuniao.obterObreiroDaListaPelaDigital(impressaoDigital);
+
+                dataAccessObjectManager.mergeDataObjeto(this.reuniao);
+
+                if (dataAccessObjectManager.isOperacaoEfetuada()) {
+                    this.setMensagemStatus("Presença de " + obreiroPresente.getNome() + " marcada");
+                    this.setOperacaoExecutada(true);
+                } else {
+                    this.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+                    this.setOperacaoExecutada(false);
+                }
+            } else {
+                Obreiro obreiroPresente = this.reuniao.obterObreiroDaListaPelaDigital(impressaoDigital);
+                this.setMensagemStatus("Presença de " + obreiroPresente.getNome() + " já foi marcada");
+            }
+
+        } else {
+            this.setMensagemStatus("Obreiro não se encontra na lista...");
+            this.setOperacaoExecutada(false);
+        }
     }
 
     /**

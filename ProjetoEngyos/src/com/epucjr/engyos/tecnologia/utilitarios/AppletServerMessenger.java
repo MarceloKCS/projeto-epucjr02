@@ -9,9 +9,11 @@ import java.util.Map;
  */
 public class AppletServerMessenger {
 
-   Map<String, String> map;
+    private Map<String, String> map;
+    private String valorStringGet;
 
     public AppletServerMessenger(String messageQuery) {
+        this.valorStringGet = "";
         this.map = new HashMap<String, String>();
         this.processMessageQueryMap(messageQuery);
     }
@@ -32,6 +34,33 @@ public class AppletServerMessenger {
         else{
             return "";
         }
+    }
+
+     /**
+     * Aqui é definido o valor a ser armazenado, sendo fornecido no modelo
+     * chave-definição com o nome do campo e valor do campo enviados, tokenizadas
+     * no modelo GET:
+     * <p>Exempo: reuniao=idReuniao&digital=asdasd4654646546</p>
+     *
+     * @param campo Nome do campo
+     * @param valor Valor do campo que deseja armazenar
+     */
+    public void setParameterGET(String campo, String valor){
+        if(this.valorStringGet.length() == 0 &&  this.valorStringGet.equals("")){
+            this.valorStringGet = campo + "=" + valor;
+        }
+        else{
+            this.valorStringGet = this.valorStringGet + "&" + campo + "=" + valor;
+        }
+    }
+
+    /**
+     * Obter a String Tokenizada no modelo GET para ser utilizada
+     *
+     * @return A String com as mensagem de requisição no modelo GET
+     */
+    public String obterRequestMessageParameters(){
+        return this.valorStringGet;
     }
 
 
