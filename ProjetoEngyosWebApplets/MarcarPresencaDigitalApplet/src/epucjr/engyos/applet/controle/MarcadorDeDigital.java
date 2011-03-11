@@ -8,7 +8,6 @@ import epucjr.engyos.comunicacao.ServletComunication;
 import epucjr.engyos.devicemanager.ControleBioDeviceHardware;
 import epucjr.engyos.util.AppletClientMessenger;
 import java.net.MalformedURLException;
-import javax.swing.JOptionPane;
 
 /**
  *

@@ -73,7 +73,7 @@
 						out.println(formularioDeObreiro.getMensagemStatus() + "<br />");
 						out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
 						if(formularioDeObreiro.verificarDadoDeConfirmacao("confirmacao_edicao")){
-							out.println("Foram incluidos no banco de dados <br />");							
+							out.println("Foram alterados no banco de dados <br />");
 							out.println("Nome: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_nome") + "<br />");
 							out.println("Cargo: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cargo") + "<br />");
 							out.println("CPF: "+ formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cpf") + "<br />");

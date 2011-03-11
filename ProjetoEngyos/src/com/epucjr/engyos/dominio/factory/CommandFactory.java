@@ -5,6 +5,8 @@ import java.util.HashMap;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.TestCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCommandCapturarDigital;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoEditCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoEditPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterPageLoaderCommand;
@@ -59,6 +61,8 @@ public class CommandFactory {
 		mapaCommand.put("congregacao_register", new ActionCongregacaoRegisterCommand());
                 mapaCommand.put("obreiro_editformload", new ActionObreiroEditPageLoaderCommand());
                 mapaCommand.put("obreiro_editer", new ActionObreiroEditCommand());
+                mapaCommand.put("congregacao_editformload", new ActionCongregacaoEditPageLoaderCommand());
+                mapaCommand.put("congregacao_editer", new ActionCongregacaoEditCommand());
 		mapaCommand.put("buscar_obreiro", new ActionObreiroFindCommand());
 		mapaCommand.put("buscar_congregacao", new ActionCongregacaoFindCommand());
 		mapaCommand.put("buscar_reuniao", new ActionReuniaoFindCommand());

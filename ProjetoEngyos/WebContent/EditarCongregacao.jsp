@@ -52,8 +52,8 @@
 					out.println(formularioDeCongregacao.getMensagemStatus() + "<br />");
 					if (formularioDeCongregacao.verificarDadoDeConfirmacao("confirmacao_cadastro")) {
 						out.println("<p>Foram incluidos no banco de dados</p>");						
-						out.println("Nome: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_nomeDaCongregacao") + "<br />");
-						out.println("Endereço: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_endereco") + "<br />");
+						out.println("Nome: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_nomeDaCongregacao") + "<br/>");
+						out.println("Endereço: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_endereco") + "<br/>");
 					}
 				}
 			%>
@@ -61,6 +61,7 @@
 			
 			<form name="formularioCongregacao" method="post" action="Controller" id="formularioCongregacao">
 			<p>
+                            <input type="hidden" name="idCongregacao" value="<%if (formularioDeCongregacao != null && formularioDeCongregacao.verificarCampoPreenchido("idCongregacao")){ out.print(formularioDeCongregacao.obterCampoPreenchido("idCongregacao")); }%>">
 				<label for="Nome">Nome: </label>
 				<input type="text" name="Nome" value="
 				<%if (formularioDeCongregacao != null
@@ -100,7 +101,7 @@
 				</span>
 			</p>
 			<p>
-			<button type="submit" name="acao" value="congregacao_edit">Editar</button>
+			<button type="submit" name="acao" value="congregacao_editer">Editar</button>
 			</p>
 			</form>
 		</div>
