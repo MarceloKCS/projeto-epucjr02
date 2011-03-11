@@ -59,7 +59,7 @@
 					<tr class="<% out.println("zebra" + countVisual % 2); %>">
 						<td><% out.println(congregacao.getNome()); %></td>
 						<td><% out.println(congregacao.getEndereco()); %></td>
-						<td><a href="#"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
+						<td><a href="Controller?acao=congregacao_editformload&idCongregacao=<% out.print(congregacao.getIdCongregacao()); %>"><img src="imagens/edit.png" width="18" height="18" title="Alterar Dados"/></a></td>
 						<td><a href="#"><img src="imagens/error.png" width="18" height="18" title="Apagar Dados"/></a></td>
 					</tr>
 				<% 

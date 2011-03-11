@@ -158,11 +158,11 @@ public class DataAccessObjectManager {
 
 		if(congregacao == null){
 			this.setOperacaoEfetuada(false);
-			this.setMensagemStatus("Usuario não inexistente no sistema");
+			this.setMensagemStatus("Congregação inexistente no sistema");
 		}
 		else{
 			this.setOperacaoEfetuada(true);
-			this.setMensagemStatus("Usuario encontrado");
+			this.setMensagemStatus("Congregação encontrada");
 		}		
 		return congregacao;
 	}
