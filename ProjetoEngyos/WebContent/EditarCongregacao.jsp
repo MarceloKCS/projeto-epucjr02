@@ -50,8 +50,8 @@
 				if (formularioDeCongregacao.getMensagemStatus() != null && !formularioDeCongregacao.getMensagemStatus().equals("")) {
 					out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
 					out.println(formularioDeCongregacao.getMensagemStatus() + "<br />");
-					if (formularioDeCongregacao.verificarDadoDeConfirmacao("confirmacao_cadastro")) {
-						out.println("<p>Foram incluidos no banco de dados</p>");						
+					if (formularioDeCongregacao.verificarDadoDeConfirmacao("confirmacao_edicao")) {
+						out.println("<p>Foram alterados no banco de dados</p>");
 						out.println("Nome: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_nomeDaCongregacao") + "<br/>");
 						out.println("Endereço: " + formularioDeCongregacao.obterDadoDeConfirmacao("confirmacao_endereco") + "<br/>");
 					}
