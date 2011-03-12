@@ -19,6 +19,8 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroEditPageLoaderComman
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionObreiroRegisterPageLoader;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoEditCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoEditPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterPageLoader;
@@ -63,6 +65,8 @@ public class CommandFactory {
                 mapaCommand.put("obreiro_editer", new ActionObreiroEditCommand());
                 mapaCommand.put("congregacao_editformload", new ActionCongregacaoEditPageLoaderCommand());
                 mapaCommand.put("congregacao_editer", new ActionCongregacaoEditCommand());
+                mapaCommand.put("reuniao_editformload", new ActionReuniaoEditPageLoaderCommand());
+                mapaCommand.put("reuniao_editer", new ActionReuniaoEditCommand());
 		mapaCommand.put("buscar_obreiro", new ActionObreiroFindCommand());
 		mapaCommand.put("buscar_congregacao", new ActionCongregacaoFindCommand());
 		mapaCommand.put("buscar_reuniao", new ActionReuniaoFindCommand());

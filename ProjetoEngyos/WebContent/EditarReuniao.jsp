@@ -65,7 +65,7 @@
 						out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
 						out.println(formularioDeReuniao.getMensagemStatus() + "<br />");
 						if (formularioDeReuniao.verificarDadoDeConfirmacao("confirmacao_edicao")){
-							out.println("<p>Foram incluidos no banco de dados</p>");
+							out.println("<p>Foram alterados no banco de dados</p>");
 							out.println("Local: " + formularioDeReuniao.obterDadoDeConfirmacao("confirmacao_local") + "<br />");
 							out.println("Data: " + formularioDeReuniao.obterDadoDeConfirmacao("confirmacao_data") + "<br />");
 							out.println("Hora: " + formularioDeReuniao.obterDadoDeConfirmacao("confirmacao_hora") + "<br />");
@@ -75,7 +75,8 @@
 				%>
 		</div>
 	<form name="formularioReuniao" method="post" action="Controller" id="formularioReuniao">
-			<p>
+            <input type="hidden" name="idReuniao" value="<% if(formularioDeReuniao != null && formularioDeReuniao.verificarCampoPreenchido("idReuniao")){ out.print(formularioDeReuniao.obterCampoPreenchido("idReuniao"));}%>">
+            <p>
 				<label for="Local">Local:</label>
 				<input type="text" name="local" id="local" value="
 				<%if (formularioDeReuniao != null
@@ -372,7 +373,7 @@
 				</table>
 			</p>
 			<p>
-				<button type="submit" name="acao" value="reuniao_edit" onclick="obterObreirosSelecionados();">Editar</button>
+				<button type="submit" name="acao" value="reuniao_editer" onclick="obterObreirosSelecionados();">Editar</button>
 			</p>
 		</form>
 		</div>

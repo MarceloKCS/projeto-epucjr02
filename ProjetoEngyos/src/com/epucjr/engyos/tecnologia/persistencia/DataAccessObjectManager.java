@@ -196,11 +196,11 @@ public class DataAccessObjectManager {
 
 		if(reuniao == null){
 			this.setOperacaoEfetuada(false);
-			this.setMensagemStatus("Usuario não inexistente no sistema");
+			this.setMensagemStatus("Reunião inexistente no sistema");
 		}
 		else{
 			this.setOperacaoEfetuada(true);
-			this.setMensagemStatus("Usuario encontrado");
+			this.setMensagemStatus("Reunião encontrada");
 		}		
 		return reuniao;
 	}
