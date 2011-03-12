@@ -68,7 +68,6 @@ public class ActionReuniaoEditCommand implements Command{
         if(idReuniaoString != null && !idReuniaoString.equals("")){
             idReuniao = Long.parseLong(idReuniaoString.trim());
         }
-        
         //Os Ids de obreiros obtidos são tokenizados pelo Javascript com %
         String obreiroIdsTokenized = request.getParameter("obreiros");
 
@@ -76,70 +75,75 @@ public class ActionReuniaoEditCommand implements Command{
         dataAccessObjectManager = new DataAccessObjectManager();
         Reuniao reuniao = dataAccessObjectManager.obterReuniao(idReuniao);
 
-        //Reorganização dos dados para validaçao
-        if(!local.equals(reuniao.getLocal())){
-            reuniao.setLocal(local);
-        }
+       if (dataAccessObjectManager.isOperacaoEfetuada()) {
 
-        //Verificando se houve alguma alteração na data
-        if(!dia.equals(reuniao.getDia()) || !mes.equals(reuniao.getMes()) || !ano.equals(reuniao.getAno()) ){
-            //Preparando a data
-            String data = DateTimeUtils.converterDataBr(dia, mes, ano);
-            //Alterando a data da reunião
-            reuniao.setData(data);
-        }
-        //Verificando se houve alguma alteração no horário
-        if(!hora.equals(reuniao.getHora()) || !minuto.equals(reuniao.getMinuto())){
-            //Preparando a hora
-            String horario = DateTimeUtils.converterHorarioHHMM(hora, minuto);
-            //Alterando o horário da reunião
-            reuniao.setHorario(horario);
-        }
-
-        //Preparando a lista de presença de obreiros:
-        if (obreiroIdsTokenized != null && !obreiroIdsTokenized.equals("")) {
-            listaDeIds = ListUtilTokenizer.obterListaString(obreiroIdsTokenized);
-            for (String idObreiro : listaDeIds) {
-                Obreiro obreiro = dataAccessObjectManager.obterObreiro(idObreiro);
-                listaDeObreirosSelecionados.add(obreiro);
+            //Reorganização dos dados para validaçao
+            if (!local.equals(reuniao.getLocal())) {
+                reuniao.setLocal(local);
             }
-        }
 
-        //Preparando a lista de presença de obreiros
-        List<PresencaObreiro> listaDePresenca = this.inserirObreirosNaLista(listaDeObreirosSelecionados);
-        reuniao.setListaDePresencaObreiro(listaDePresenca);
-
-        //1. Validar os dados cadastrais
-        ValidadorDeFormularioDeReuniao validadorDeFormularioDeReuniao = new ValidadorDeFormularioDeReuniao();
-	validadorDeFormularioDeReuniao.verificarCamposValidos(local, dia, mes, ano, hora, minuto);
-
-        if(validadorDeFormularioDeReuniao.isFormularioValido()){
-
-            dataAccessObjectManager.mergeDataObjeto(reuniao);
-
-            //Realização de passos para caso de sucesso ou fracasso por ocorrência de um erro interno
-            //ex. banco de dados
-            if (dataAccessObjectManager.isOperacaoEfetuada()) {
-                //Instanciação e Carregar dados do obreiro registrado para apresentação
-                formularioDeReuniao = new FormularioDeReuniao();
-                formularioDeReuniao.definirDadosDeConfirmacaoDeEdicaoReuniao(dataAccessObjectManager.getMensagemStatus(), local, DateTimeUtils.converterDataBr(dia, mes, ano), DateTimeUtils.converterHorarioHHMM(hora, minuto));
-
-                //Define mensagem de sucesso ao editar
-                formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+            //Verificando se houve alguma alteração na data
+            if (!dia.equals(reuniao.getDia()) || !mes.equals(reuniao.getMes()) || !ano.equals(reuniao.getAno())) {
+                //Preparando a data
+                String data = DateTimeUtils.converterDataBr(dia, mes, ano);
+                //Alterando a data da reunião
+                reuniao.setData(data);
             }
-           //Ocorreu um erro de edição
-            else {
+            //Verificando se houve alguma alteração no horário
+            if (!hora.equals(reuniao.getHora()) || !minuto.equals(reuniao.getMinuto())) {
+                //Preparando a hora
+                String horario = DateTimeUtils.converterHorarioHHMM(hora, minuto);
+                //Alterando o horário da reunião
+                reuniao.setHorario(horario);
+            }
+
+            //Preparando a lista de presença de obreiros:
+            if (obreiroIdsTokenized != null && !obreiroIdsTokenized.equals("")) {
+                listaDeIds = ListUtilTokenizer.obterListaString(obreiroIdsTokenized);
+                for (String idObreiro : listaDeIds) {
+                    Obreiro obreiro = dataAccessObjectManager.obterObreiro(idObreiro);
+                    listaDeObreirosSelecionados.add(obreiro);
+                }
+            }
+
+            //Preparando a lista de presença de obreiros
+            List<PresencaObreiro> listaDePresenca = this.inserirObreirosNaLista(listaDeObreirosSelecionados);
+            reuniao.setListaDePresencaObreiro(listaDePresenca);
+
+            //1. Validar os dados cadastrais
+            ValidadorDeFormularioDeReuniao validadorDeFormularioDeReuniao = new ValidadorDeFormularioDeReuniao();
+            validadorDeFormularioDeReuniao.verificarCamposValidos(local, dia, mes, ano, hora, minuto);
+
+            if (validadorDeFormularioDeReuniao.isFormularioValido()) {
+                dataAccessObjectManager.mergeDataObjeto(reuniao);
+
+                //Realização de passos para caso de sucesso ou fracasso por ocorrência de um erro interno
+                //ex. banco de dados
+                if (dataAccessObjectManager.isOperacaoEfetuada()) {
+                    //Instanciação e Carregar dados do obreiro registrado para apresentação
+                    formularioDeReuniao = new FormularioDeReuniao();
+                    formularioDeReuniao.definirDadosDeConfirmacaoDeEdicaoReuniao(dataAccessObjectManager.getMensagemStatus(), local, DateTimeUtils.converterDataBr(dia, mes, ano), DateTimeUtils.converterHorarioHHMM(hora, minuto));
+
+                    //Define mensagem de sucesso ao editar
+                    formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+                } //Ocorreu um erro de edição
+                else {
+                    formularioDeReuniao = new FormularioDeReuniao();
+                    formularioDeReuniao.definirCamposPreenchidosPeloUsuario(request);
+                    formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+                }
+
+            } else {
                 formularioDeReuniao = new FormularioDeReuniao();
+                formularioDeReuniao.setValidadorDeFormularioDeReuniao(validadorDeFormularioDeReuniao);
                 formularioDeReuniao.definirCamposPreenchidosPeloUsuario(request);
-                formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
+                formularioDeReuniao.setMensagemStatus("Erro ao Editar");
             }
 
-        }
-       else {
+        } else {
             formularioDeReuniao = new FormularioDeReuniao();
-            formularioDeReuniao.setValidadorDeFormularioDeReuniao(validadorDeFormularioDeReuniao);
             formularioDeReuniao.definirCamposPreenchidosPeloUsuario(request);
-            formularioDeReuniao.setMensagemStatus("Erro ao Editar");
+            formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
         }
 
         String respostaOperacao = formularioDeReuniao.getMensagemStatus();

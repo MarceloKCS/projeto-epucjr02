@@ -156,8 +156,13 @@ public class FormularioDeReuniao {
 		String ano = httpServletRequest.getParameter("dataReuniaoAno");
 		String hora = httpServletRequest.getParameter("horaReuniao");
 		String minuto = httpServletRequest.getParameter("minutoReuniao");
+                String idReuniao = httpServletRequest.getParameter("idReuniao");
 		//Os Ids de obreiros obtidos são tokenizados pelo Javascript com %
 		String obreiroIdsTokenized = httpServletRequest.getParameter("obreiros");
+
+                 if(idReuniao != null && !idReuniao.equals("")){
+			this.definirCampoPreenchido("idReuniao", idReuniao);
+		}
 
 		if(local != null && !local.equals("")){
 			this.definirCampoPreenchido("local", local);

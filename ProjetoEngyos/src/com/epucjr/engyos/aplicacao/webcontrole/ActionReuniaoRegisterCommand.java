@@ -43,7 +43,7 @@ public class ActionReuniaoRegisterCommand implements Command{
 			dataAccessObjectManager = new DataAccessObjectManager();
 			//2.Preparando os campos para cadastro da Reunião
 			//2.a. Preparando a lista de presença de obreiros:
-			if(obreiroIdsTokenized != null && obreiroIdsTokenized != ""){			
+			if(obreiroIdsTokenized != null && !obreiroIdsTokenized.equals("")){
 				listaDeIds = ListUtilTokenizer.obterListaString(obreiroIdsTokenized);			
 				for(String idObreiro : listaDeIds){					
 					Obreiro obreiro = dataAccessObjectManager.obterObreiro(idObreiro);
