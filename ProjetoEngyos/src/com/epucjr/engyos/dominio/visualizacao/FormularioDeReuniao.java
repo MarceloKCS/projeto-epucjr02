@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeReuniao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
+import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
+import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 import com.epucjr.engyos.tecnologia.utilitarios.ListUtilTokenizer;
 
@@ -157,7 +159,7 @@ public class FormularioDeReuniao {
 		//Os Ids de obreiros obtidos são tokenizados pelo Javascript com %
 		String obreiroIdsTokenized = httpServletRequest.getParameter("obreiros");
 
-		if(local != null && local != ""){
+		if(local != null && !local.equals("")){
 			this.definirCampoPreenchido("local", local);
 		}
 
@@ -181,9 +183,60 @@ public class FormularioDeReuniao {
 			this.definirCampoPreenchido("minutoReuniao", minuto);
 		}
 
-		if(obreiroIdsTokenized != null && obreiroIdsTokenized != ""){			
+		if(obreiroIdsTokenized != null && !obreiroIdsTokenized.equals("")){
 			List<String> listaDeIds = ListUtilTokenizer.obterListaString(obreiroIdsTokenized);			
 			this.definirCampoListaPreenchido("obreiros", listaDeIds);			
+		}
+
+	}
+
+        public void definirCamposPreenchidos(Reuniao reuniao){
+		//Obtenção dos campos preenchidos pelo usuário
+		String local = reuniao.getLocal();
+		String dia = reuniao.getDia();
+		String mes = reuniao.getMes();
+		String ano = reuniao.getAno();
+		String hora = reuniao.getHora();
+		String minuto = reuniao.getMinuto();
+                String idReuniao = reuniao.getIdReuniao() + "";
+
+                //Carga de obreiros selecionados da lista de presença no modelo proposto na página
+                List<PresencaObreiro> listaDePresenca =  reuniao.getListaDePresencaObreiro();
+                List<String> listaDeIds = new ArrayList<String>();
+                for(PresencaObreiro obreiroDaLista : listaDePresenca){
+                    listaDeIds.add(obreiroDaLista.getObreiro().getCpf());
+                }
+
+                if(idReuniao != null && !idReuniao.equals("")){
+			this.definirCampoPreenchido("idReuniao", idReuniao);
+		}
+
+		if(local != null && !local.equals("")){
+			this.definirCampoPreenchido("local", local);
+		}
+
+		if(dia != null && !dia.equals("00")){
+			this.definirCampoPreenchido("dataReuniaoDia", dia);
+		}
+
+		if(mes != null && !mes.equals("00")){
+			this.definirCampoPreenchido("dataReuniaoMes", mes);
+		}
+
+		if(ano != null && !ano.equals("00")){
+			this.definirCampoPreenchido("dataReuniaoAno", ano);
+		}
+
+		if(hora != null && !hora.equals("24")){
+			this.definirCampoPreenchido("horaReuniao", hora);
+		}
+
+		if(minuto != null && !minuto.equals("60")){
+			this.definirCampoPreenchido("minutoReuniao", minuto);
+		}
+
+		if(listaDeIds != null && !listaDeIds.isEmpty()){
+			this.definirCampoListaPreenchido("obreiros", listaDeIds);
 		}
 
 	}
@@ -191,6 +244,14 @@ public class FormularioDeReuniao {
 	public void definirDadosDeConfirmacaoDeCadastroReuniao(String confirmacaoCadastro, String local, String data, String hora){
 
 		this.definirDadosDeConfirmacao("confirmacao_cadastro", confirmacaoCadastro);
+		this.definirDadosDeConfirmacao("confirmacao_local", local);
+		this.definirDadosDeConfirmacao("confirmacao_data", data);
+		this.definirDadosDeConfirmacao("confirmacao_hora", hora);
+	}
+
+        public void definirDadosDeConfirmacaoDeEdicaoReuniao(String confirmacaoEdicao, String local, String data, String hora){
+
+		this.definirDadosDeConfirmacao("confirmacao_edicao", confirmacaoEdicao);
 		this.definirDadosDeConfirmacao("confirmacao_local", local);
 		this.definirDadosDeConfirmacao("confirmacao_data", data);
 		this.definirDadosDeConfirmacao("confirmacao_hora", hora);

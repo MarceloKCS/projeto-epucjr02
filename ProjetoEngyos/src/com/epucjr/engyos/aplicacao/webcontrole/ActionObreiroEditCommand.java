@@ -136,7 +136,7 @@ public class ActionObreiroEditCommand implements Command {
                 formularioDeObreiro = new FormularioDeObreiro();
                 formularioDeObreiro.definirDadosDeConfirmacaoDeEdicaoObreiro(dataAccessObjectManager.getMensagemStatus(), nome, cpf, cargo, congregacao, msgSenha, msgDigital);
 
-                //Define mensagem de sucesso ao cadastrar
+                //Define mensagem de sucesso ao editar
                 formularioDeObreiro.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
 
                 //Encerra o atributo na session para digital

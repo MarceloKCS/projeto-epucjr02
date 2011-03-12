@@ -68,6 +68,13 @@ public class ViewFactory {
                 this.adicionaView("congregacao_editer", "Operação Realizada com Sucesso!", "EditarCongregacao.jsp");
 		this.adicionaView("congregacao_editer", "Erro interno na operação", "EditarCongregacao.jsp");
 
+                this.adicionaView("reuniao_editformload", "Reunião inexistente no sistema", "EditarReuniao.jsp");
+                this.adicionaView("reuniao_editformload", "Reunião encontrada", "EditarReuniao.jsp");
+
+                this.adicionaView("reuniao_editer", "Erro ao Editar", "EditarReuniao.jsp");
+                this.adicionaView("reuniao_editer", "Operação Realizada com Sucesso!", "EditarReuniao.jsp");
+		this.adicionaView("reuniao_editer", "Erro interno na operação", "EditarReuniao.jsp");
+
                 this.adicionaView("iniciar_reuniao", "Reuniao Inicializada", "SessaoReuniao.jsp");
                 this.adicionaView("iniciar_reuniao", "Erro na Inicialização", "SessaoReuniao.jsp");
 
