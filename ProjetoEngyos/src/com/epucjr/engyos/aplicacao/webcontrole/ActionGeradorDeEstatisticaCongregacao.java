@@ -40,8 +40,11 @@ public class ActionGeradorDeEstatisticaCongregacao implements Command {
 
 		// pega os dados do bd
 		DataAccessObjectManager dao = new DataAccessObjectManager();
+		
 		//pega um array de id de reunioes
 		long[] idreunioes = (long[]) request.getAttribute("idReunioes");
+		String titulo = request.getAttribute("titulo").toString();
+		
 		LinkedList<Reuniao> reuniaos = new LinkedList<Reuniao>();
 		for (long r:idreunioes) {
 			reuniaos.add(dao.obterReuniao(r));
@@ -50,7 +53,7 @@ public class ActionGeradorDeEstatisticaCongregacao implements Command {
 		List<Congregacao> listaCongregacaos = dao.obterListaDeCongregacoes();
 		
 		try {
-			BufferedImage bi = criarGrafico(reuniaos, listaCongregacaos, request.getAttribute("titulo").toString());
+			BufferedImage bi = criarGrafico(reuniaos, listaCongregacaos, titulo);
 			GeradorPDF.gerarPDF(bi, response.getOutputStream());
 			return "Sucesso gerou pdf";
 		} catch (IOException e) {
@@ -79,7 +82,7 @@ public class ActionGeradorDeEstatisticaCongregacao implements Command {
 			List<PresencaObreiro> listaPresencaObreiros = reuniao
 					.getListaDePresencaObreiro();
 			for (PresencaObreiro po : listaPresencaObreiros) {
-				if (po.isObreiroPresente()) { // ???? TODO
+				if (po.isObreiroPresente()) { // ???? TODO n sei se é isso, se isObreiroPresente entao adiciona no grafico
 					long id = po.getObreiro().getCongregacao()
 							.getIdCongregacao();
 					int valor = mapPresenca.get(id) + 1;

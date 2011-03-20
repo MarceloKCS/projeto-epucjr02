@@ -45,66 +45,20 @@ public class ActionMarcarPresencaDigital implements Command {
 
 	   //TODO apagar
     public String executeTeste(HttpServletRequest request, HttpServletResponse response, ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
-        String resposta = "";
-        String requestData = "";
-        try {
-            requestData = (String) objectInputStream.readObject();
-            //Mensageiro com a função de reconhecer as mensagens no formato
-            //semelhante a uma requisição GET
-            AppletServerMessenger appletServerMessenger = new AppletServerMessenger(requestData);
+    	try {
+			long idReuniao = objectInputStream.readLong();
+			String impressaoDigital = objectInputStream.readUTF();
 
-            //Controlador da sessão de reunião
-            ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
+			System.out.println("idReuniao="+idReuniao);
+			System.out.println("impressaoDigital="+impressaoDigital);
 
+			objectOutputStream.writeBoolean(true);
+			objectOutputStream.writeUTF("Operação feita com sucesso");
 
-            //O applet envia 2 campos necessário para o registro de uma digital
-            String idReuniaoString = appletServerMessenger.obterValorCampo("idReuniao");
-            String impressaoDigital = appletServerMessenger.obterValorCampo("digital");
-            long idReuniao = 0;
-            if (idReuniaoString != null && !idReuniaoString.equals("")) {
-                System.out.println("idReuniao = " + idReuniao);
-                idReuniao = Long.parseLong(idReuniaoString.trim());
-            }
-
-            System.out.println("idReuniaoString = " + idReuniaoString);
-            System.out.println("impressaoDigital = " + impressaoDigital);
-            System.out.println("idReuniao = " + idReuniao);
-
-            System.out.println("Digital = " + requestData);
-
-
-            if (reuniaoSessionControl.verificarSessaoReuniaoAberta()) {
-                IReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
-                //marca a presenca da reuniao pela digital
-                reuniaoMonitor.marcarPresencaPelaDigital(impressaoDigital);
-
-                //Manda a resposta da operação para a página
-                resposta = reuniaoMonitor.getMensagemStatus();
-
-            //Armazena a mensagem no formato adequando no envio para applet
-            appletServerMessenger.setParameterGET("mensagemStatus", (reuniaoMonitor != null && reuniaoMonitor.isOperacaoExecutada()) ? "sucesso" : "fracasso");
-
-            } else {
-                resposta = "Reunião não iniciada";
-            }
-
-
-            appletServerMessenger.setParameterGET("resposta", resposta);
-
-            System.out.println("MESSAGE = " + appletServerMessenger.obterRequestMessageParameters());
-
-             objectOutputStream.writeUTF(appletServerMessenger.obterRequestMessageParameters());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-             ex.printStackTrace();
-            Logger.getLogger(ActionMarcarPresencaDigital.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-
-        return resposta;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
 
 }
