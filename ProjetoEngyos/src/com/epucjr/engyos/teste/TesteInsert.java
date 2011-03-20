@@ -1,6 +1,8 @@
 package com.epucjr.engyos.teste;
 
+import com.epucjr.engyos.dominio.modelo.Administrador;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
+import com.epucjr.engyos.dominio.modelo.Identificacao;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
@@ -28,7 +30,7 @@ public class TesteInsert {
 
 		//finaliza o programa
 		
-		TesteInsert.testeCongregaInsert();
+		TesteInsert.testeInsertAdmin();
 		
 	}
 	
@@ -59,4 +61,19 @@ public class TesteInsert {
 			System.out.println("FracassoMSG = " + dataAccessObjectManager.getMensagemStatus());
 		}
 	}
+
+        public static void testeInsertAdmin(){
+            DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+            Identificacao identificacao = new Identificacao();
+            identificacao.setSenha("alaska");
+            Administrador administrador = new Administrador("Rogério", "Maegaki", "31273800893", "rmaega@gmail.com", identificacao);
+
+            dataAccessObjectManager.persistirObjeto(administrador);
+
+            if (dataAccessObjectManager.isOperacaoEfetuada()) {
+                System.out.println("SucessoMSG = " + dataAccessObjectManager.getMensagemStatus());
+            } else {
+                System.out.println("FracassoMSG = " + dataAccessObjectManager.getMensagemStatus());
+            }
+        }
 }

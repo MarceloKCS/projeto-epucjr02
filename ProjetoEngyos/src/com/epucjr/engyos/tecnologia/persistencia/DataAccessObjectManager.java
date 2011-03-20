@@ -249,12 +249,13 @@ public class DataAccessObjectManager {
 
 		if(administrador == null){
 			this.setOperacaoEfetuada(false);
-			this.setMensagemStatus("Administrador não inexistente no sistema");
+			this.setMensagemStatus("Administrador inexistente no sistema");
 		}
 		else{
 			this.setOperacaoEfetuada(true);
 			this.setMensagemStatus("Administrador encontrado");
-		}		
+		}
+
 		return administrador;
 	}
 

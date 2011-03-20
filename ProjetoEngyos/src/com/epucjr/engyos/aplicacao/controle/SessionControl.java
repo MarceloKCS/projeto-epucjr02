@@ -11,11 +11,11 @@ package com.epucjr.engyos.aplicacao.controle;
  */
 public interface SessionControl {
 
-    public void criarFlagSessionStatus(String nomeDaSessao, boolean status);
+    public void definirSessionStatusAtivaInativa(String nomeDaSessao, boolean status);
 
-    public boolean obterFlagSessionStatus(String nomeDaSessao);
+    public boolean verificarSessionStatusAtiva();
 
-    public boolean obterValidadeSessao(String nomeDaSessao);
+    public boolean verificarValidadeDaSessao(String nomeDaSessao);
 
     public void definirAtributoNaSessao(String nomeDoCampo, String valorDoCampo);
 
@@ -23,10 +23,10 @@ public interface SessionControl {
 
     public boolean verificaAtributoExistente(String nomeDoCampo);
 
-    public boolean isSessaoFlagAtiva(String nomeDaSessao);
+    public boolean isSessaoAtiva(String nomeDaSessao);
 
-    public void encerrarSessao(String nomeDaSessao);
+    public void removerAtributoNaSessao(String nomeDoAtributo);
 
-    public void matarTodasSessoes();
+    public void encerrarSessao();
 
 }

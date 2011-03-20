@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Buscar - Projeto Engyos - Controle de PresenÃ§a</title>
+	<title>Buscar - Projeto Engyos - Controle de Presença</title>
 	<link href="screen.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript">

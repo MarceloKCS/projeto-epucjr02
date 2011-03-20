@@ -78,8 +78,14 @@ public class ViewFactory {
                 this.adicionaView("iniciar_reuniao", "Reuniao Inicializada", "SessaoReuniao.jsp");
                 this.adicionaView("iniciar_reuniao", "Erro na Inicialização", "SessaoReuniao.jsp");
 
-		this.adicionaView("ActionLogin", "Sucesso Login", "Principal.jsp");
-		this.adicionaView("ActionLogin", "Erro Login", "TelaLogin.jsp");
+		this.adicionaView("action_login", "Administrador inexistente no sistema", "TelaLogin.jsp");                
+                this.adicionaView("action_login", "Senha Inválida", "TelaLogin.jsp");
+                this.adicionaView("action_login", "Usuário inexistente no sistema", "TelaLogin.jsp");
+		this.adicionaView("action_login", "Sessão já Iniciada", "Principal.jsp");
+                this.adicionaView("action_login", "Usuário válido", "Principal.jsp");
+
+                this.adicionaView("action_logout", "Sessão encerrada.", "TelaLogin.jsp");
+                this.adicionaView("action_logout", "Nenhuma sessão foi iniciada.", "TelaLogin.jsp");
 		
 	}
 

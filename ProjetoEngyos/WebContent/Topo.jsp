@@ -1,10 +1,11 @@
+<%@ page import="com.epucjr.engyos.aplicacao.controle.UserSessionControl" %>
 
 <div id="logo" class="left"><a href="Principal.jsp"
 	title="Voltar para tela principal"><img src="imagens/logo.png"
 	alt="Projeto Engyos" /></a></div>
 <div id="btn_topo" class="right">
 <p class="usuarioLogado"><img src="imagens/icon_user.png"
-	alt="Usuário Logado" />Calebe Santos</p>
+                              alt="Usuario Logado" /><%out.print(request.getSession().getAttribute(UserSessionControl.NOME_USUARIO));%></p>
 <p><a href="#">Alterar dados</a></p>
-<p><a href="#">Sair</a></p>
+<p><a href="Controller?acao=action_logout">Sair</a></p>
 </div>

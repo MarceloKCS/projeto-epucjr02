@@ -107,9 +107,9 @@ public class Obreiro {
     }
 
 
-	/******************************
-	 *	GETTERS AND SETTERS
-	 ******************************/
+    /******************************
+     *	GETTERS AND SETTERS
+     ******************************/
 	public String getNome() {
 		return this.nome;
 	}

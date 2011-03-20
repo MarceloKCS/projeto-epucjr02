@@ -6,8 +6,6 @@
 package com.epucjr.engyos.dominio.visualizacao;
 
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
-import com.epucjr.engyos.tecnologia.utilitarios.HoraUtil;
-import org.apache.commons.lang.time.DateUtils;
 
 /**
  *

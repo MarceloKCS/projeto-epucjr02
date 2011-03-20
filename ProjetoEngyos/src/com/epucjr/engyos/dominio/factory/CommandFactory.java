@@ -11,6 +11,7 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionLogin;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionLogoutCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaDigital;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaPeloCPFCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaSenha;
@@ -77,7 +78,8 @@ public class CommandFactory {
                 mapaCommand.put("iniciar_session_reuniao", new ActionReuniaoSessionStartCommand());
                 mapaCommand.put("marcar_presenca", new ActionMarcarPresencaDigital());
                 mapaCommand.put("verificar_reuniao_status", new ActionReuniaoSessionAppletResponse());
-		mapaCommand.put("ActionLogin", new ActionLogin());
+		mapaCommand.put("action_login", new ActionLogin());
+                mapaCommand.put("action_logout", new ActionLogoutCommand());
 		//marcar presenca
 		//mapaCommand.put("marcarPresencaDigital", new ActionMarcarPresencaDigital());
 		mapaCommand.put("marcarPresencaSenha", new ActionMarcarPresencaSenha());

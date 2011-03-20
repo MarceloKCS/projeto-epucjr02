@@ -1,5 +1,12 @@
 package com.epucjr.engyos.dominio.modelo;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author Projeto Engyos Team
@@ -8,13 +15,37 @@ package com.epucjr.engyos.dominio.modelo;
  *
  * @since 1.0
  */
+@Entity
 public class Administrador implements IUsuario{
 
-    private String nome;
-    private String sobrenome;
+    /******************************
+     *	ATRIBUTOS
+     ******************************/
+
+    @Id
     private String cpf;
+    private String nome;
+    private String sobrenome;    
     private String email;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @JoinColumn
     private Identificacao identificacao;
+
+
+
+
+    /******************************
+     *	CONSTRUTOR
+     ******************************/
+    public Administrador() {
+        this.cpf = "";
+        this.nome = "";
+        this.sobrenome = "";
+        this.email = "";
+        this.identificacao = new Identificacao();
+    }
+
 
     /**
      * Class constructor
@@ -63,21 +94,30 @@ public class Administrador implements IUsuario{
     }
 
     
-    //TODO
+    /******************************
+     *	METODOS
+     ******************************/
 
 
+    /******************************
+     *	GETTERS AND SETTERS
+     ******************************/
+    @Override
     public String obterNome() {
         return nome;
     }
 
+    @Override
     public String obterNomeCompleto() {
         return nome + ' ' + sobrenome;
     }
 
+    @Override
     public String obterSenha() {
         return identificacao.getSenha();
     }
 
+    @Override
     public String obterSobrenome() {
         return sobrenome;
     }
@@ -92,5 +132,31 @@ public class Administrador implements IUsuario{
     
     public String obterLogin() {
         return email;
+    }
+
+    public Identificacao getIdentificacao() {
+        return identificacao;
+    }
+
+    public void setIdentificacao(Identificacao identificacao) {
+        this.identificacao = identificacao;
+    }
+
+    public String getSenha(){
+        if(this.identificacao != null){
+            return this.identificacao.getSenha();
+        }
+        else{
+            return "";
+        }
+    }
+
+    public String getImpressaoDigital(){
+        if(this.identificacao != null){
+            return this.identificacao.getImpressaoDigital();
+        }
+        else{
+            return "";
+        }
     }
 }

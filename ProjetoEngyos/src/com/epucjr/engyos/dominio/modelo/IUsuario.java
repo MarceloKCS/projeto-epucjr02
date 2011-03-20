@@ -1,13 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.epucjr.engyos.dominio.modelo;
 
 /**
  *
- * @author Rogerio
+ * @author Projeto Engyos Team
+ *
+ * @version 1.0
+ *
+ * @since 1.0
  */
 public interface IUsuario {
 
