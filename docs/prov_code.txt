@@ -1,0 +1,19 @@
+private static final String[] SPECIALS =
+new String[]{
+"+", "-", "&&", "||", "!", "(", ")", "{", "}",
+"[", "]", "^", "\"", "~", "*", "?", ":", "\\"
+};
+protected String escapeSpecials(String clientQuery)
+{
+String regexOr = "";
+for (String special : SPECIALS)
+{
+regexOr += (special
+.equals(SPECIALS[0]) ? "" : "|") + "\\"
++ special.substring(0, 1);
+}
+clientQuery = clientQuery
+.replaceAll("(?<!\\\\)(" + regexOr + ")",
+"\\\\$1");
+return clientQuery.trim();
+}

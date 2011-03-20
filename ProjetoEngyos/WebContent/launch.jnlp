@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>CadastroDigitalObreiroApplet</title>
+        <vendor>E-PUCJr.</vendor>
+        <homepage href=""/>
+        <description>CadastroDigitalObreiroApplet</description>
+        <description kind="short">CadastroDigitalObreiroApplet</description>
+
+    </information>
+<update check="always"/>
+<security>
+<all-permissions/>
+</security>
+<resources>
+    <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.5+"/>
+    <jar href="CadastroDigitalObreiroApplet.jar" main="true"/>
+
+    <jar href="lib/NBioBSPJNI.jar"/>
+</resources>
+    <applet-desc height="200" main-class="epucjr.engyos.applet.CadastroDigital" name="PresencaApplet" width="250">
+
+    <param name="idReuniao" value="5"/>
+</applet-desc>
+</jnlp>
