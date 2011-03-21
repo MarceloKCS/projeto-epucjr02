@@ -11,6 +11,7 @@ import com.epucjr.engyos.dominio.modelo.Administrador;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.dominio.modelo.SessionStatus;
 
 public class DataAccessObjectManager {
 
@@ -257,6 +258,25 @@ public class DataAccessObjectManager {
 		}
 
 		return administrador;
+	}
+
+        public SessionStatus obterSessionStatus(long idSession){
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+
+		SessionStatus sessionStatus = entityManager.find(SessionStatus.class, idSession);
+
+		if(sessionStatus == null){
+			this.setOperacaoEfetuada(false);
+			this.setMensagemStatus("Sessao inexistente no sistema");
+		}
+		else{
+			this.setOperacaoEfetuada(true);
+			this.setMensagemStatus("Sessao encontrada");
+		}
+
+		return sessionStatus;
 	}
 
 	public Obreiro obterObreiro(String cpf){

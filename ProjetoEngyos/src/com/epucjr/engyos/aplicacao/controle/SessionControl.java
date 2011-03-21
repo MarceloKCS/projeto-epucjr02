@@ -17,7 +17,7 @@ public interface SessionControl {
 
     public boolean verificarValidadeDaSessao(String nomeDaSessao);
 
-    public void definirAtributoNaSessao(String nomeDoCampo, String valorDoCampo);
+    public void definirAtributoNaSessao(String nomeDoCampo, Object valorDoCampo);
 
     public Object obterAtributoDaSessao(String nomeDoCampo);
 
