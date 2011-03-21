@@ -27,7 +27,7 @@ public class ActionObreiroRegisterCommand implements Command{
     /**
      * Método que executa a requisição de cadastro de oberiro no banco de dados
      *
-     * @param arg O <code>HttpServletRequest</code> e o <code>HttpServletResponse</code>     *
+     * @param arg O <code>HttpServletRequest</code> e o <code>HttpServletResponse</code>     
      *
      * @return o Objeto com o resultado da acao requisitada, utilizada pela view
      *factory no <code>FrontControllerServlet</code>

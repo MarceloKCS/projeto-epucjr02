@@ -45,9 +45,9 @@ public class MainSessionControl implements SessionControl{
     }
 
     @Override
-    public void definirAtributoNaSessao(String nomeDoCampo, String valorDoCampo) {
+    public void definirAtributoNaSessao(String nomeDoCampo, Object valorDoCampo) {
         if(!this.verificaAtributoExistente(nomeDoCampo)){
-            this.session.setAttribute(valorDoCampo, valorDoCampo);
+            this.session.setAttribute(nomeDoCampo, valorDoCampo);
         }
     }
 

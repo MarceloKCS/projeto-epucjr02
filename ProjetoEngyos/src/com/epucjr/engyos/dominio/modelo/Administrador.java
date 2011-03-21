@@ -32,6 +32,10 @@ public class Administrador implements IUsuario{
     @JoinColumn
     private Identificacao identificacao;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @JoinColumn
+    private SessionStatus sessionStatus;
+
 
 
 
@@ -44,6 +48,7 @@ public class Administrador implements IUsuario{
         this.sobrenome = "";
         this.email = "";
         this.identificacao = new Identificacao();
+        this.sessionStatus = new SessionStatus();
     }
 
 
@@ -67,6 +72,7 @@ public class Administrador implements IUsuario{
         this.cpf = cpf;
         this.email = email;
         this.identificacao = new Identificacao(senha);
+        this.sessionStatus = new SessionStatus();
     }
 
     /**
@@ -91,6 +97,7 @@ public class Administrador implements IUsuario{
         this.cpf = cpf;
         this.email = email;
         this.identificacao = identificacao;
+         this.sessionStatus = new SessionStatus();
     }
 
     
@@ -159,4 +166,14 @@ public class Administrador implements IUsuario{
             return "";
         }
     }
+
+    public SessionStatus getSessionStatus() {
+        return sessionStatus;
+    }
+
+    public void setSessionStatus(SessionStatus sessionStatus) {
+        this.sessionStatus = sessionStatus;
+    }
+
+    
 }
