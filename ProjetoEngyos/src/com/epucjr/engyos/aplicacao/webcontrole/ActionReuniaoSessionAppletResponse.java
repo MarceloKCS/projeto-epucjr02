@@ -33,12 +33,12 @@ public class ActionReuniaoSessionAppletResponse implements Command{
 
         ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
         //HttpSession session = request.getSession();
-        reuniaoSessionControl.abrirSessaoReuniao();
+        reuniaoSessionControl.iniciarReuniao();
 
         //String value = (String) session.getAttribute("reuniao");
 
         //System.out.println("value = " + value);
-        if(reuniaoSessionControl.verificarSessaoReuniaoAberta()){
+        if(reuniaoSessionControl.verificarSessionStatusAtiva()){
             mensagemResposta = "ativa";
         }
         else{

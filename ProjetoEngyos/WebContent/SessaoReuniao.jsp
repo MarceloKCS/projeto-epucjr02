@@ -172,6 +172,14 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         $('#status').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
                     });
                 });
+
+                $('#stop_button').click(function() {               // Locate HTML DOM element with ID "somebutton" and assign the following function to its "click" event...
+                    $.get('frontcontrollerajax?acao=encerrar_session_reuniao', function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                        alert(responseText);
+                        location.replace("Principal.jsp")
+                        //$('#status').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+                    });
+                });
             });
         </script>
     </head>
@@ -213,7 +221,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         <br/>
                         <br/>
                         <input type=button id="start_button" name="start" value="Iniciar" onclick="time_start()">
-                        <input type=button name="stop" value="Parar" onclick="Stop()">
+                        <input type=button id="stop_button" name="stop" value="Parar" onclick="Stop()">
                         <input type=button name="reset" value="Reset" onclick="Reset()">
 
                     </div>

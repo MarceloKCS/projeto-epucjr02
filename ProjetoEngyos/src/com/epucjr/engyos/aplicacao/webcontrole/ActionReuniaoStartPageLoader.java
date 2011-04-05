@@ -20,8 +20,8 @@ public class ActionReuniaoStartPageLoader implements Command{
 	HttpServletRequest request = (HttpServletRequest) arg[0];
 
         //TODO lembrar de remover senão vai adr pau cada vez que passar aqui quando implementar o login
-        InitAppRoutines initAppRoutines = new InitAppRoutines(request.getSession());
-        initAppRoutines.limparSession();
+//        InitAppRoutines initAppRoutines = new InitAppRoutines(request.getSession());
+//        initAppRoutines.limparSession();
         /** DO NOT FORGET TO REMOVE ABOVE****************************************************************/
 
 
@@ -36,7 +36,7 @@ public class ActionReuniaoStartPageLoader implements Command{
         //Inicializar uma sessão de reunião agendada na página
         ReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
 
-        reuniaoMonitor.inicializaReuniao();
+        reuniaoMonitor.reuniaoLoader();
 
         PaginaDeReuniao paginaDeReuniao = reuniaoMonitor.obterPaginaDeReuniaoInicializada();
 

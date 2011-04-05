@@ -81,7 +81,7 @@ public class ReuniaoMonitorTest {
 
         reuniaoMonitor = new ReuniaoMonitor(reuniao);
 
-        reuniaoMonitor.inicializaReuniao();
+        reuniaoMonitor.reuniaoLoader();
 
 
         assertTrue(reuniaoMonitor.isOperacaoExecutada());

@@ -25,6 +25,7 @@ import org.hibernate.search.annotations.Store;
 
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.HoraUtil;
+import javax.persistence.OneToOne;
 
 @Entity
 @Indexed
@@ -65,6 +66,10 @@ public class Reuniao implements IReuniao{
 
         @Transient
 	private final int tempoEmMinutosDeTolerânciaContagemPresenca = 30;
+
+        @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+        @JoinColumn
+        ReuniaoSessionStatus sessionStatus;
 	
 		
 	/******************************
@@ -79,6 +84,7 @@ public class Reuniao implements IReuniao{
 		this.quantidadeMaxObreirosReuniao = 0;
                 this.horárioInicioEfetivo = "";
                 this.horárioDeEncerramentoEsperado = "";
+                this.sessionStatus = new ReuniaoSessionStatus();
 	}
 	
 	public Reuniao(String local, String data, String hora) {
@@ -90,6 +96,7 @@ public class Reuniao implements IReuniao{
 		this.quantidadeMaxObreirosReuniao = 0;
                 this.horárioInicioEfetivo = "";
                 this.horárioDeEncerramentoEsperado = "";
+                this.sessionStatus = new ReuniaoSessionStatus();
 	}
 	
 	/******************************
@@ -463,5 +470,15 @@ public class Reuniao implements IReuniao{
     public void setHorárioInicioEfetivo(String horárioInicioEfetivo) {
         this.horárioInicioEfetivo = horárioInicioEfetivo;
     }
+
+    public ReuniaoSessionStatus getReuniaoSessionStatus() {
+        return sessionStatus;
+    }
+
+    public void setReuniaoSessionStatus(ReuniaoSessionStatus sessionStatus) {
+        this.sessionStatus = sessionStatus;
+    }
+
+    
 
 }

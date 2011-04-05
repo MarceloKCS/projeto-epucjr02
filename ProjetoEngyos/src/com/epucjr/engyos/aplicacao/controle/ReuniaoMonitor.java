@@ -57,7 +57,7 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
      }
 
     @Override
-    public void inicializaReuniao() {
+    public void reuniaoLoader() {
 
         //verificar se a requisição para o carregamento da seção de reunião
         //seja de uma reunião que não passe, pelo menos, o dia de hoje

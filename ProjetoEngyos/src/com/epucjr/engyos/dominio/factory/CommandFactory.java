@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.TestCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionBuscaPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCommandCapturarDigital;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoEditCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoEditPageLoaderCommand;
@@ -12,6 +13,7 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionCongregacaoRegisterPageLoaderCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionLogin;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionLogoutCommand;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionMainPageLoader;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaDigital;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaPeloCPFCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionMarcarPresencaSenha;
@@ -26,6 +28,7 @@ import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoFindCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoRegisterPageLoader;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoSessionAppletResponse;
+import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoSessionFinishCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoSessionStartCommand;
 import com.epucjr.engyos.aplicacao.webcontrole.ActionReuniaoStartPageLoader;
 
@@ -76,10 +79,15 @@ public class CommandFactory {
                 //Commands usados pelo servlet que trata requisisoes ajax
                 mapaCommand.put("marcar_presenca_cpf", new ActionMarcarPresencaPeloCPFCommand());
                 mapaCommand.put("iniciar_session_reuniao", new ActionReuniaoSessionStartCommand());
+                mapaCommand.put("encerrar_session_reuniao", new ActionReuniaoSessionFinishCommand());
                 mapaCommand.put("marcar_presenca", new ActionMarcarPresencaDigital());
                 mapaCommand.put("verificar_reuniao_status", new ActionReuniaoSessionAppletResponse());
 		mapaCommand.put("action_login", new ActionLogin());
                 mapaCommand.put("action_logout", new ActionLogoutCommand());
+
+                mapaCommand.put("busca_loader", new ActionBuscaPageLoaderCommand());
+
+                mapaCommand.put("page_loader", new ActionMainPageLoader());
 		//marcar presenca
 		//mapaCommand.put("marcarPresencaDigital", new ActionMarcarPresencaDigital());
 		mapaCommand.put("marcarPresencaSenha", new ActionMarcarPresencaSenha());

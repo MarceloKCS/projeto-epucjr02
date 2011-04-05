@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.epucjr.engyos.dominio.modelo;
 
 import java.io.Serializable;
@@ -13,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 /**
+ *Classe responsável pelo gerenciamento de sessões de usuários de maneira persistente
  *
- * @author Rogerio
+ * @author Projeto Engyos Team
  */
+
 @Entity
 public class SessionStatus implements Serializable{
 
@@ -38,6 +35,13 @@ public class SessionStatus implements Serializable{
         this.CURRENT_SESSION_ID = "";
     }
 
+    /**
+     * Define o status de uma sessão, baseada em SECAO_ATIVA ou SECAO_INATIVA
+     *
+     * @param sessaoStatus Assume dois valores : SECAO_ATIVA ou SECAO_INATIVA
+     *
+     * TODO Exception se sessaoStatus for diferente de SECAO_ATIVA ou SECAO_INATIVA
+     */
     public void definirSessaoStatus(String sessaoStatus){
         if(sessaoStatus.equals(SECAO_ATIVA)){
             this.sessaoAtiva = true;

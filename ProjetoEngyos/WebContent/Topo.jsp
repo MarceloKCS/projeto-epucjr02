@@ -1,6 +1,6 @@
 <%@ page import="com.epucjr.engyos.aplicacao.controle.UserSessionControl" %>
 
-<div id="logo" class="left"><a href="Principal.jsp"
+<div id="logo" class="left"><a href="Controller?acao=page_loader&page_corrente=pagina_principal"
 	title="Voltar para tela principal"><img src="imagens/logo.png"
 	alt="Projeto Engyos" /></a></div>
 <div id="btn_topo" class="right">
