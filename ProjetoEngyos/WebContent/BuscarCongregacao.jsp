@@ -29,9 +29,9 @@
 	</div>
 	<div id="conteudo">
 		<ul id="tabmenu">
-			<li id="liObreiros" class="tab_off"><a href="BuscarObreiro.jsp">Obreiro</a></li>
-			<li id="liCongregacoes" class="tab_on"><a href="BuscarCongregacao.jsp">Congregação</a></li>
-			<li id="liReunioes" class="tab_off"><a href="BuscarReuniao.jsp">Reunião</a></li>
+			<li id="liObreiros" class="tab_off"><a href="Controller?acao=busca_loader&pagina_busca=buscar_obreiro">Obreiro</a></li>
+			<li id="liCongregacoes" class="tab_on"><a href="Controller?acao=busca_loader&pagina_busca=buscar_congregacao">Congregação</a></li>
+			<li id="liReunioes" class="tab_off"><a href="Controller?acao=busca_loader&pagina_busca=buscar_reuniao">Reunião</a></li>
 		</ul>
 		<div id="conteudo_tabmenu">
 			<div id="buscarCongregacoes">

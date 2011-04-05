@@ -86,6 +86,15 @@ public class ViewFactory {
 
                 this.adicionaView("action_logout", "Sessão encerrada.", "TelaLogin.jsp");
                 this.adicionaView("action_logout", "Nenhuma sessão foi iniciada.", "TelaLogin.jsp");
+
+
+                this.adicionaView("busca_loader", "buscar_obreiro", "BuscarObreiro.jsp");
+                this.adicionaView("busca_loader", "buscar_congregacao", "BuscarCongregacao.jsp");
+                this.adicionaView("busca_loader", "buscar_reuniao", "BuscarReuniao.jsp");
+
+                this.adicionaView("page_loader", "pagina_principal", "Principal.jsp");
+
+                this.adicionaView("", "", "TelaLogin.jsp");
 		
 	}
 

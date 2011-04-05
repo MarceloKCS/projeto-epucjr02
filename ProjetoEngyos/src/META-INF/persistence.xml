@@ -9,6 +9,7 @@
     <class>com.epucjr.engyos.dominio.modelo.PresencaObreiro</class>
     <class>com.epucjr.engyos.dominio.modelo.Administrador</class>
     <class>com.epucjr.engyos.dominio.modelo.SessionStatus</class>
+    <class>com.epucjr.engyos.dominio.modelo.ReuniaoSessionStatus</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ProjetoEngyos"/>

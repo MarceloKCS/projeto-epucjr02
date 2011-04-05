@@ -12,7 +12,7 @@ public interface IReuniaoMonitor {
 
     public void marcarPresencaPeloCPF(String cpfObreiro);
 
-    public void inicializaReuniao();
+    public void reuniaoLoader();
 
     public PaginaDeReuniao obterPaginaDeReuniaoInicializada();
 

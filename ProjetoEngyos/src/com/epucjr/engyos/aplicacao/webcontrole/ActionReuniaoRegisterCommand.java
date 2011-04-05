@@ -10,6 +10,7 @@ import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeReuniao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.dominio.modelo.ReuniaoSessionStatus;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeReuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
@@ -61,6 +62,11 @@ public class ActionReuniaoRegisterCommand implements Command{
 			//Instanciando a reunião para persistência
 			Reuniao reuniao = new Reuniao(local, data, horario);
 			reuniao.setListaDePresencaObreiro(listaDePresenca);
+
+                        //Coloca o módulo de controle de sessão
+                        ReuniaoSessionStatus reuniaoSessionStatus = new ReuniaoSessionStatus();
+                        reuniao.setReuniaoSessionStatus(reuniaoSessionStatus);
+
 			//Realizando a persistência
 			dataAccessObjectManager.persistirObjeto(reuniao);
 			

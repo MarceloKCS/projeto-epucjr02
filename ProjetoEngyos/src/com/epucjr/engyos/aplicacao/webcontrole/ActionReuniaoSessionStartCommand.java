@@ -3,7 +3,6 @@ package com.epucjr.engyos.aplicacao.webcontrole;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.ReuniaoSessionControl;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,18 +20,18 @@ public class ActionReuniaoSessionStartCommand implements Command{
         ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
 
         String idReuniaoPagina = request.getParameter("idReuniao");
-//        long idReuniao = 0;
-//
-//        if (idReuniaoPagina != null && !idReuniaoPagina.equals("")) {
-//            idReuniao = Long.parseLong(idReuniaoPagina.trim());
-//        }
+        long idReuniao = 0;
 
-        if (!reuniaoSessionControl.verificarSessaoReuniaoAberta()){
+        if (idReuniaoPagina != null && !idReuniaoPagina.equals("")) {
+            idReuniao = Long.parseLong(idReuniaoPagina.trim());
+        }
+
+        if (!reuniaoSessionControl.verificarSessionStatusAtiva()){
+           
             System.out.println("CLOSED SESSION: STARTING");
-            reuniaoSessionControl.criarSessaoDeReuniao();
-            reuniaoSessionControl.abrirSessaoReuniao();
-            reuniaoSessionControl.armazenaIdReuniaoCorrente(idReuniaoPagina);
-
+            reuniaoSessionControl.criarEDefinirDadosSessaoDeReuniao(idReuniao);
+            reuniaoSessionControl.iniciarReuniao();
+            
             resposta = "Reunião Iniciada";
 
         } else {

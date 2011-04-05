@@ -21,7 +21,7 @@ public class MainSessionControl implements SessionControl{
      * @param session
      */
     public MainSessionControl(HttpSession session) {
-       
+
         this.session = session;
         this.session.setMaxInactiveInterval(SESSION_EXPIRATION_TIME_INSECONDS);
 
@@ -82,12 +82,8 @@ public class MainSessionControl implements SessionControl{
     public void encerrarSessao() {
         if(!this.session.isNew()){
             this.session.invalidate();
-            this.session = null;
-            System.out.println("SESSION INVALIDATE");
-        }
-        else{
-            System.out.println("WTF!!!!!!!!!!!");
-        }
+            
+        }       
     }
 
     @Override
@@ -115,5 +111,5 @@ public class MainSessionControl implements SessionControl{
         this.session = session;
     }
 
-    
+
 }

@@ -34,7 +34,7 @@ public class ActionMarcarPresencaPeloCPFCommand implements Command{
 
         //Uma presença não pode ser marcada caso a reunião não esteja iniciada.
 
-        if (reuniaoSessionControl.verificarSessaoReuniaoAberta()) {
+        if (reuniaoSessionControl.verificarSessionStatusAtiva()) {
             IReuniaoMonitor reuniaoMonitor = new ReuniaoMonitor(idReuniao);
             //marca a presenca da reuniao pelo CPF
             reuniaoMonitor.marcarPresencaPeloCPF(cpfObreiro);
@@ -45,6 +45,8 @@ public class ActionMarcarPresencaPeloCPFCommand implements Command{
         } else {
             resposta = "Reunião não iniciada";
         }
+
+        System.out.println("resposta = " + resposta);
         return resposta;
 
     }
