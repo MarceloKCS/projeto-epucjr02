@@ -6,7 +6,6 @@
 package com.epucjr.engyos.dominio.modelo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,14 +30,14 @@ public class ReuniaoSessionStatus implements Serializable{
     @Transient
     public static String SECAO_ATIVA = "SECAO_ATIVA";
     @Transient
-    public static String SECAO_INATIVA = "SECAO_ATIVA";
+    public static String SECAO_INATIVA = "SECAO_INATIVA";
 
     private boolean sessaoAtiva;
 
     /**
      * O Id da sessão utilizada em HttpSession
      */
-    private String CURRENT_SESSION_ID;
+    //private String CURRENT_SESSION_ID;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date SESSION_START_TIME;
@@ -51,7 +50,7 @@ public class ReuniaoSessionStatus implements Serializable{
     public ReuniaoSessionStatus() {
         this.idReuniaoSessionStatus = 0;
         this.sessaoAtiva = false;
-        this.CURRENT_SESSION_ID = "";
+       // this.CURRENT_SESSION_ID = "";
         this.SESSION_START_TIME = null;
         this.SESSION_END_TIME = null;
     }
@@ -95,17 +94,6 @@ public class ReuniaoSessionStatus implements Serializable{
         return hash;
     }
 
-    
-
-
-    public String getCURRENT_SESSION_ID() {
-        return CURRENT_SESSION_ID;
-    }
-
-    public void setCURRENT_SESSION_ID(String CURRENT_SESSION_ID) {
-        this.CURRENT_SESSION_ID = CURRENT_SESSION_ID;
-    }
-
     public Date getSESSION_START_TIME() {
         return SESSION_START_TIME;
     }
@@ -133,7 +121,5 @@ public class ReuniaoSessionStatus implements Serializable{
     public void setSESSION_END_TIME(Date SESSION_END_TIME) {
         this.SESSION_END_TIME = SESSION_END_TIME;
     }
-
-    
 
 }

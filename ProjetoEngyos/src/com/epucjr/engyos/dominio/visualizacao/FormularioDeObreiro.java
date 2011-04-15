@@ -101,6 +101,10 @@ public class FormularioDeObreiro {
         DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
         List<Congregacao> listaDeCongregacao = dataAccessObjectManager.obterListaDeCongregacoes();
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
         this.setListaDeCongregacoes(listaDeCongregacao);
         this.setMensagemStatus("Formulario Carregado");
 

@@ -56,7 +56,11 @@ public class ActionCongregacaoRegisterCommand implements Command{
 			formularioDeCongregacao.definirCamposPreenchidosPeloUsuario(request);
 			formularioDeCongregacao.setMensagemStatus("Erro ao Cadastrar");
 		}
-		
+
+                //Fechando o EntityManager de DataAccessObjectManager após uso
+                if (dataAccessObjectManager != null) {
+                    dataAccessObjectManager.fecharEntityManager();
+                }
 		String respostaOperacao = formularioDeCongregacao.getMensagemStatus();
 		request.setAttribute("formularioDeCongregacao", formularioDeCongregacao);
 		

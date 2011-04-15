@@ -399,6 +399,42 @@ public class DateTimeUtils {
 		return dataValida;
 	}
 
+        /**
+	 *Dada uma data no formato DD/MM/AAAA e um horário no formato HH:MM:SS,
+         *realiza a conversão para epoch para que possa ser manipulada em comparações
+         *
+	 *@param data , A data atual no formato DD/MM/AAAA
+         *@param time O horário atual no formato HH:MM:SS
+         *
+         *@return O tempo atual em milissegundos
+	 */
+	public static long converterDateTimeToMilissegundos(String data, String time){
+            String dia = DateTimeUtils.obterDiaDeDataBrasileira(data);
+            String mes = DateTimeUtils.obterMesDeDataBrasileira(data);
+            String ano = DateTimeUtils.obterAnoDeDataBrasileira(data);
+            String hora = DateTimeUtils.obterHora(time);
+            String minuto = DateTimeUtils.obterMinuto(time);
+            String segundo = DateTimeUtils.obterSegundo(time);
+
+            Calendar calendar = Calendar.getInstance();
+            
+            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dia));
+            calendar.set(Calendar.MONTH, Integer.parseInt(mes) - 1);
+            calendar.set(Calendar.YEAR, Integer.parseInt(ano));
+            calendar.set(Calendar.HOUR, Integer.parseInt(hora));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(minuto));
+            calendar.set(Calendar.SECOND, Integer.parseInt(segundo));
+
+
+            System.out.println("Dia : " + calendar.get(Calendar.DAY_OF_MONTH));
+            System.out.println("Mes : " + calendar.get(Calendar.MONTH));
+            System.out.println("Ano : " + calendar.get(Calendar.YEAR));
+            System.out.println("Hora : " + calendar.get(Calendar.HOUR));
+            System.out.println("Minuto : " + calendar.get(Calendar.MINUTE));
+            System.out.println("Segundo : " + calendar.get(Calendar.SECOND));
+
+            return calendar.getTime().getTime();
+        }
 
 }
 

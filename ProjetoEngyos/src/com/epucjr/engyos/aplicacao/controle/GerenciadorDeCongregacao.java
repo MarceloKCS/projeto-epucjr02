@@ -1,12 +1,10 @@
 package com.epucjr.engyos.aplicacao.controle;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeCongregacao;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeCongregacao;
-import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
 public class GerenciadorDeCongregacao {
 

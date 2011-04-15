@@ -146,6 +146,11 @@ public class ActionReuniaoEditCommand implements Command{
             formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
         }
 
+        //Fecha o EntityManager do DataAccessObjectManager após o uso
+        if(dataAccessObjectManager != null){
+            dataAccessObjectManager.fecharEntityManager();
+        }
+
         String respostaOperacao = formularioDeReuniao.getMensagemStatus();
         request.setAttribute("formularioDeReuniao", formularioDeReuniao);
 
