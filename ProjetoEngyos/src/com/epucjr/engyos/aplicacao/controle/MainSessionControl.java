@@ -23,7 +23,10 @@ public class MainSessionControl implements SessionControl{
     public MainSessionControl(HttpSession session) {
 
         this.session = session;
-        this.session.setMaxInactiveInterval(SESSION_EXPIRATION_TIME_INSECONDS);
+        if(this.session != null){
+            this.session.setMaxInactiveInterval(SESSION_EXPIRATION_TIME_INSECONDS);
+        }
+        
 
     }
 

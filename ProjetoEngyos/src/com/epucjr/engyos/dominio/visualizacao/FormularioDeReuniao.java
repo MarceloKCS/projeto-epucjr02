@@ -125,27 +125,11 @@ public class FormularioDeReuniao {
 		this.setListaDeObreiros(listaDeObreiro);
 		this.setMensagemStatus("Formulario Carregado");
 
-		/*this.dia = reuniao.getDia();
-		this.mes = reuniao.getMes();
-		this.ano = reuniao.getAno();
-		this.hora = reuniao.getHora();
-		this.minuto = reuniao.getMinuto();*/
-
-		/*if (!this.dia.equals("00")){
-			this.definirCampoPreenchido("Dia", this.dia);
-		}
-		if (!this.mes.equals("00")){
-			this.definirCampoPreenchido("Mes", this.mes);
-		}
-		if (!this.ano.equals("0000")){
-			this.definirCampoPreenchido("Ano", this.ano);
-		}
-		if (!this.hora.equals("24")){
-			this.definirCampoPreenchido("Hora", this.hora);
-		}
-		if (!this.minuto.equals("60")){
-			this.definirCampoPreenchido("Minuto", this.minuto);
-		}*/
+                //Fechando o EntityManager de DataAccessObjectManager após uso
+                if (dataAccessObjectManager != null) {
+                    dataAccessObjectManager.fecharEntityManager();
+                }
+		
 	}
 
 	public void definirCamposPreenchidosPeloUsuario(HttpServletRequest httpServletRequest){

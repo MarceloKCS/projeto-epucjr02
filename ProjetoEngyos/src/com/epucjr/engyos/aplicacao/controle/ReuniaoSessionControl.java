@@ -8,6 +8,7 @@ package com.epucjr.engyos.aplicacao.controle;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.dominio.modelo.ReuniaoSessionStatus;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
 
@@ -20,10 +21,23 @@ public class ReuniaoSessionControl extends MainSessionControl{
     private final String REUNIAO_SESSION_TIME_START = "REUNIAO_SESSION";
     private final String ID_REUNIAO = "ID_REUNIAO";
     public static final String REUNIAO_SESSION_STATUS = "REUNIAO_SESSION_STATUS";
-
+    private final long tempoMaxReuniaoEmMilissegundos = 86400000L;
+    private String messageStatus;
+    /**
+     * Construtor, recebe a sessão em uso pelo usuário no gerenciamente de uma
+     * sessão de reunião
+     *
+     * @param session A sessão corrente de um usuário no sistema
+     */
     public ReuniaoSessionControl(HttpSession session) {
         super(session);
-    }    
+        this.messageStatus = "";
+    }
+
+    public ReuniaoSessionControl() {
+        super(null);
+        this.messageStatus = "";
+    }
 
     /**
      * A ser apagado na versão final
@@ -38,6 +52,12 @@ public class ReuniaoSessionControl extends MainSessionControl{
         }
     }
 
+    /**
+     * Método que cria e define uma sessão de reunião através de uma reunião escolhida,
+     * previamente cadastrada no sistema
+     *
+     * @param idReuniao  O ID da reunião escolhida para inicio da sessão
+     */
     public void criarEDefinirDadosSessaoDeReuniao(long idReuniao){
         //1. Usa o dataAccessObjectManager para controle de sessão usando o banco de dados para reconhecimento de
         //sessão através da rede
@@ -48,11 +68,7 @@ public class ReuniaoSessionControl extends MainSessionControl{
 
         //2. Define os dados do usuário na sessão
         
-        this.definirAtributoNaSessao(ID_REUNIAO, idReuniao);
-
-        //3. Define os dados para condição de atividade da sessão
-        reuniaoSessionStatus.setCURRENT_SESSION_ID(this.session.getId());        
-        
+        this.definirAtributoNaSessao(ID_REUNIAO, idReuniao);        
 
         //4. Coloca na sessão para consulta destes dados de forma mais rápida
         this.definirAtributoNaSessao(REUNIAO_SESSION_STATUS, reuniaoSessionStatus);
@@ -60,11 +76,21 @@ public class ReuniaoSessionControl extends MainSessionControl{
         //5. Persiste no banco para consulta na rede.
         dataAccessObjectManager.mergeDataObjeto(reuniaoSessionStatus);
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
+
        //6. TODO if !dataAccessObjectManager.isOperacaoExecutada throws Exception
     }
 
     /**
+     * Método que tem como objetivo iniciar uma sessão de reunião préviamente criada
+     * através de <code>criarEDefinirDadosSessaoDeReuniao(long idReuniao)</code>
      *
+     *@pre Uma reunião deverá estar previamente criada e definida
+     *
+     * @see #criarEDefinirDadosSessaoDeReuniao(long) 
      */
     public void iniciarReuniao() {
         ReuniaoSessionStatus reuniaoSessionStatus = (ReuniaoSessionStatus) session.getAttribute(REUNIAO_SESSION_STATUS);
@@ -79,9 +105,54 @@ public class ReuniaoSessionControl extends MainSessionControl{
             this.definirAtributoNaSessao(REUNIAO_SESSION_TIME_START, date.getTime());
             dataAccessObjectManager.mergeDataObjeto(reuniaoSessionStatus);
 
+            //Fechando o EntityManager de DataAccessObjectManager após uso
+            if (dataAccessObjectManager != null) {
+                dataAccessObjectManager.fecharEntityManager();
+            }
+
             //6. TODO if !dataAccessObjectManager.isOperacaoExecutada throws Exception
 
         }
+    }
+    /**
+     * 
+     * @param idReuniao
+     * @return
+     */
+    public boolean verificarReuniaoValida(long idReuniao){
+         DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+         Reuniao reuniao = dataAccessObjectManager.obterReuniao(idReuniao);
+         boolean reuniaoValida = true;
+         //Verifica se a reunião está ativa, então será dispendido esforço para
+         //verificar se ela está no prazo
+         System.out.println("Current Reuniao Status : " + reuniao.getReuniaoStatus());
+        if (reuniao.getReuniaoStatus().equals(Reuniao.REUNIAO_ATIVA)) {
+            //Verifica se a reunião está dentro do prazo minimo estipulado nesta classe em "tempoMaxReuniaoEmMilissegundos".
+            //Que está representando um tempo de 24 de atraso do seu agendamento
+            long momentoAgendamentoReuniaoEmMilis = DateTimeUtils.converterDateTimeToMilissegundos(reuniao.getData(), reuniao.getHorario());
+            Date date = new Date();
+            long tempoAtual = date.getTime();
+            long diferenca = tempoAtual - momentoAgendamentoReuniaoEmMilis;
+
+            if (diferenca > tempoMaxReuniaoEmMilissegundos) {
+                reuniao.setReuniaoStatus(Reuniao.REUNIAO_INATIVA);
+                dataAccessObjectManager.mergeDataObjeto(reuniao);
+                this.setMessageStatus("Reuniao expirou o seu tempo mínimo de início...");
+                reuniaoValida =  false;
+            } 
+        }
+        else{
+             reuniaoValida = false;
+             this.setMessageStatus("Reuniao préviamente encerrada e invalidada.");
+        }
+
+         //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
+
+         return reuniaoValida;
+        
     }
 
     public void fecharSessaoReuniao(){
@@ -92,11 +163,15 @@ public class ReuniaoSessionControl extends MainSessionControl{
             reuniaoSessionStatus.definirSessaoStatus(ReuniaoSessionStatus.SECAO_INATIVA);
             Date date = new Date();
             //date.setTime(sessionTimeEnd);
-            reuniaoSessionStatus.setSESSION_END_TIME(date);
-            reuniaoSessionStatus.setCURRENT_SESSION_ID("");
+            reuniaoSessionStatus.setSESSION_END_TIME(date);           
             this.encerrarSessao();
 
             dataAccessObjectManager.mergeDataObjeto(reuniaoSessionStatus);
+
+            //Fechando o EntityManager de DataAccessObjectManager após uso
+            if (dataAccessObjectManager != null) {
+                dataAccessObjectManager.fecharEntityManager();
+            }
 
             //6. TODO if !dataAccessObjectManager.isOperacaoExecutada throws Exception
         }
@@ -150,6 +225,14 @@ public class ReuniaoSessionControl extends MainSessionControl{
         else{
             return "";
         }
+    }
+
+    public String getMessageStatus() {
+        return messageStatus;
+    }
+
+    public void setMessageStatus(String messageStatus) {
+        this.messageStatus = messageStatus;
     }
 
 }

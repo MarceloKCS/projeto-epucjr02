@@ -49,6 +49,10 @@ public class UserSessionControl extends MainSessionControl{
         //5. Persiste no banco para consulta na rede.
         dataAccessObjectManager.mergeDataObjeto(sessionStatus);
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
        //6. TODO if !dataAccessObjectManager.isOperacaoExecutada throws Exception
     }
 

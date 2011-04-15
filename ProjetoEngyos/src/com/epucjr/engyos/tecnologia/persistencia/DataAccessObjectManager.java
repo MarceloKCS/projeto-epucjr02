@@ -140,7 +140,7 @@ public class DataAccessObjectManager {
 	}	
 	
 	public void fecharEntityManager(){
-		if(this.getEntityManager().isOpen()){
+		if(this.entityManager != null && this.getEntityManager().isOpen()){
 			this.getEntityManager().close();
 		}
 	}

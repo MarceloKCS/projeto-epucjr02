@@ -60,6 +60,11 @@ public class ActionReuniaoEditPageLoaderCommand implements Command{
 
         String respostaOperacao = dataAccessObjectManager.getMensagemStatus();
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
+
          //Solução temporária para não aparecer o msg pagina carregana na página
         formularioDeReuniao.setMensagemStatus(null);
 

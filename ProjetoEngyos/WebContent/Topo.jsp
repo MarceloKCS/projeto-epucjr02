@@ -6,7 +6,7 @@
 <div id="btn_topo" class="right">
 <p class="usuarioLogado"><img src="imagens/icon_user.png"
                               alt="Usuario Logado" /><%out.print(request.getSession().getAttribute(UserSessionControl.NOME_USUARIO));%></p>
-<p><a href="#">Administrativo</a></p>
+<p><a href="Administrativo.jsp">Administrativo</a></p>
 <p><a href="#">Alterar dados</a></p>
 <p><a href="Controller?acao=action_logout">Sair</a></p>
 </div>

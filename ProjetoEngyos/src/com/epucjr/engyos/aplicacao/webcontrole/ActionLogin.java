@@ -31,6 +31,7 @@ public class ActionLogin implements Command {
         ValidadorLogin validadorLogin = new ValidadorLogin();
         PaginaDeLogin paginaDeLogin = new PaginaDeLogin();
         UserSessionControl userSessionControl = null;
+        DataAccessObjectManager dataAccessObjectManager = null;
         String login = request.getParameter("login");
         String senha = request.getParameter("senha");
 
@@ -40,7 +41,7 @@ public class ActionLogin implements Command {
 
             //1. recuperação do administrador requisitado para login, sendo o seu
             //login a sua chave no sistema
-            DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
+            dataAccessObjectManager = new DataAccessObjectManager();
             Administrador administrador = dataAccessObjectManager.obterAdministrador(login);
 
             //2.Verifica se foi possivel obter o administrador a partir da chave, ou a operação de banco de
@@ -71,6 +72,11 @@ public class ActionLogin implements Command {
         else{
             validadorLogin.setStatusCondition(ValidadorLogin.STATUS_WARNING);
             paginaDeLogin.setMensagemStatus("Sessão já Iniciada");
+        }
+
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
         }
 
         paginaDeLogin.setValidadorLogin(validadorLogin);

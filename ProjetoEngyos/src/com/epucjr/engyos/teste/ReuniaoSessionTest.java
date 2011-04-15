@@ -27,7 +27,7 @@ public class ReuniaoSessionTest {
         DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
 
         //Dados de simulação de seção...
-        String idSession = "28";
+       // String idSession = "28";
 
         //Pega o tempo corrente
         Date date = new Date();       
@@ -35,7 +35,7 @@ public class ReuniaoSessionTest {
         Reuniao reuniao = new Reuniao("Rua do tamandua, 123", DateTimeUtils.obterDataCorrenteBr(), DateTimeUtils.obterTempoCorrente());
 
         ReuniaoSessionStatus reuniaoSessionStatus = new ReuniaoSessionStatus();
-        reuniaoSessionStatus.setCURRENT_SESSION_ID(idSession);
+        //reuniaoSessionStatus.setCURRENT_SESSION_ID(idSession);
         reuniaoSessionStatus.setSESSION_START_TIME(date);
 
         reuniao.setReuniaoSessionStatus(reuniaoSessionStatus);

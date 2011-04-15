@@ -49,7 +49,14 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
          DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
          
          if(idReuniao != 0){
-             return dataAccessObjectManager.obterReuniao(idReuniao);
+             IReuniao reuniao = dataAccessObjectManager.obterReuniao(idReuniao);
+             
+             //Fechando o EntityManager de DataAccessObjectManager após uso
+             if (dataAccessObjectManager != null) {
+                 dataAccessObjectManager.fecharEntityManager();
+             }
+
+             return reuniao;
          }
          else{
              return new Reuniao();
@@ -110,6 +117,11 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
             this.setMensagemStatus("Obreiro não se encontra na lista...");
             this.setOperacaoExecutada(false);
         }
+
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
     }
 
     /**
@@ -161,6 +173,10 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
             this.setOperacaoExecutada(false);
         }
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
 
     }
 

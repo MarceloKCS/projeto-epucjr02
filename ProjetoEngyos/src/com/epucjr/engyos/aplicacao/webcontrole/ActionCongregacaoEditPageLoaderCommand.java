@@ -58,6 +58,11 @@ public class ActionCongregacaoEditPageLoaderCommand implements Command{
 
         String respostaOperacao = dataAccessObjectManager.getMensagemStatus();
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
+
         request.setAttribute("formularioDeCongregacao", formularioDeCongregacao);
 
 

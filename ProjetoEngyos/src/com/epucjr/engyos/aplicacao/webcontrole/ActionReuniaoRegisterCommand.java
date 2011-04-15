@@ -96,6 +96,11 @@ public class ActionReuniaoRegisterCommand implements Command{
 			formularioDeReuniao.definirCamposPreenchidosPeloUsuario(request);
 			formularioDeReuniao.setMensagemStatus("Erro ao Cadastrar");
 		}
+
+                //Fechando o EntityManager de DataAccessObjectManager após uso
+                if(dataAccessObjectManager != null){
+                    dataAccessObjectManager.fecharEntityManager();
+                }
 		
 		String respostaOperacao = formularioDeReuniao.getMensagemStatus();
 		request.setAttribute("formularioDeReuniao", formularioDeReuniao);

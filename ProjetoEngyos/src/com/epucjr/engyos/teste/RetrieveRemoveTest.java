@@ -1,12 +1,5 @@
 package com.epucjr.engyos.teste;
 
-import java.util.List;
-
-import com.epucjr.engyos.dominio.modelo.Obreiro;
-import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
-import com.epucjr.engyos.dominio.modelo.Reuniao;
-import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
-
 public class RetrieveRemoveTest {
 	
 	public static void main(String[] args){

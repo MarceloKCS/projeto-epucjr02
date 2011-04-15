@@ -4,15 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.IReuniaoMonitor;
 import com.epucjr.engyos.aplicacao.controle.ReuniaoMonitor;
-import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
-import com.epucjr.engyos.dominio.modelo.Reuniao;
-import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
 public class ActionMarcarPresencaSenha implements Command {
 

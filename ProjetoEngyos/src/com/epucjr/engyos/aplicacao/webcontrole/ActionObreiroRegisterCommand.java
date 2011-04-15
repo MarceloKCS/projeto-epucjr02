@@ -122,6 +122,11 @@ public class ActionObreiroRegisterCommand implements Command{
 			formularioDeObreiro.definirCamposPreenchidosPeloUsuario(request);
 			formularioDeObreiro.setMensagemStatus("Erro ao Cadastrar");
 		}
+
+                //Fechando o EntityManager de DataAccessObjectManager após uso
+                if (dataAccessObjectManager != null) {
+                    dataAccessObjectManager.fecharEntityManager();
+                }
 		
 		String respostaOperacao = formularioDeObreiro.getMensagemStatus();
 		request.setAttribute("formularioDeObreiro", formularioDeObreiro);

@@ -1,20 +1,15 @@
 package com.epucjr.engyos.aplicacao.webcontrole;
 
 import java.io.IOException;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epucjr.engyos.dominio.crud.BuscaAvancada;
 import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeObreiro;
-import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeObreiro;
-import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
 
 public class ObreiroEditServlet extends HttpServlet {

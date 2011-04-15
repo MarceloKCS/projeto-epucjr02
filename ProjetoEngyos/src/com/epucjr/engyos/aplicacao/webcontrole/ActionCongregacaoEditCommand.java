@@ -100,6 +100,11 @@ public class ActionCongregacaoEditCommand implements Command{
             formularioDeCongregacao.setMensagemStatus("Erro ao Editar");
         }
 
+        //Fechando o EntityManager de DataAccessObjectManager após uso
+        if (dataAccessObjectManager != null) {
+            dataAccessObjectManager.fecharEntityManager();
+        }
+
         String respostaOperacao = formularioDeCongregacao.getMensagemStatus();
         request.setAttribute("formularioDeCongregacao", formularioDeCongregacao);
         System.out.println("value!= " + respostaOperacao);

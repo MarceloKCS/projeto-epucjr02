@@ -2,12 +2,15 @@ package com.epucjr.engyos.teste;
 
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.HoraUtil;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DateUtilTest {
 	
 	public static void main(String[] args){
 		//DateUtilTest.obterDataAtual();
-                DateUtilTest.schedulerDateUtilTest();
+                //DateUtilTest.schedulerDateUtilTest();
+                DateUtilTest.timeTest();
 	}
 	
 	public static void obterDataAtual(){
@@ -118,9 +121,6 @@ public class DateUtilTest {
 		else{
 			System.out.println("Teste1 hora verificada = DATA_INVALIDA");
 		}
-		
-		
-		
 	}
 
         public static void schedulerDateUtilTest(){
@@ -129,6 +129,44 @@ public class DateUtilTest {
             System.out.println("Hora Marca Iniciada");
             horaUtil.ReminderBeep(10);
             System.out.println("Hora Marca Encerrada");
+        }
+
+        public static void timeTest(){
+            String data = "14/4/2011";
+            String horario = "0:53:32";
+            System.out.println("data = " + data);
+            System.out.println("horario = " + horario);
+
+            long timeInMili = DateTimeUtils.converterDateTimeToMilissegundos(data, horario);
+
+            System.out.println("timeInMili = " + timeInMili);
+
+            Calendar calendarOld = Calendar.getInstance();
+            calendarOld.setTimeInMillis(timeInMili);
+
+            Date dateOld = calendarOld.getTime();
+
+            Date dateToday = new Date();
+
+            long timeInMIliToday = dateToday.getTime();
+
+            System.out.println("timeInMIliTodaty = " + timeInMIliToday);
+
+            int result = dateToday.compareTo(dateOld);
+
+            System.out.println("result = " + result);
+
+            long diference = timeInMIliToday - timeInMili;
+
+            System.out.println("diference = " + diference);
+
+            if(diference > 86400000){
+                System.out.println("message = maior que 24 horas");
+            }
+            else {
+                System.out.println("OK!!!!!!!!!!!!!");
+            }
+
         }
 
 }

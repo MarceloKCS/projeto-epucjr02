@@ -53,6 +53,11 @@ public class ActionObreiroEditPageLoaderCommand implements Command{
 			 formularioDeObreiro.definirCamposPreenchidos(obreiro);
 		}		
 		
+                //Fechando o EntityManager de DataAccessObjectManager após uso
+                if (dataAccessObjectManager != null) {
+                    dataAccessObjectManager.fecharEntityManager();
+                }
+
 		String respostaOperacao = formularioDeObreiro.getMensagemStatus();
                 System.out.println("Operacao = " + respostaOperacao);
                 

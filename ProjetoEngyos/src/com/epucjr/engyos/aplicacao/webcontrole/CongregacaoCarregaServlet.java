@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epucjr.engyos.dominio.modelo.Congregacao;
-import com.epucjr.engyos.dominio.visualizacao.FormularioDeCongregacao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 
 /**

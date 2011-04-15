@@ -67,6 +67,11 @@ public class Reuniao implements IReuniao{
         @Transient
 	private final int tempoEmMinutosDeTolerânciaContagemPresenca = 30;
 
+        @Transient
+        public static String REUNIAO_ATIVA = "ATIVA";
+        @Transient
+        public static String REUNIAO_INATIVA = "INATIVA";
+
         @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
         @JoinColumn
         ReuniaoSessionStatus sessionStatus;
@@ -80,7 +85,7 @@ public class Reuniao implements IReuniao{
 		this.data = "";
 		this.horario = "";		
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
-		this.reuniaoStatus = "ATIVO";
+		this.reuniaoStatus = REUNIAO_ATIVA;
 		this.quantidadeMaxObreirosReuniao = 0;
                 this.horárioInicioEfetivo = "";
                 this.horárioDeEncerramentoEsperado = "";
@@ -92,7 +97,7 @@ public class Reuniao implements IReuniao{
 		this.data = data;
 		this.horario = hora;		
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
-		this.reuniaoStatus = "ATIVO";
+		this.reuniaoStatus = REUNIAO_ATIVA;
 		this.quantidadeMaxObreirosReuniao = 0;
                 this.horárioInicioEfetivo = "";
                 this.horárioDeEncerramentoEsperado = "";
