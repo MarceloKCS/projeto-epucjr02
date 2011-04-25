@@ -20,6 +20,8 @@ public class PaginaDeReuniao {
     private String segundo;
     private String horaFinal;
     private String minutoFinal;
+    //para o relogio do javascript da página de reunião
+    private long tempoCorridoReuniao;
     private String dia;
     private String mes;
     private String ano;
@@ -44,6 +46,7 @@ public class PaginaDeReuniao {
         this.tempoDeInicio = "";
         this.tempoFinal = "";
         this.mensagemDeAviso = "";
+        this.tempoCorridoReuniao = 0;
     }
 
     public void carregarDadosDaPagina(String data, String local, String horario){
@@ -63,7 +66,7 @@ public class PaginaDeReuniao {
        
     }
 
-    public void carregarDadosDaPagina(String data, String local, String horarioDeInicio, long idReuniao){
+    public void carregarDadosDaPagina(String data, String local, String horarioDeInicio, long tempoCorridoReuniao, long idReuniao){
         this.setData(data);
         this.setTempoDeInicio(horarioDeInicio);
         this.setLocal(local);
@@ -79,6 +82,8 @@ public class PaginaDeReuniao {
         this.setSegundo(DateTimeUtils.obterSegundo(horarioDeInicio));
 
         this.setIdReuniao(idReuniao);
+
+        this.setTempoCorridoReuniao(tempoCorridoReuniao);
 
     }
 
@@ -193,5 +198,15 @@ public class PaginaDeReuniao {
     public void setTempoFinal(String tempoFinal) {
         this.tempoFinal = tempoFinal;
     }
+
+    public long getTempoCorridoReuniao() {
+        return tempoCorridoReuniao;
+    }
+
+    public void setTempoCorridoReuniao(long tempoReuniaoAnterior) {
+        this.tempoCorridoReuniao = tempoReuniaoAnterior;
+    }
+
+
 
 }

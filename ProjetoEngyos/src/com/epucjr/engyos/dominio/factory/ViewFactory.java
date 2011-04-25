@@ -77,8 +77,15 @@ public class ViewFactory {
 
                 this.adicionaView("iniciar_reuniao", "Reuniao Inicializada", "SessaoReuniao.jsp");
                 this.adicionaView("iniciar_reuniao", "Erro na Inicialização", "SessaoReuniao.jsp");
-                 this.adicionaView("iniciar_reuniao", "Reuniao expirou o seu tempo mínimo de início...", "ReuniaoWarningPage.jsp");
-                  this.adicionaView("iniciar_reuniao", "Reuniao préviamente encerrada e invalidada.", "ReuniaoWarningPage.jsp");
+
+                this.adicionaView("iniciar_reuniao", "Reunião préviamente iniciada", "SessaoReuniao.jsp");
+                this.adicionaView("iniciar_reuniao", "Reunião já iniciada", "SessaoReuniao.jsp");
+                this.adicionaView("iniciar_reuniao", "Reunião Iniciada", "SessaoReuniao.jsp");
+                this.adicionaView("iniciar_reuniao", "Reunião Reiniciada", "SessaoReuniao.jsp");
+
+
+                this.adicionaView("iniciar_reuniao", "Reuniao expirou o seu tempo mínimo de início...", "ReuniaoWarningPage.jsp");
+                this.adicionaView("iniciar_reuniao", "Reuniao préviamente encerrada e invalidada.", "ReuniaoWarningPage.jsp");
 
 		this.adicionaView("action_login", "Administrador inexistente no sistema", "TelaLogin.jsp");                
                 this.adicionaView("action_login", "Senha Inválida", "TelaLogin.jsp");

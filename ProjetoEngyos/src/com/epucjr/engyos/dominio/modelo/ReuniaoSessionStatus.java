@@ -32,6 +32,12 @@ public class ReuniaoSessionStatus implements Serializable{
     @Transient
     public static String SECAO_INATIVA = "SECAO_INATIVA";
 
+    @Transient
+    public String currentUserSessionID;
+
+    @Transient
+    public Date tempoDecorrido;
+
     private boolean sessaoAtiva;
 
     /**
@@ -53,6 +59,7 @@ public class ReuniaoSessionStatus implements Serializable{
        // this.CURRENT_SESSION_ID = "";
         this.SESSION_START_TIME = null;
         this.SESSION_END_TIME = null;
+        this.tempoDecorrido = null;
     }
 
     /**
@@ -121,5 +128,23 @@ public class ReuniaoSessionStatus implements Serializable{
     public void setSESSION_END_TIME(Date SESSION_END_TIME) {
         this.SESSION_END_TIME = SESSION_END_TIME;
     }
+
+    public String getCurrentUserSessionID() {
+        return currentUserSessionID;
+    }
+
+    public void setCurrentUserSessionID(String currentUserSessionID) {
+        this.currentUserSessionID = currentUserSessionID;
+    }
+
+    public Date getTempoDecorrido() {
+        return tempoDecorrido;
+    }
+
+    public void setTempoDecorrido(Date tempoDecorrido) {
+        this.tempoDecorrido = tempoDecorrido;
+    }
+
+    
 
 }

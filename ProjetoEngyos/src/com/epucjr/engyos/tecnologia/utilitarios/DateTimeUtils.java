@@ -2,8 +2,14 @@ package com.epucjr.engyos.tecnologia.utilitarios;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateTimeUtils {
+        public static final int DIA = 1;
+        public static final int ANO = 2;
+        public static final int HORA = 3;
+        public static final int MINUTO = 4;
+        public static final int SEGUNDO = 5;
 
 	public static final String 	DATA_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
@@ -421,7 +427,7 @@ public class DateTimeUtils {
             calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dia));
             calendar.set(Calendar.MONTH, Integer.parseInt(mes) - 1);
             calendar.set(Calendar.YEAR, Integer.parseInt(ano));
-            calendar.set(Calendar.HOUR, Integer.parseInt(hora));
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hora));
             calendar.set(Calendar.MINUTE, Integer.parseInt(minuto));
             calendar.set(Calendar.SECOND, Integer.parseInt(segundo));
 
@@ -429,11 +435,73 @@ public class DateTimeUtils {
             System.out.println("Dia : " + calendar.get(Calendar.DAY_OF_MONTH));
             System.out.println("Mes : " + calendar.get(Calendar.MONTH));
             System.out.println("Ano : " + calendar.get(Calendar.YEAR));
-            System.out.println("Hora : " + calendar.get(Calendar.HOUR));
+            System.out.println("Hora : " + calendar.get(Calendar.HOUR_OF_DAY));
             System.out.println("Minuto : " + calendar.get(Calendar.MINUTE));
             System.out.println("Segundo : " + calendar.get(Calendar.SECOND));
 
             return calendar.getTime().getTime();
+        }
+
+        public static Date calcularTempoDecorrido(long tempoDeReferenciaDecorrido){
+            Date dataCorrente = new Date();
+
+            //Calcula a diferença entre a data atual e a data passada:
+            long dataCorrenteEmMili = dataCorrente.getTime();
+
+            long diferenca = dataCorrenteEmMili - tempoDeReferenciaDecorrido;
+
+            if(diferenca > 0){
+                Date diferencaEntreDatas = new Date();
+                diferencaEntreDatas.setTime(diferenca);
+                return diferencaEntreDatas;
+            }
+            else{
+                return new Date();
+            }
+
+        }
+
+        public static long getElapsed(long diference, int opcaoEscolhida){
+            long secondInMillis = 1000;
+            long minuteInMillis = secondInMillis * 60;
+            long hourInMillis = minuteInMillis * 60;
+            long dayInMillis = hourInMillis * 24;
+            long yearInMillis = dayInMillis * 365;
+
+            long elapsedYears = diference / yearInMillis;
+            diference = diference % yearInMillis;
+            long elapsedDays = diference / dayInMillis;
+            diference = diference % dayInMillis;
+            long elapsedHours = diference / hourInMillis;
+            diference = diference % hourInMillis;
+            long elapsedMinutes = diference / minuteInMillis;
+            diference = diference % minuteInMillis;
+            long elapsedSeconds = diference / secondInMillis;
+
+            long valorOpcaoEscolhida = 0;
+
+            switch(opcaoEscolhida){
+                case DateTimeUtils.DIA:
+                    valorOpcaoEscolhida = elapsedDays;
+                    break;
+                case DateTimeUtils.ANO:
+                    valorOpcaoEscolhida = elapsedYears;
+                    break;
+                case DateTimeUtils.HORA:
+                    valorOpcaoEscolhida = elapsedHours;
+                    break;
+                case DateTimeUtils.MINUTO:
+                    valorOpcaoEscolhida = elapsedMinutes;
+                    break;
+                case DateTimeUtils.SEGUNDO:
+                    valorOpcaoEscolhida = elapsedSeconds;
+                    break;
+                default:
+                    break;
+            }
+
+            return valorOpcaoEscolhida;
+
         }
 
 }

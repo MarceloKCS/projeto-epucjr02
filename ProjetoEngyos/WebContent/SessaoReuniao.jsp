@@ -4,12 +4,13 @@
     Author     : Rogerio
 --%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils"%>
 <%@ page import="com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao" %>
 <%@page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
 
 <%
 PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("paginaDeReuniao");
-
+Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,6 +26,11 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
             
             var timercount = 0;
             var timestart  = null;
+            <%if(paginaDeReuniao.getTempoCorridoReuniao() != 0){%>
+                timediference = paginaDeReuniao.getTempoCorridoReuniao();
+            <%}else{%>
+                var timediference = 0;
+            <%}%>
 
             function mostra_tempo() {
                     if(timercount) {
@@ -75,6 +81,10 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
             function time_start(){
                  if(!timercount){
                     timestart   = new Date();
+                    var timeInput = <%out.print(paginaDeReuniao.getTempoCorridoReuniao());%>;
+                    var timeCurrent = timestart.getTime();
+                    var temporeal = timeCurrent - timeInput;
+                    timestart.setTime(temporeal);
                     document.timeform.timetextarea.value = "00:00";
                     //document.timeform.laptime.value = "";
                     timercount  = setTimeout("showtimer()", 1000);
@@ -82,6 +92,29 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
             }
 
             function sw_start(){
+                <%if(paginaDeReuniao.getTempoCorridoReuniao() != 0){%>
+
+                        var timedifference = <%out.print(paginaDeReuniao.getTempoCorridoReuniao());%>
+
+                        timeend.setTime(timedifference);
+                        var minutes_passed = timeend.getMinutes();
+                        if(minutes_passed < 10){
+                                minutes_passed = "0" + minutes_passed;
+                        }
+                        var seconds_passed = timeend.getSeconds();
+                        if(seconds_passed < 10){
+                                seconds_passed = "0" + seconds_passed;
+                        }
+                        var milliseconds_passed = timeend.getMilliseconds();
+                        if(milliseconds_passed < 10){
+                                milliseconds_passed = "00" + milliseconds_passed;
+                        }
+                        else if(milliseconds_passed < 100){
+                                milliseconds_passed = "0" + milliseconds_passed;
+                        }
+                        document.timeform.laptime.value = minutes_passed + ":" + seconds_passed + "." + milliseconds_passed;
+                <%}else{%>
+
                     if(!timercount){
                     timestart   = new Date();
                     document.timeform.timetextarea.value = "00:00";
@@ -89,26 +122,33 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                     timercount  = setTimeout("showtimer()", 1000);
                     }
                     else{
-                    var timeend = new Date();
-                            var timedifference = timeend.getTime() - timestart.getTime();
-                            timeend.setTime(timedifference);
-                            var minutes_passed = timeend.getMinutes();
-                            if(minutes_passed < 10){
-                                    minutes_passed = "0" + minutes_passed;
-                            }
-                            var seconds_passed = timeend.getSeconds();
-                            if(seconds_passed < 10){
-                                    seconds_passed = "0" + seconds_passed;
-                            }
-                            var milliseconds_passed = timeend.getMilliseconds();
-                            if(milliseconds_passed < 10){
-                                    milliseconds_passed = "00" + milliseconds_passed;
-                            }
-                            else if(milliseconds_passed < 100){
-                                    milliseconds_passed = "0" + milliseconds_passed;
-                            }
-                            document.timeform.laptime.value = minutes_passed + ":" + seconds_passed + "." + milliseconds_passed;
+                        var timeend = new Date();
+                        <%if(paginaDeReuniao.getTempoCorridoReuniao() != 0){%>
+                        var timedifference = <%out.print(paginaDeReuniao.getTempoCorridoReuniao());%>
+                        <%}else{%>
+                        var timedifference = timeend.getTime() - timestart.getTime();
+                        <%}%>
+
+
+                        timeend.setTime(timedifference);
+                        var minutes_passed = timeend.getMinutes();
+                        if(minutes_passed < 10){
+                                minutes_passed = "0" + minutes_passed;
+                        }
+                        var seconds_passed = timeend.getSeconds();
+                        if(seconds_passed < 10){
+                                seconds_passed = "0" + seconds_passed;
+                        }
+                        var milliseconds_passed = timeend.getMilliseconds();
+                        if(milliseconds_passed < 10){
+                                milliseconds_passed = "00" + milliseconds_passed;
+                        }
+                        else if(milliseconds_passed < 100){
+                                milliseconds_passed = "0" + milliseconds_passed;
+                        }
+                        document.timeform.laptime.value = minutes_passed + ":" + seconds_passed + "." + milliseconds_passed;
                     }
+                    <%}%>
             }
 
             function Stop() {
@@ -180,8 +220,30 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
                         //$('#status').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
                     });
                 });
+
+                $('a').click(function(){
+                       var confirmExit = confirm('Are you sure? You haven\'t saved your changes. Click OK to leave or Cancel to go back and save your changes.');
+                       alert(confirmExit);
+
+                       if(confirmExit){
+                           
+                           $.get('frontcontrollerajax?acao=encerrar_session_reuniao', function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                           alert("response text : " + responseText);
+                           alert("saida confirmada");
+                            return true;
+                           });                          
+                       }
+                       else{
+                           alert("saida não confirmada");
+                            return false;
+                       }
+                });
             });
         </script>
+
+         <script type="text/javascript">
+            
+         </script>
     </head>
     <body id="reuniao">
 
@@ -202,6 +264,7 @@ PaginaDeReuniao paginaDeReuniao = (PaginaDeReuniao) request.getAttribute("pagina
 
                     <div id="colunaE">
                         <h2>Dados da Reunião</h2>
+                        <a id="link_1" href="http://jquery.com/">asdasd</a>
                         <br/>
                         <label>Inicio da Reunião:</label> <%out.print(paginaDeReuniao != null ? paginaDeReuniao.getTempoDeInicio() : "");%> <!--<input type="text" name="Inicio" value="" readonly disabled> -->
                         <br/>

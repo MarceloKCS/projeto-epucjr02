@@ -10,7 +10,7 @@ public class DateUtilTest {
 	public static void main(String[] args){
 		//DateUtilTest.obterDataAtual();
                 //DateUtilTest.schedulerDateUtilTest();
-                DateUtilTest.timeTest();
+                DateUtilTest.calculaDifirencaTempo(329000);
 	}
 	
 	public static void obterDataAtual(){
@@ -132,8 +132,8 @@ public class DateUtilTest {
         }
 
         public static void timeTest(){
-            String data = "14/4/2011";
-            String horario = "0:53:32";
+            String data = "19/04/2011";
+            String horario = "22:53:32";
             System.out.println("data = " + data);
             System.out.println("horario = " + horario);
 
@@ -167,6 +167,94 @@ public class DateUtilTest {
                 System.out.println("OK!!!!!!!!!!!!!");
             }
 
+            System.out.println("Vamos ver a difirença!");
+
+            Date dateDiference = new Date();
+            dateDiference.setTime(diference);
+
+            Calendar calendarDiference = Calendar.getInstance();
+            calendarDiference.setTime(dateDiference);
+
+            System.out.println("Dias decorridas? : " + calendarDiference.get(Calendar.DAY_OF_MONTH));
+            System.out.println("Horas decorridas? : " + calendarDiference.get(Calendar.HOUR_OF_DAY));
+
+            long secondInMillis = 1000;
+            long minuteInMillis = secondInMillis * 60;
+            long hourInMillis = minuteInMillis * 60;
+            long dayInMillis = hourInMillis * 24;
+            long yearInMillis = dayInMillis * 365;
+
+            long elapsedYears = diference / yearInMillis;
+            diference = diference % yearInMillis;
+            long elapsedDays = diference / dayInMillis;
+            diference = diference % dayInMillis;
+            long elapsedHours = diference / hourInMillis;
+            diference = diference % hourInMillis;
+            long elapsedMinutes = diference / minuteInMillis;
+            diference = diference % minuteInMillis;
+            long elapsedSeconds = diference / secondInMillis;
+
+            System.out.println("elapsedYears = " + elapsedYears);
+            System.out.println("elapsedDays = " + elapsedDays);
+            System.out.println("elapsedHours = " + elapsedHours);
+            System.out.println("elapsedMinutes = " + elapsedMinutes);
+            System.out.println("elapsedSeconds = " + elapsedSeconds);
+            
+
+
+
+        }
+
+        public static void calculaDifirencaTempo(long diference){
+            long secondInMillis = 1000;
+            long minuteInMillis = secondInMillis * 60;
+            long hourInMillis = minuteInMillis * 60;
+            long dayInMillis = hourInMillis * 24;
+            long yearInMillis = dayInMillis * 365;
+
+            long elapsedYears = diference / yearInMillis;
+            diference = diference % yearInMillis;
+            long elapsedDays = diference / dayInMillis;
+            diference = diference % dayInMillis;
+            long elapsedHours = diference / hourInMillis;
+            diference = diference % hourInMillis;
+            long elapsedMinutes = diference / minuteInMillis;
+            diference = diference % minuteInMillis;
+            long elapsedSeconds = diference / secondInMillis;
+
+            System.out.println("elapsedYears = " + elapsedYears);
+            System.out.println("elapsedDays = " + elapsedDays);
+            System.out.println("elapsedHours = " + elapsedHours);
+            System.out.println("elapsedMinutes = " + elapsedMinutes);
+            System.out.println("elapsedSeconds = " + elapsedSeconds);
+        }
+
+        public static void testGetElapsed(){
+            String data = "22/04/2011";
+            String horario = "13:00:00";
+            System.out.println("data = " + data);
+            System.out.println("horario = " + horario);
+
+            long timeInMili = DateTimeUtils.converterDateTimeToMilissegundos(data, horario);
+            //Calendar calendarOld = Calendar.getInstance();
+            //calendarOld.setTimeInMillis(timeInMili);
+
+            //Date dateOld = calendarOld.getTime();
+
+            //Date dateToday = new Date();
+
+            //long timeInMIliToday = dateToday.getTime();
+
+            //long diference = timeInMIliToday - timeInMili;
+
+             Date dateDiference = DateTimeUtils.calcularTempoDecorrido(timeInMili);
+
+
+            System.out.println("elapsedYears = " + DateTimeUtils.getElapsed(dateDiference.getTime(), DateTimeUtils.ANO));
+            System.out.println("elapsedDays = " + DateTimeUtils.getElapsed(dateDiference.getTime(), DateTimeUtils.DIA));
+            System.out.println("elapsedHours = " + DateTimeUtils.getElapsed(dateDiference.getTime(), DateTimeUtils.HORA));
+            System.out.println("elapsedMinutes = " + DateTimeUtils.getElapsed(dateDiference.getTime(), DateTimeUtils.MINUTO));
+            System.out.println("elapsedSeconds = " + DateTimeUtils.getElapsed(dateDiference.getTime(), DateTimeUtils.SEGUNDO));
         }
 
 }

@@ -55,7 +55,7 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
 
             @Override
             public void messageChanged(String message) {
-                labelAviso.setText(message);
+                //labelAviso.setText(message);
                 publicarMensagemNaPaginaHtmlViaJavaScript(message);
             }
         };
@@ -161,10 +161,10 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(informable != null){
             this.ativarCapturaDeDigitalDevice(this.informable, pageParameter);
-            System.out.println("ALWAYS");
+            //System.out.println("ALWAYS");
         }
         else{
-            JOptionPane.showMessageDialog(null, "TIRED");
+            //JOptionPane.showMessageDialog(null, "TIRED");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -178,10 +178,10 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
                     labelAviso.setText(resposta);
                     publicarMensagemNaPaginaHtmlViaJavaScript(resposta);
                 } catch (InterruptedException ex) {
-                    JOptionPane.showMessageDialog(null, "APPLET EXCEPTION:183:: " + ex.getMessage());
+                    //JOptionPane.showMessageDialog(null, "APPLET EXCEPTION:183:: " + ex.getMessage());
                     Logger.getLogger(DigitalCaptureAppletGUI.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ExecutionException ex) {
-                    JOptionPane.showMessageDialog(null, "APPLET EXCEPTION:186:: " + ex.getMessage());
+                    //JOptionPane.showMessageDialog(null, "APPLET EXCEPTION:186:: " + ex.getMessage());
                     Logger.getLogger(DigitalCaptureAppletGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -198,7 +198,7 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
             jdJSObject.call("writeMessage", new Object[]{mensagem});
         }
         catch(netscape.javascript.JSException ex){
-            JOptionPane.showMessageDialog(null, "APPLET EXCEPTION204:: " + ex.getMessage());
+            //JOptionPane.showMessageDialog(null, "APPLET EXCEPTION204:: " + ex.getMessage());
             Logger.getLogger(DigitalCaptureAppletGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
