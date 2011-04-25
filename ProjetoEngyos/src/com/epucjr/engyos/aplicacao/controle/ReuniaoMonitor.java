@@ -3,15 +3,18 @@ package com.epucjr.engyos.aplicacao.controle;
 import com.epucjr.engyos.dominio.modelo.IReuniao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.dominio.modelo.ReuniaoSessionStatus;
 import com.epucjr.engyos.dominio.visualizacao.PaginaDeReuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
-import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
+import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Projeto Engyos Team
  */
 public class ReuniaoMonitor implements IReuniaoMonitor{
+    private static org.apache.log4j.Logger log = Logger.getLogger(ReuniaoMonitor.class);
 
     private PaginaDeReuniao paginaDeReuniao;
     private boolean operacaoExecutada;
@@ -45,10 +48,8 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
     }
 
      private IReuniao carregarReuniao(long idReuniao){
-         
-         DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
-         
          if(idReuniao != 0){
+             DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
              IReuniao reuniao = dataAccessObjectManager.obterReuniao(idReuniao);
              
              //Fechando o EntityManager de DataAccessObjectManager após uso
@@ -65,21 +66,37 @@ public class ReuniaoMonitor implements IReuniaoMonitor{
 
     @Override
     public void reuniaoLoader() {
-
+        log.debug("aplicacao.controle.ReuniaoMonitor#reuniaoLoader");
+        ReuniaoSessionStatus reuniaoSessionStatus = this.reuniao.getReuniaoSessionStatus();
+        Date tempoInicioReuniao = reuniaoSessionStatus.getSESSION_START_TIME();
+        Date tempoFimReuniao = reuniaoSessionStatus.getSESSION_END_TIME();
+        long tempoDecorrido = 0;
+        if(!reuniaoSessionStatus.isSessaoAtiva() && tempoFimReuniao != null && tempoInicioReuniao != null){
+            log.debug("aplicacao.controle.ReuniaoMonitor#reuniaoLoader - calculando o tempo, de uma reunião não ativa, mas já foi iniciada");
+            tempoDecorrido = tempoFimReuniao.getTime() - tempoInicioReuniao.getTime();
+        }
+        else if(tempoInicioReuniao != null){
+            log.debug("aplicacao.controle.ReuniaoMonitor#reuniaoLoader - calculando o tempo para o caso de já existir uma reunião ativa");
+            tempoDecorrido = (new Date().getTime()) - tempoInicioReuniao.getTime();
+        }
+        else{
+            log.debug("aplicacao.controle.ReuniaoMonitor#reuniaoLoader - reunião nova, tempo não calculado");
+        }
+        log.debug("aplicacao.controle.ReuniaoMonitor#reuniaoLoader - tempoDecorrido = " + tempoDecorrido);
         //verificar se a requisição para o carregamento da seção de reunião
         //seja de uma reunião que não passe, pelo menos, o dia de hoje
 
-        if(DateTimeUtils.verificarDataMaiorQueDataCorrente(this.getReuniao().getData())){
-            this.paginaDeReuniao.carregarDadosDaPagina(this.reuniao.getData() , this.reuniao.getLocal(), this.reuniao.getHorario(), this.reuniao.getIdReuniao());
+        //if(DateTimeUtils.verificarDataMaiorQueDataCorrente(this.getReuniao().getData())){
+            this.paginaDeReuniao.carregarDadosDaPagina(this.reuniao.getData() , this.reuniao.getLocal(), this.reuniao.getHorario(), tempoDecorrido, this.reuniao.getIdReuniao());
             this.setOperacaoExecutada(true);
             this.setMensagemStatus("Reuniao Inicializada");
-        }
-        else{
-            this.setOperacaoExecutada(false);
-            this.setMensagemStatus("Erro na Inicialização");
-            this.paginaDeReuniao.setMensagemDeAviso(this.getMensagemStatus());
+       // }
+       // else{
+         //   this.setOperacaoExecutada(false);
+        //    this.setMensagemStatus("Erro na Inicialização");
+        //    this.paginaDeReuniao.setMensagemDeAviso(this.getMensagemStatus());
             
-        }
+      //  }
     }
 
     @Override

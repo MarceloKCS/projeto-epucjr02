@@ -25,7 +25,10 @@ import org.hibernate.search.annotations.Store;
 
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.HoraUtil;
+import java.util.Date;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Indexed
@@ -57,9 +60,11 @@ public class Reuniao implements IReuniao{
 	
 	private String reuniaoStatus;  //ATIVO-INATIVO
 
-        private String horárioInicioEfetivo;
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date horárioInicioEfetivo;
 
-        private String horárioDeEncerramentoEsperado;
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date horárioDeEncerramentoEfetivo;
 	
 	@Transient
 	private int quantidadeMaxObreirosReuniao;
@@ -87,8 +92,8 @@ public class Reuniao implements IReuniao{
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = REUNIAO_ATIVA;
 		this.quantidadeMaxObreirosReuniao = 0;
-                this.horárioInicioEfetivo = "";
-                this.horárioDeEncerramentoEsperado = "";
+                this.horárioInicioEfetivo = null;
+                this.horárioDeEncerramentoEfetivo = null;
                 this.sessionStatus = new ReuniaoSessionStatus();
 	}
 	
@@ -99,8 +104,8 @@ public class Reuniao implements IReuniao{
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = REUNIAO_ATIVA;
 		this.quantidadeMaxObreirosReuniao = 0;
-                this.horárioInicioEfetivo = "";
-                this.horárioDeEncerramentoEsperado = "";
+                this.horárioInicioEfetivo = null;
+                this.horárioDeEncerramentoEfetivo = null;
                 this.sessionStatus = new ReuniaoSessionStatus();
 	}
 	
@@ -460,19 +465,19 @@ public class Reuniao implements IReuniao{
         return tempoEmMinutosDeTolerânciaContagemPresenca;
     }
 
-    public String getHorárioDeEncerramentoEsperado() {
-        return horárioDeEncerramentoEsperado;
+    public Date getHorárioDeEncerramentoEfetivo() {
+        return horárioDeEncerramentoEfetivo;
     }
 
-    public void setHorárioDeEncerramentoEsperado(String horárioDeEncerramentoEsperado) {
-        this.horárioDeEncerramentoEsperado = horárioDeEncerramentoEsperado;
+    public void setHorárioDeEncerramentoEfetivo(Date horárioDeEncerramentoEfetivo) {
+        this.horárioDeEncerramentoEfetivo = horárioDeEncerramentoEfetivo;
     }
 
-    public String getHorárioInicioEfetivo() {
+    public Date getHorárioInicioEfetivo() {
         return horárioInicioEfetivo;
     }
 
-    public void setHorárioInicioEfetivo(String horárioInicioEfetivo) {
+    public void setHorárioInicioEfetivo(Date horárioInicioEfetivo) {
         this.horárioInicioEfetivo = horárioInicioEfetivo;
     }
 

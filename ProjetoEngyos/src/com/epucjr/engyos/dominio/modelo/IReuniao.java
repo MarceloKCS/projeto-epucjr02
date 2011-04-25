@@ -69,6 +69,8 @@ public interface IReuniao {
 
     public int obterTempoDeDuracaoReuniao();
 
+    public ReuniaoSessionStatus getReuniaoSessionStatus();
+
     //public para teste, alterar para private
 
     public Obreiro buscarObreiroNaListaDePresenca(List<PresencaObreiro> listaDePresencaObreiro, String valorCPFProcurado);

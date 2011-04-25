@@ -12,12 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Rogerio
  */
 public class FrontControllerAjaxServlet extends HttpServlet {
+    private static org.apache.log4j.Logger log = Logger.getLogger(FrontControllerAjaxServlet.class);
 
     private CommandFactory fabricaComandos;
 
@@ -62,18 +64,17 @@ public class FrontControllerAjaxServlet extends HttpServlet {
     public void servico(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //response.getWriter().print("TESTE");       
         String acao = request.getParameter("acao");
+        log.debug("acao requisitada : " + acao);
         System.out.println("ACAO_RETRIEVED = " + acao);
         //Cada comando mapeado na fábrica implementa a interface Command
         System.out.println("RETRIEVING: COMMAND");
-
-
        
         Command comando = fabricaComandos.getCommand(acao);
         System.out.println("OK: COMAND RETRIEVED");
         String resposta = (String) comando.execute(request, response);
 
         System.out.println("RESPOSTA = " + resposta);
-
+        log.debug("resposta da requisição : " + resposta);
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         response.getWriter().write(resposta);
