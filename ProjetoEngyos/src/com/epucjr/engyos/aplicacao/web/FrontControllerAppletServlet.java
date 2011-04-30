@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.dominio.factory.CommandFactory;
-//import com.epucjr.engyos.dominio.factory.ViewFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class Servlet
  */
 public class FrontControllerAppletServlet extends HttpServlet {
+        private static org.apache.log4j.Logger log = Logger.getLogger(FrontControllerAppletServlet.class);
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -53,17 +54,17 @@ public class FrontControllerAppletServlet extends HttpServlet {
         ObjectInputStream objectInputStream = new ObjectInputStream(request.getInputStream());
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(response.getOutputStream());
         String acao = objectInputStream.readUTF();
-        System.out.println("ACAO: " + acao);
+        log.debug("acao : " + acao);
         Command comando = fabricaComandos.getCommand(acao);
         String resposta = (String) comando.execute(request, response, objectInputStream, objectOutputStream);
 
-        System.out.println("resposta = " + resposta);
-
+        log.debug("acao : " + resposta);
+        
         objectInputStream.close();
         objectOutputStream.close();
         //response.setContentType("text/plain");
         //objectOutputStream.write(resposta.getBytes());
-		/*String viewJsp = viewFactory.getView(acao, resposta);
+	/*String viewJsp = viewFactory.getView(acao, resposta);
 
         RequestDispatcher view = request.getRequestDispatcher(viewJsp);
         view.forward(request, response);*/

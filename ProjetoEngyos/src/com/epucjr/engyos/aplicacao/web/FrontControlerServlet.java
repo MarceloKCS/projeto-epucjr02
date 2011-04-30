@@ -12,11 +12,13 @@ import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.UserSessionControl;
 import com.epucjr.engyos.dominio.factory.CommandFactory;
 import com.epucjr.engyos.dominio.factory.ViewFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class Servlet
  */
 public class FrontControlerServlet extends HttpServlet {
+    private static org.apache.log4j.Logger log = Logger.getLogger(FrontControlerServlet.class);
 
     private static final long serialVersionUID = 1L;
     /**
@@ -49,6 +51,7 @@ public class FrontControlerServlet extends HttpServlet {
     public void servico(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //response.getWriter().print("TESTE");
         String acao = request.getParameter("acao");
+        log.debug("acao : " + acao);
         String viewJsp = "";
         String resposta = "";
 
@@ -69,9 +72,7 @@ public class FrontControlerServlet extends HttpServlet {
         else{
             acao = "";
         }
-
-        System.out.println("acao = " + acao);
-        System.out.println("resposta = " + resposta);
+        log.debug("resposta : " + resposta);
         viewJsp = viewFactory.getView(acao, resposta);
 
         RequestDispatcher view = request.getRequestDispatcher(viewJsp);
