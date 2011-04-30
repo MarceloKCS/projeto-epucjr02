@@ -19,9 +19,115 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Reuniões - Projeto Engyos - Controle de Presença</title>
-	<link href="screen.css" rel="stylesheet" type="text/css" />
-        <script type='text/javascript' src="javascript/jquery-1.5.1.min.js"></script>
+	<link href="screen.css" rel="stylesheet" type="text/css" rel="stylesheet"/>
+        <link href="css/jqueryui/jquery-ui.css" type="text/css" rel="stylesheet"/>
+        <!--<link href="css/jqueryui/jquery.ui.all.css" type="text/css" rel="stylesheet"/>-->
+               
+        <script type='text/javascript' src="javascript/jquery-1.5.2.js"></script>
         <script type='text/javascript' src="javascript/deployJava.js"></script>
+        <script type='text/javascript' src="javascript/jqueryui/jquery-ui.js"></script>
+
+        <style type="text/css">
+		body { font-size: 62.5%; }
+                div#colunaE {font-size: 15px;}
+                div#colunaD {font-size: 15px;}
+               
+		/*label, input { display:block; }*/
+		input.text { margin-bottom:12px; width:95%; padding: .4em; }
+		fieldset { padding:0; border:0; margin-top:25px; }
+		h1 { font-size: 1.2em; margin: .6em 0; }
+		div#users-contain { width: 350px; margin: 20px 0; }
+		div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+		div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+		.ui-dialog .ui-state-error { padding: .3em; }
+		.validateTips { border: 1px solid transparent; padding: 0.3em; }
+	</style>
+	<script type="text/javascript">
+	$(function() {
+		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+		$( "#dialog:ui-dialog" ).dialog( "destroy" );
+
+		var name = $( "#name" ),
+			email = $( "#email" ),
+			password = $( "#password" ),
+			allFields = $( [] ).add( name ).add( email ).add( password ),
+			tips = $( ".validateTips" );
+
+		function updateTips( t ) {
+			tips
+				.text( t )
+				.addClass( "ui-state-highlight" );
+			setTimeout(function() {
+				tips.removeClass( "ui-state-highlight", 1500 );
+			}, 500 );
+		}
+
+		function checkLength( o, n, min, max ) {
+			if ( o.val().length > max || o.val().length < min ) {
+				o.addClass( "ui-state-error" );
+				updateTips( "Length of " + n + " must be between " +
+					min + " and " + max + "." );
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		function checkRegexp( o, regexp, n ) {
+			if ( !( regexp.test( o.val() ) ) ) {
+				o.addClass( "ui-state-error" );
+				updateTips( n );
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		$( "#dialog-form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+			buttons: {
+				"Create an account": function() {
+					var bValid = true;
+					allFields.removeClass( "ui-state-error" );
+
+					bValid = bValid && checkLength( name, "username", 3, 16 );
+					bValid = bValid && checkLength( email, "email", 6, 80 );
+					bValid = bValid && checkLength( password, "password", 5, 16 );
+
+					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
+					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
+					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
+					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+
+					if ( bValid ) {
+						$( "#users tbody" ).append( "<tr>" +
+							"<td>" + name.val() + "</td>" +
+							"<td>" + email.val() + "</td>" +
+							"<td>" + password.val() + "</td>" +
+						"</tr>" );
+						$( this ).dialog( "close" );
+					}
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			},
+			close: function() {
+				allFields.val( "" ).removeClass( "ui-state-error" );
+			}
+		});
+
+		$( "#create-user" )
+			.button()
+			.click(function() {
+				$( "#dialog-form" ).dialog( "open" );
+			});
+	});
+	</script>
+        
         <script type="text/javascript"> 
             
             var timercount = 0;
@@ -193,6 +299,16 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                 summaryElem = document.getElementById("status");
                 summaryElem.innerHTML = message;
             }
+
+            function updateApplet()
+            {
+                document.jsap.setMessage("Some message from me");
+            }
+
+            function updateWebPage(s)
+            {
+                document.forms[0].txt1.value = s;
+            }
         </script>
 
 
@@ -222,30 +338,38 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                 });
 
                 $('a').click(function(){
-                       var confirmExit = confirm('Are you sure? You haven\'t saved your changes. Click OK to leave or Cancel to go back and save your changes.');
-                       alert(confirmExit);
+                       var confirmExit = confirm('Tem certeza que deseja sair? \n A sessão de reunião será interrompida.');
 
                        if(confirmExit){
                            
                            $.get('frontcontrollerajax?acao=encerrar_session_reuniao', function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                           alert("response text : " + responseText);
-                           alert("saida confirmada");
                             return true;
                            });                          
                        }
                        else{
-                           alert("saida não confirmada");
                             return false;
                        }
                 });
-            });
-        </script>
 
-         <script type="text/javascript">
-            
+                // increase the default animation speed to exaggerate the effect
+                $.fx.speeds._default = 1000;
+                $(function() {
+                        $( "#dialog" ).dialog({
+                                autoOpen: false,
+                                show: "blind",
+                                hide: "explode"
+                        });
+
+                        $( "#opener" ).click(function() {
+                                $( "#dialog" ).dialog( "open" );
+                                return false;
+                        });
+                });            
+            });
+                    
          </script>
     </head>
-    <body id="reuniao">
+    <body id="reuniao" style="cursor: auto;">
 
         <!-- Encapsula toda a página -->
         <div id="all">
@@ -258,13 +382,30 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
             </div>
 
             <!-- Conteudo da página -->
-            <div id="conteudo">
+            <div id="conteudo">     
+              
+                <div id="dialog-form" title="Create new user">
+                    <p class="validateTips">All form fields are required.</p>
+
+                    <form>
+                        <fieldset>
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+                                <label for="email">Email</label>
+                                <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+                        </fieldset>
+                    </form>
+                </div>
+                
+                <button id="create-user">Create new user</button>
 
                 <form method="post" name="timeform" action="#">
 
                     <div id="colunaE">
                         <h2>Dados da Reunião</h2>
-                        <a id="link_1" href="http://jquery.com/">asdasd</a>
+                        
                         <br/>
                         <label>Inicio da Reunião:</label> <%out.print(paginaDeReuniao != null ? paginaDeReuniao.getTempoDeInicio() : "");%> <!--<input type="text" name="Inicio" value="" readonly disabled> -->
                         <br/>
@@ -297,8 +438,17 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                         <input type="button" id="acao_button" name="acao" value="Marcar Presença"/>
                          <div id="digital">
 
+                             <object id="jsap" height="189" width="389" name="jsap" type="application/x-java-applet;version=1.4.1">
+                                <param value="MarcarPresencaDigitalApplet.jar, lib/NBioBSPJNI.jar" name="archive">
+                                <param value="epucjr.engyos.applet.gui.DigitalCaptureAppletGUI" name="code">
+                                <param value="yes" name="mayscript">
+                                <param value="true" name="scriptable">
+                                <param value="jsapplet" name="name">
+                                <param value="<% out.print(paginaDeReuniao.getIdReuniao()); %>" name="idReuniao">
+                            </object>
+
                              <script type="text/javascript">
-                                var attributes = {
+                                <%--var attributes = {
                                     code:       "epucjr.engyos.applet.gui.DigitalCaptureAppletGUI",
                                     archive:    "MarcarPresencaDigitalApplet.jar, lib/NBioBSPJNI.jar",
                                     width:      389,
@@ -306,9 +456,9 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                                 };
                                 var parameters = {idReuniao:<% out.print(paginaDeReuniao.getIdReuniao()); %>, jnlp_href:"marcar_presenca_digital.jnlp"}; <!-- Applet Parameters -->
                                 var version = "1.5"; <!-- Required Java Version -->
-                                deployJava.runApplet(attributes, parameters, version);
+                                deployJava.runApplet(attributes, parameters, version);--%>
                             </script>
-                                
+                            <input type="button" onclick="updateApplet()" value="Update applet">
                         </div>
                     </div>
 
