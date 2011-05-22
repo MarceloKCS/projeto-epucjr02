@@ -151,12 +151,15 @@ public class Reuniao implements IReuniao{
         return false;
     }
 
+    @Override
     public boolean verificaObreiroNaListaPelaSenha(String senhaObreiro) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void marcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro) {
         PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(digitalObreiro);
+        presencaObreiro.setMomentoRegistroPresenca(new Date());
         presencaObreiro.setMomentoPresenca(HoraUtil.obterTempoCorrente());
         presencaObreiro.setDataPresenca(DateTimeUtils.obterDataCorrenteBr());
         presencaObreiro.setObreiroPresente(true);
@@ -165,6 +168,7 @@ public class Reuniao implements IReuniao{
     @Override
     public void desmarcarPresencaDeObreiroNaListaPelaDigital(String digitalObreiro) {
         PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(digitalObreiro);
+        presencaObreiro.setMomentoRegistroPresenca(null);
         presencaObreiro.setMomentoPresenca("");
         presencaObreiro.setDataPresenca("");
         presencaObreiro.setObreiroPresente(false);
@@ -223,6 +227,7 @@ public class Reuniao implements IReuniao{
     @Override
     public void marcarPresencaDeObreiroNaListaPeloCPF(String cpfObreiro) {
         PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpfObreiro);
+        presencaObreiro.setMomentoRegistroPresenca(new Date());
         presencaObreiro.setMomentoPresenca(HoraUtil.obterTempoCorrente());
         presencaObreiro.setDataPresenca(DateTimeUtils.obterDataCorrenteBr());
         presencaObreiro.setObreiroPresente(true);
@@ -231,6 +236,7 @@ public class Reuniao implements IReuniao{
     @Override
     public void desmarcarPresencaDeObreiroNaLista(String cpf) {
        PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpf);
+       presencaObreiro.setMomentoRegistroPresenca(null);
        presencaObreiro.setMomentoPresenca("");
        presencaObreiro.setDataPresenca("");
        presencaObreiro.setObreiroPresente(false);
@@ -280,6 +286,7 @@ public class Reuniao implements IReuniao{
         return null;
     }
 
+    @Override
     public Obreiro buscarObreiroNaListaDePresenca(String digitalObreiro) {
         //Utiliza o algoritmo de comparacao da Implementaçaõ da Interface ControleBioDeviceHardware
         //Busca sequencial
