@@ -79,7 +79,6 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
         labelTitulo = new javax.swing.JLabel();
         labelAviso = new javax.swing.JLabel();
         capturarDigitalButton = new javax.swing.JButton();
-        reloadAppletButton = new javax.swing.JButton();
 
         painelDeFundo.setBackground(new java.awt.Color(231, 230, 230));
         //imagePanel.paint(this.getGraphics());
@@ -112,13 +111,6 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
             }
         });
 
-        reloadAppletButton.setText("reload");
-        reloadAppletButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reloadAppletButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout painelDeFundoLayout = new javax.swing.GroupLayout(painelDeFundo);
         painelDeFundo.setLayout(painelDeFundoLayout);
         painelDeFundoLayout.setHorizontalGroup(
@@ -127,10 +119,7 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
                 .addGap(14, 14, 14)
                 .addGroup(painelDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelDeFundoLayout.createSequentialGroup()
-                        .addComponent(capturarDigitalButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(reloadAppletButton))
+                    .addComponent(capturarDigitalButton)
                     .addComponent(labelAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -147,9 +136,7 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
                         .addGap(36, 36, 36)
                         .addComponent(labelAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                        .addGroup(painelDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(capturarDigitalButton)
-                            .addComponent(reloadAppletButton))))
+                        .addComponent(capturarDigitalButton)))
                 .addContainerGap())
         );
 
@@ -180,11 +167,6 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
             //JOptionPane.showMessageDialog(null, "TIRED");
         }
     }//GEN-LAST:event_capturarDigitalButtonActionPerformed
-
-    private void reloadAppletButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadAppletButtonActionPerformed
-       this.getAppletContext().showDocument(this.getDocumentBase(), "_self");
-
-    }//GEN-LAST:event_reloadAppletButtonActionPerformed
 
     public void setMessage(String message){
         JOptionPane.showMessageDialog(null,"Mensagem: " + message + "\nidReuniao: " + pageParameter);
@@ -233,7 +215,6 @@ public class DigitalCaptureAppletGUI extends javax.swing.JApplet {
     private javax.swing.JLabel labelAviso;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel painelDeFundo;
-    private javax.swing.JButton reloadAppletButton;
     // End of variables declaration//GEN-END:variables
 
 }

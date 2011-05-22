@@ -340,8 +340,7 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                 $('a').click(function(){
                        var confirmExit = confirm('Tem certeza que deseja sair? \n A sessão de reunião será interrompida.');
 
-                       if(confirmExit){
-                           
+                       if(confirmExit){                          
                            $.get('frontcontrollerajax?acao=encerrar_session_reuniao', function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
                             return true;
                            });                          
@@ -438,17 +437,17 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                         <input type="button" id="acao_button" name="acao" value="Marcar Presença"/>
                          <div id="digital">
 
-                             <object id="jsap" height="189" width="389" name="jsap" type="application/x-java-applet;version=1.4.1">
+                             <%--<object id="jsap" height="189" width="389" name="jsap" type="application/x-java-applet;version=1.4.1">
                                 <param value="MarcarPresencaDigitalApplet.jar, lib/NBioBSPJNI.jar" name="archive">
                                 <param value="epucjr.engyos.applet.gui.DigitalCaptureAppletGUI" name="code">
                                 <param value="yes" name="mayscript">
                                 <param value="true" name="scriptable">
                                 <param value="jsapplet" name="name">
                                 <param value="<% out.print(paginaDeReuniao.getIdReuniao()); %>" name="idReuniao">
-                            </object>
+                            </object>--%>
 
                              <script type="text/javascript">
-                                <%--var attributes = {
+                               var attributes = {
                                     code:       "epucjr.engyos.applet.gui.DigitalCaptureAppletGUI",
                                     archive:    "MarcarPresencaDigitalApplet.jar, lib/NBioBSPJNI.jar",
                                     width:      389,
@@ -456,7 +455,7 @@ Date tempoDecorrido = (Date) request.getAttribute("reuniaoElapsedTime");
                                 };
                                 var parameters = {idReuniao:<% out.print(paginaDeReuniao.getIdReuniao()); %>, jnlp_href:"marcar_presenca_digital.jnlp"}; <!-- Applet Parameters -->
                                 var version = "1.5"; <!-- Required Java Version -->
-                                deployJava.runApplet(attributes, parameters, version);--%>
+                                deployJava.runApplet(attributes, parameters, version);
                             </script>
                             <input type="button" onclick="updateApplet()" value="Update applet">
                         </div>
