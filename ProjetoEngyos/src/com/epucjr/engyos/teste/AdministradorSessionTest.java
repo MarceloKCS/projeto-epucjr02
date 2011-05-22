@@ -21,7 +21,7 @@ public class AdministradorSessionTest {
 
     public static void inserdAdmin(){
         DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
-        Administrador administrador = new Administrador("Michel", " Alves Silva", "123", "msilva@epucjr.com.br", "nights");
+        Administrador administrador = new Administrador("Administrador", "Administrador", "admin", "admin@admin.com.br", "admin");
         SessionStatus sessionStatus = new SessionStatus();
         sessionStatus.definirSessaoStatus(SessionStatus.SECAO_INATIVA);
         sessionStatus.setCURRENT_SESSION_ID("");

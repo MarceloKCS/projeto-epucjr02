@@ -1,6 +1,7 @@
 package com.epucjr.engyos.dominio.modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class PresencaObreiro {
@@ -23,6 +26,9 @@ public class PresencaObreiro {
 	private boolean obreiroPresente;
 	private String momentoPresenca;
 	private String dataPresenca;
+        
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date momentoRegistroPresenca;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )	
 	@JoinColumn
@@ -36,6 +42,7 @@ public class PresencaObreiro {
 		this.obreiroPresente = false;
 		this.momentoPresenca = "";
 		this.dataPresenca = "";
+                this.momentoRegistroPresenca = null;
 		this.obreiro = new Obreiro();
 		this.reuniao = new ArrayList<Reuniao>();
 	}
@@ -44,6 +51,7 @@ public class PresencaObreiro {
 		this.obreiroPresente = false;
 		this.momentoPresenca = "";
 		this.dataPresenca = "";
+                this.momentoRegistroPresenca = null;
 		this.obreiro = obreiro;
 		this.reuniao = new ArrayList<Reuniao>();
 	}
@@ -92,5 +100,15 @@ public class PresencaObreiro {
 	public long getIdPresencaObreiro() {
 		return IdPresencaObreiro;
 	}
+
+        public Date getMomentoRegistroPresenca() {
+            return momentoRegistroPresenca;
+        }
+
+        public void setMomentoRegistroPresenca(Date momentoRegistroPresenca) {
+            this.momentoRegistroPresenca = momentoRegistroPresenca;
+        }
+
+
 
 }
