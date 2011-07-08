@@ -6,6 +6,12 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.Index;
 
 /**
  *
@@ -16,6 +22,7 @@ import javax.persistence.OneToOne;
  * @since 1.0
  */
 @Entity
+@Indexed
 public class Administrador implements IUsuario{
 
     /******************************
@@ -23,9 +30,24 @@ public class Administrador implements IUsuario{
      ******************************/
 
     @Id
+    @DocumentId
+    @Field
     private String cpf;
+
+    //Essas marcação são necessárias ao hibernate search e cumprem duas funções:
+    // - O primeiro é para indexar para tornar possivel a realização de buscas
+    //no campo referido
+    //-A segunda, a qual foi atribuido um nome nomexxx_sort é utilizado pelo
+    //hibernate search para realizar uma ordenação com base no campo nome
+    //Veja a classe BuscaAvancada no método de sort para verificar a implementação
+    @Fields(
+            {@Field(index=Index.TOKENIZED, store=Store.YES),
+            @Field(name="nomeadm_sort",
+            index=Index.UN_TOKENIZED)
+            })
     private String nome;
-    private String sobrenome;    
+    private String sobrenome;
+    @Field
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
@@ -96,6 +118,22 @@ public class Administrador implements IUsuario{
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.email = email;
+        this.identificacao = identificacao;
+         this.sessionStatus = new SessionStatus();
+    }
+    
+   /**
+    * Administrador Simplificado
+    *
+    * @param nome
+    * @param cpf
+    * @param identificacao
+    */
+     public Administrador(String nome, String cpf, Identificacao identificacao) {
+        this.nome = nome;
+        this.sobrenome = "";
+        this.cpf = cpf;
+        this.email = "";
         this.identificacao = identificacao;
          this.sessionStatus = new SessionStatus();
     }
@@ -175,5 +213,12 @@ public class Administrador implements IUsuario{
         this.sessionStatus = sessionStatus;
     }
 
+    public void definirNome(String nome){
+        this.nome = nome;
+    }
+
+    public void definirCPF(String cpf){
+        this.cpf = cpf;
+    }
     
 }

@@ -13,6 +13,7 @@ import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.ListUtilTokenizer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,9 +56,10 @@ public class ActionReuniaoEditCommand implements Command{
 
         //Obtenção de parâmetros necessários obtidos da página
         String local = request.getParameter("local");
-        String dia = request.getParameter("dataReuniaoDia");
-        String mes = request.getParameter("dataReuniaoMes");
-        String ano = request.getParameter("dataReuniaoAno");
+//        String dia = request.getParameter("dataReuniaoDia");
+//        String mes = request.getParameter("dataReuniaoMes");
+//        String ano = request.getParameter("dataReuniaoAno");
+        String dataReuniao = request.getParameter("dataReuniao");
         String hora = request.getParameter("horaReuniao");
         String minuto = request.getParameter("minutoReuniao");
         
@@ -83,12 +85,14 @@ public class ActionReuniaoEditCommand implements Command{
             }
 
             //Verificando se houve alguma alteração na data
-            if (!dia.equals(reuniao.getDia()) || !mes.equals(reuniao.getMes()) || !ano.equals(reuniao.getAno())) {
+
+            if ( !dataReuniao.equals(reuniao.getData()) ) {
                 //Preparando a data
-                String data = DateTimeUtils.converterDataBr(dia, mes, ano);
+                //String data = DateTimeUtils.converterDataBr(dia, mes, ano);
                 //Alterando a data da reunião
-                reuniao.setData(data);
+                reuniao.setData(dataReuniao);
             }
+            
             //Verificando se houve alguma alteração no horário
             if (!hora.equals(reuniao.getHora()) || !minuto.equals(reuniao.getMinuto())) {
                 //Preparando a hora
@@ -96,6 +100,9 @@ public class ActionReuniaoEditCommand implements Command{
                 //Alterando o horário da reunião
                 reuniao.setHorario(horario);
             }
+
+            long momentoReuniaoMarcado = DateTimeUtils.converterDateTimeToMilissegundos(reuniao.getData(), reuniao.getHorario());
+            reuniao.setMomentoReuniaoMarcada(new Date(momentoReuniaoMarcado));
 
             //Preparando a lista de presença de obreiros:
             if (obreiroIdsTokenized != null && !obreiroIdsTokenized.equals("")) {
@@ -112,7 +119,7 @@ public class ActionReuniaoEditCommand implements Command{
 
             //1. Validar os dados cadastrais
             ValidadorDeFormularioDeReuniao validadorDeFormularioDeReuniao = new ValidadorDeFormularioDeReuniao();
-            validadorDeFormularioDeReuniao.verificarCamposValidos(local, dia, mes, ano, hora, minuto);
+            validadorDeFormularioDeReuniao.verificarCamposValidos(local, dataReuniao, hora, minuto);
 
             if (validadorDeFormularioDeReuniao.isFormularioValido()) {
                 dataAccessObjectManager.mergeDataObjeto(reuniao);
@@ -122,7 +129,7 @@ public class ActionReuniaoEditCommand implements Command{
                 if (dataAccessObjectManager.isOperacaoEfetuada()) {
                     //Instanciação e Carregar dados do obreiro registrado para apresentação
                     formularioDeReuniao = new FormularioDeReuniao();
-                    formularioDeReuniao.definirDadosDeConfirmacaoDeEdicaoReuniao(dataAccessObjectManager.getMensagemStatus(), local, DateTimeUtils.converterDataBr(dia, mes, ano), DateTimeUtils.converterHorarioHHMM(hora, minuto));
+                    formularioDeReuniao.definirDadosDeConfirmacaoDeEdicaoReuniao(dataAccessObjectManager.getMensagemStatus(), local, dataReuniao, DateTimeUtils.converterHorarioHHMM(hora, minuto));
 
                     //Define mensagem de sucesso ao editar
                     formularioDeReuniao.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());

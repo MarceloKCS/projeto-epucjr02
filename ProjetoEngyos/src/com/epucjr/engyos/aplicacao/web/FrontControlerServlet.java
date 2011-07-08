@@ -15,7 +15,7 @@ import com.epucjr.engyos.dominio.factory.ViewFactory;
 import org.apache.log4j.Logger;
 
 /**
- * Servlet implementation class Servlet
+ * Servlet implementation class  Servlet
  */
 public class FrontControlerServlet extends HttpServlet {
     private static org.apache.log4j.Logger log = Logger.getLogger(FrontControlerServlet.class);
@@ -49,7 +49,6 @@ public class FrontControlerServlet extends HttpServlet {
     }
 
     public void servico(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //response.getWriter().print("TESTE");
         String acao = request.getParameter("acao");
         log.debug("acao : " + acao);
         String viewJsp = "";

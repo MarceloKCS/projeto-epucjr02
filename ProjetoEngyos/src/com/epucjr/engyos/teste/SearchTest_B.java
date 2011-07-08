@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.epucjr.engyos.dominio.crud.BuscaAvancada;
+import com.epucjr.engyos.dominio.modelo.Administrador;
 import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
@@ -70,6 +71,16 @@ public class SearchTest_B {
 				System.out.println("Testa Escape Sequence para Query Lucene");
 				SearchTest_B.putScapeSequenceHoraTest();
 				break;
+                        case 10:
+                                System.out.println("Busca por Administrador com paginação No Param");
+                                buscarAdministradoresPaginadasNoParam();
+                                break;
+                        case 11:
+                                System.out.println("Busca por Administradores com paginação");
+				System.out.print("Entre com o Parâmetro de busca: ");
+				parametroBusca = input.next();
+                                buscarAdministradoresPaginados(parametroBusca);
+                                break;
 				
 
 			}
@@ -236,6 +247,68 @@ public class SearchTest_B {
 
 		for(Congregacao congregacao : listaDeCongregacao){
 			System.out.println("nome da Congregacao = " + congregacao.getNome());
+		}
+
+	}
+
+        public static void buscarAdministradoresPaginados(String parametroBusca){
+		BuscaAvancada buscaAvancada = new BuscaAvancada();
+		SearchInitializator searchInitializator = new SearchInitializator();
+		searchInitializator.atualizarIndicesLucene();
+		String parametroDeBusca = parametroBusca;
+		if(searchInitializator.isOperacaoExecutada()){
+
+			System.out.println("MSG Index Init Search = " + searchInitializator.getMensagemStatus());
+		}
+		else{
+			System.out.println("MSG Index Init Search Error = " + searchInitializator.getMensagemStatus());
+		}
+		buscaAvancada.buscarAdministrador(parametroDeBusca, 1);
+		List<Administrador> listaDeAdministrador = buscaAvancada.getListaDeAdministradoresEncontrados();
+		System.out.println("DADOS DA PAGINAÇÃO");
+		System.out.println("NumPagina = " + buscaAvancada.getPaginaCorrente());
+		System.out.println("Quantidade de Paginas: " + buscaAvancada.getQuantidadeDePagina());
+		System.out.println("Quantidade de Resultados por Página: " + buscaAvancada.getQuantidadeDeResultadosPorPagina());
+		System.out.println("Quantidade Total de Resultados: " + buscaAvancada.getQuantidadeTotalResultados());
+		System.out.println("Mensagem Status: " + buscaAvancada.getMensagemStatus());
+		System.out.println("Verificação de Ocorrencias Encontradas: " + buscaAvancada.isOcorrenciasEncontradas());
+
+		System.out.println("Resultados = " + listaDeAdministrador.size());
+
+		for(Administrador administrador : listaDeAdministrador){
+			System.out.println("nome da Congregacao = " + administrador.obterNome());
+                        System.out.println("nome da Congregacao = " + administrador.obterCPF());
+		}
+
+	}
+
+        public static void buscarAdministradoresPaginadasNoParam(){
+		BuscaAvancada buscaAvancada = new BuscaAvancada();
+		SearchInitializator searchInitializator = new SearchInitializator();
+		searchInitializator.atualizarIndicesLucene();
+		String parametroDeBusca = "";
+		if(searchInitializator.isOperacaoExecutada()){
+
+			System.out.println("MSG Index Init Search = " + searchInitializator.getMensagemStatus());
+		}
+		else{
+			System.out.println("MSG Index Init Search Error = " + searchInitializator.getMensagemStatus());
+		}
+		buscaAvancada.buscarAdministrador(parametroDeBusca, 1);
+		List<Administrador> listaDeAdministrador = buscaAvancada.getListaDeAdministradoresEncontrados();
+		System.out.println("DADOS DA PAGINAÇÃO");
+		System.out.println("NumPagina = " + buscaAvancada.getPaginaCorrente());
+		System.out.println("Quantidade de Paginas: " + buscaAvancada.getQuantidadeDePagina());
+		System.out.println("Quantidade de Resultados por Página: " + buscaAvancada.getQuantidadeDeResultadosPorPagina());
+		System.out.println("Quantidade Total de Resultados: " + buscaAvancada.getQuantidadeTotalResultados());
+		System.out.println("Mensagem Status: " + buscaAvancada.getMensagemStatus());
+		System.out.println("Verificação de Ocorrencias Encontradas: " + buscaAvancada.isOcorrenciasEncontradas());
+
+		System.out.println("Resultados = " + listaDeAdministrador.size());
+
+		for(Administrador administrador : listaDeAdministrador){
+			System.out.println("nome da Congregacao = " + administrador.obterNome());
+                        System.out.println("nome da Congregacao = " + administrador.obterCPF());
 		}
 
 	}

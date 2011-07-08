@@ -50,7 +50,6 @@ public class TesteServlet extends HttpServlet {
 		printWriter.println("<html>");
 		printWriter.println("<h1>Teste Finalizado</h1>");
 		printWriter.println("</html>");
-		printWriter.close();
 		
 	}
 

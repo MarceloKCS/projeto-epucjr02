@@ -46,12 +46,33 @@ public class DateTimeUtils {
 		String horario = hora + ":" + minuto + ":" + segundo;
 		return horario;
 	}
-	
+
+        /**
+         * Dada a hora e os minutos em String, é realizada a preparação destes
+         * dados para que eles sejam apresentados na forma de HH:MM:SS
+         * exemplo: a chamada com <code>hora=12</code> e <code>minuto=30</code>
+         * devolve 12:30:00.
+         * Como o tempo não envolve segundos, o valor de segundos é sempre
+         * devolvido como 00.
+         *
+         * @param hora A hora data com digito até 23
+         * @param minuto O minuto dado com valor Maximo até 59
+         * @return A hora no formato HH:MM:SS
+         */
 	public static String converterHorarioHHMM(String hora, String minuto){
 		String horario = hora + ":" + minuto + ":" + "00";
 		return horario;
 	}
 
+        /**
+         * Dado o dia, mes e ano é devolvido a formatação da data como DD/MM/AAAA
+         * com foco no formato usado no Brasil.
+         *
+         * @param dia O dia com valor máximo até 31
+         * @param mes O mes com valor máximo até 12
+         * @param ano O ano, com valor máximo de 9999
+         * @return A data no formato DD/MM/AAAA
+         */
 	public static String converterDataBr(String dia, String mes, String ano){
 		String data = dia + "/" + mes + "/" + ano; 
 		return data;

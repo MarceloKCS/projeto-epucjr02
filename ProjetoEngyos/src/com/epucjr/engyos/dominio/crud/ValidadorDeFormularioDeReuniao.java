@@ -124,6 +124,68 @@ public class ValidadorDeFormularioDeReuniao {
 		
 	}
 
+        public void verificarCamposValidos(String local, String dataReuniao, String hora, String minuto){
+		this.setFormularioValido(true);
+		String dia = null;
+		String mes = null;
+		String ano = null;
+		String avisoDataHora = "";
+		String avisoDataMinuto = "";
+
+		if (local == null || local.trim().length() == 0){
+			this.definirCampoComErro("local", "Nome Obrigatório");
+			this.setFormularioValido(false);
+                        
+		}
+
+                if(dataReuniao == null || dataReuniao.equals("") ){
+                    this.definirCampoComErro("Data", "Insira a data");
+                    this.setFormularioValido(false);
+                }
+                else{
+                    dia = DateTimeUtils.obterDiaDeDataBrasileira(dataReuniao);
+                    mes = DateTimeUtils.obterMesDeDataBrasileira(dataReuniao);
+                    ano = DateTimeUtils.obterAnoDeDataBrasileira(dataReuniao);
+                }
+
+
+		
+		if(hora == null || hora.equals("24")){
+			this.definirCampoComErro("Hora", "Insira a hora");
+			avisoDataHora = "Hora";
+			this.setFormularioValido(false);
+		}
+		if(minuto == null || minuto.equals("60")){
+			this.definirCampoComErro("Minuto", "Insira os minutos");
+			avisoDataMinuto = "Minuto";
+			this.setFormularioValido(false);
+		}
+
+		
+		if(!avisoDataHora.equals("") && avisoDataMinuto.equals("")){
+			this.definirCampoComErro("Horario", "Insira a " +  avisoDataHora);
+		}
+		else if(avisoDataHora.equals("") && !avisoDataMinuto.equals("")){
+			this.definirCampoComErro("Horario", "Insira o " +  avisoDataMinuto);
+		}
+		else if(!avisoDataHora.equals("") && !avisoDataMinuto.equals("")){
+			this.definirCampoComErro("Horario", "Insira a " +  avisoDataHora + " e o " + avisoDataMinuto);
+		}
+
+		if((dia != null && !dia.equals("00")) && (mes != null && !mes.equals("00"))
+		&& (ano != null && !ano.equals("00"))){
+			this.validarDateFornecido(dia, mes, ano);
+		}
+
+		if((dia != null && !dia.equals("00")) && (mes != null && !mes.equals("00"))
+		&& (ano != null && !ano.equals("00")) && (hora != null && !hora.equals("24"))
+		&& (minuto != null && !minuto.equals("60"))
+		){
+			this.validarDateTimeFornecido(dia, mes, ano, hora, minuto);
+		}
+
+	}
+
 	/**
 	 * Validador de data, que a partir dos parametros inseridos verifica se
 	 * o evento verificado ocorre em uma data que não seja menor que a data corrente

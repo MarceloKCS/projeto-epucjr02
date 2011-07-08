@@ -31,11 +31,19 @@ public class ViewFactory {
 		this.adicionaView("obreiro_formload", "Formulario Carregado", "CadastrarObreiro.jsp");
 		this.adicionaView("reuniao_formload", "Formulario Carregado", "CadastrarReuniao.jsp");
 		this.adicionaView("congregacao_formload", "Formulario Carregado", "CadastrarCongregacao.jsp");
+                this.adicionaView("administrador_formload", "Formulario Carregado", "CadastrarAdministrador.jsp");
+
 		
 		this.adicionaView("obreiro_register", "Erro ao Cadastrar", "CadastrarObreiro.jsp");
 		this.adicionaView("obreiro_register", "Operação Realizada com Sucesso!", "CadastrarObreiro.jsp");
 		this.adicionaView("obreiro_register", "Erro interno na operação", "CadastrarObreiro.jsp");		
-		this.adicionaView("obreiro_register", "Usuario Já Existente no Registro...", "CadastrarObreiro.jsp");	
+		this.adicionaView("obreiro_register", "Usuario Já Existente no Registro...", "CadastrarObreiro.jsp");
+                this.adicionaView("obreiro_register", "Já existe obreiro registrado com este cpf.", "CadastrarObreiro.jsp");
+
+                this.adicionaView("administrador_register", "Erro ao Cadastrar", "CadastrarAdministrador.jsp");
+		this.adicionaView("administrador_register", "Operação Realizada com Sucesso!", "CadastrarAdministrador.jsp");
+		this.adicionaView("administrador_register", "Erro interno na operação", "CadastrarAdministrador.jsp");
+		this.adicionaView("administrador_register", "Usuario Já Existente no Registro...", "CadastrarAdministrador.jsp");
 		
 		this.adicionaView("congregacao_register", "Erro ao Cadastrar", "CadastrarCongregacao.jsp");
 		this.adicionaView("congregacao_register", "Operação Realizada com Sucesso!", "CadastrarCongregacao.jsp");
@@ -45,7 +53,10 @@ public class ViewFactory {
 		this.adicionaView("reuniao_register", "Erro ao Cadastrar", "CadastrarReuniao.jsp");
 		this.adicionaView("reuniao_register", "Operação Realizada com Sucesso!", "CadastrarReuniao.jsp");
 		this.adicionaView("reuniao_register", "Erro interno na operação", "CadastrarReuniao.jsp");
-		
+
+                this.adicionaView("buscar_administrador", "Busca Realizada", "BuscarAdministrador.jsp");
+		this.adicionaView("buscar_administrador", "Não existem registros no banco de dados", "BuscarAdministrador.jsp");
+
 		this.adicionaView("buscar_obreiro", "Busca Realizada", "BuscarObreiro.jsp");
 		this.adicionaView("buscar_obreiro", "Não existem registros no banco de dados", "BuscarObreiro.jsp");
 		
@@ -57,9 +68,18 @@ public class ViewFactory {
 		
                 this.adicionaView("obreiro_editformload", "Formulario Carregado", "EditarObreiro.jsp");
 
+                this.adicionaView("administrador_editformload", "Formulario Carregado", "EditarAdministrador.jsp");
+
                 this.adicionaView("obreiro_editer", "Erro ao Editar", "EditarObreiro.jsp");
                 this.adicionaView("obreiro_editer", "Operação Realizada com Sucesso!", "EditarObreiro.jsp");
 		this.adicionaView("obreiro_editer", "Erro interno na operação", "EditarObreiro.jsp");
+
+                this.adicionaView("administrador_editformload", "Administrador inexistente no sistema", "EditarAdministrador.jsp");
+                this.adicionaView("administrador_editformload", "Administrador encontrado", "EditarAdministrador.jsp");
+
+                this.adicionaView("administrador_editer", "Erro ao Editar", "EditarAdministrador.jsp");
+                this.adicionaView("administrador_editer", "Operação Realizada com Sucesso!", "EditarAdministrador.jsp");
+		this.adicionaView("administrador_editer", "Erro interno na operação", "EditarAdministrador.jsp");
 
                 this.adicionaView("congregacao_editformload", "Congregação inexistente no sistema", "EditarCongregacao.jsp");
                 this.adicionaView("congregacao_editformload", "Congregação encontrada", "EditarCongregacao.jsp");
@@ -100,8 +120,11 @@ public class ViewFactory {
                 this.adicionaView("busca_loader", "buscar_obreiro", "BuscarObreiro.jsp");
                 this.adicionaView("busca_loader", "buscar_congregacao", "BuscarCongregacao.jsp");
                 this.adicionaView("busca_loader", "buscar_reuniao", "BuscarReuniao.jsp");
+                this.adicionaView("busca_loader", "buscar_administrador", "BuscarAdministrador.jsp");
 
                 this.adicionaView("page_loader", "pagina_principal", "Principal.jsp");
+                this.adicionaView("page_loader", "pagina_administrativa", "Administrativo.jsp");
+                this.adicionaView("page_loader", "pagina_relatorio", "PaginaDeRelatorio.jsp");
 
                 this.adicionaView("", "", "TelaLogin.jsp");
 		

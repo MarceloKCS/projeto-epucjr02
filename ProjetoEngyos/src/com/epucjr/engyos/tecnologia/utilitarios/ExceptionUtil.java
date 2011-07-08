@@ -11,7 +11,7 @@ public class ExceptionUtil {
 		StringWriter stringException = new StringWriter ();
 		PrintWriter printer = new PrintWriter(stringException);
 		e.printStackTrace(printer);
-		
+		printer.close();
 		return stringException.toString();
 	}
 	

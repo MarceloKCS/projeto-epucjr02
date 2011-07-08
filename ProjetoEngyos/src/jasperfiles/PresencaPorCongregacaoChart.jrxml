@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testChart" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PERIODO_INICIO" class="java.lang.Long"/>
+	<parameter name="PERIODO_FIM" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT CASE MONTHNAME(p.momentoRegistroPresenca)
+     when 'January' then 'Janeiro'
+     when 'February' then 'Fevereiro'
+     when 'March' then 'Março'
+     when 'April' then 'Abril'
+     when 'May' then 'Maio'
+     when 'June' then 'Junho'
+     when 'July' then 'Julho'
+     when 'August' then 'Agosto'
+     when 'September' then 'Setembro'
+     when 'October' then 'Outubro'
+     when 'November' then 'Novembro'
+     when 'December' then 'Dezembro' END as mes,
+     count(*) as qtdPresencaMensal,
+     c.nome as congregacao
+FROM
+     obreiro o,
+     congregacao c,
+     presencaobreiro p
+where
+     o.congregacao_fk = c.idCongregacao AND
+     o.cpf = p.obreiro_cpf AND
+     p.momentoRegistroPresenca >= FROM_UNIXTIME($P{PERIODO_INICIO}) AND
+     p.momentoRegistroPresenca <= FROM_UNIXTIME($P{PERIODO_FIM}) AND
+     p.obreiroPresente = true
+     group by extract(month from p.momentoRegistroPresenca), c.nome;]]>
+	</queryString>
+	<field name="mes" class="java.lang.String"/>
+	<field name="qtdPresencaMensal" class="java.lang.Long"/>
+	<field name="congregacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="131">
+			<staticText>
+				<reportElement x="177" y="42" width="229" height="34"/>
+				<textElement textAlignment="Justified">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presença por Congregação]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="465" y="0" width="90" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["FOLHA " + $V{PAGE_NUMBER} + " DE " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="163" height="18"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Projeto Engyos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="37">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="35" forecolor="#999999"/>
+				<textElement>
+					<font fontName="Century Gothic" size="9"/>
+				</textElement>
+				<text><![CDATA[Rua Manoel Ferreira Jr., nº 197 - Congregação Parque São Joaquim  - Telefone: (xx) xxxx-xxxx - CEP xxxxx-xxx - São Paulo/SP
+  e-mail: calebe@calebe.com.br]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="322" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="0" y="16" width="555" height="294">
+						<property name="net.sf.jasperreports.chart.range.axis.tick.interval" value="1"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{congregacao}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{mes}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{qtdPresencaMensal}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

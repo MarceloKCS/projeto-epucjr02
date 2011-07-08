@@ -10,7 +10,7 @@ import com.epucjr.engyos.dominio.modelo.Identificacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeObreiro;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
-
+import org.apache.log4j.Logger;
 /**
  *Classe que executa a acao solicitada de realizar o cadastro de um obreiro a 
  * partir dos dados necessários fornecidos no formulário de cadastro
@@ -23,7 +23,7 @@ import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
  */
 
 public class ActionObreiroRegisterCommand implements Command{
-
+    private static org.apache.log4j.Logger log = Logger.getLogger(ActionObreiroRegisterCommand.class);
     /**
      * Método que executa a requisição de cadastro de oberiro no banco de dados
      *
@@ -56,6 +56,13 @@ public class ActionObreiroRegisterCommand implements Command{
 		String congregacao = request.getParameter(idCongregacaoEscolhido);
 		String senha = request.getParameter("Senha");
 		String senhaConfirmacao = request.getParameter("SenhaConfirmacao");
+                log.debug("nome: " + nome);
+                log.debug("Cpf: " + cpf);
+                log.debug("Cargo: " + cargo);
+                log.debug("idCongregacao: " + idCongregacaoEscolhido);
+                log.debug("congregacao: " + congregacao);
+                log.debug("Senha: " + senha);
+                log.debug("SenhaConfirmacao: " + senhaConfirmacao);
 			
 		long idCongregacao = 0;
 		if(idCongregacaoEscolhido != null && !idCongregacaoEscolhido.equals("")){

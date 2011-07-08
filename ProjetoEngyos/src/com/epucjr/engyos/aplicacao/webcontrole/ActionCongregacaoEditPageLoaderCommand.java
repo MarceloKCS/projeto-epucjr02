@@ -8,7 +8,7 @@ import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeCongregacao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 import javax.servlet.http.HttpServletRequest;
-
+import org.apache.log4j.Logger;
 /**
  * Classe que atende a uma acao de carregar o formulário a partir da congregação
  * selecionada na busca
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 1.0
  */
 public class ActionCongregacaoEditPageLoaderCommand implements Command{
-
+    private static org.apache.log4j.Logger log = Logger.getLogger(ActionCongregacaoEditPageLoaderCommand.class);
     /**
      * Método que executa a requisição de carga do formulário de congregação para edição
      *
@@ -42,7 +42,7 @@ public class ActionCongregacaoEditPageLoaderCommand implements Command{
         //Obtendo o id da congregação requisitada para a edição
         String idCongregacaoString = request.getParameter("idCongregacao");
         long idCongregacao = 0;
-        System.out.println("valorID = " + idCongregacao);
+        log.debug("idCongregacao: " + idCongregacaoString);
 
         if(idCongregacaoString != null && !idCongregacaoString.equals("")){
             idCongregacao = Long.parseLong(idCongregacaoString);
@@ -54,6 +54,7 @@ public class ActionCongregacaoEditPageLoaderCommand implements Command{
         //Carregando os dados necessários para a edição de congregação
         if(dataAccessObjectManager.isOperacaoEfetuada()){
             formularioDeCongregacao.definirCamposPreenchidos(congregacao);
+            formularioDeCongregacao.setFormularioPertenceCongregacaoPadrao(congregacao.isCongregacaoPadrao());
         }
 
         String respostaOperacao = dataAccessObjectManager.getMensagemStatus();

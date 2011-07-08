@@ -1,252 +1,217 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.epucjr.engyos.dominio.modelo.Obreiro" %>
-<%@ page import="com.epucjr.engyos.dominio.modelo.Congregacao" %>
-<%@ page import="com.epucjr.engyos.dominio.visualizacao.FormularioDeObreiro" %>
-<%@ page import="com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeObreiro" %>
+<%@ page import="com.epucjr.engyos.dominio.visualizacao.FormularioDeAdministrador"%>
+<%@ page import="com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeAdministrador"%>
+
+
 <%
-	FormularioDeObreiro formularioDeObreiro;
-	ValidadorDeFormularioDeObreiro validadorDeObreiro;
-	formularioDeObreiro = (FormularioDeObreiro) request.getAttribute("formularioDeObreiro");
-	//validadorDeObreiro = (ValidadorDeFormularioDeObreiro) request.getAttribute("errorObreiro");
-	validadorDeObreiro = formularioDeObreiro.getValidadorDeFormularioDeObreiro();
+    FormularioDeAdministrador formularioDeAdministrador = null;
+    ValidadorDeFormularioDeAdministrador validadorDeFormularioDeAdministrador = null;
+    formularioDeAdministrador = (FormularioDeAdministrador) request.getAttribute("formularioDeAdministrador");
+    validadorDeFormularioDeAdministrador = formularioDeAdministrador.getValidadorDeFormularioDeAdministrador();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Obreiros - Projeto Engyos - Controle de Presença</title>
-	<link href="screen.css" rel="stylesheet" type="text/css" />
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+            <title>Obreiros - Projeto Engyos - Controle de Presença</title>
+            <link href="css/screen.css" rel="stylesheet" type="text/css" />
+            <link href="css/jqueryui/jquery-ui.css" type="text/css" rel="stylesheet"/>
 
-	<script type="text/javascript">
-		// Função para esconder a Div após alguns segundos
-		function esconderDiv() {
-			var div = document.getElementById('mensagemRetorno');
-			div.style.display = 'none';
-		}
-		// esconderá a div "mensagemRetorno" após 9 segundos.
-		window.setTimeout(esconderDiv, 9000);
+            <script type='text/javascript' src="javascript/jquery-1.5.2.js"></script>
+            <script type='text/javascript' src="javascript/jqueryui/jquery-ui.js"></script>
+            <script type='text/javascript' src="javascript/jqueryui/jquery.ui.button.js"></script>
+            <script type='text/javascript' src="javascript/jquery.form.js"></script>
 
-		// Função para mostrarTooltip
-		function mostrarTooltip(elemento, mensagem) {
-			var el = document.getElementById(elemento);
-			el.innerHTML = mensagem;
-		}
+            <style type="text/css">
+                .submit_administrador {padding-top: 10px; font-size: 62.5%; }
+            </style>
 
-	</script>
+            <script type="text/javascript">
+                    // Função para esconder a Div após alguns segundos
+                    function esconderDiv() {
+                            var div = document.getElementById('mensagemRetorno');
+                            div.style.display = 'none';
+                    }
+                    // esconderá a div "mensagemRetorno" após 9 segundos.
+                    window.setTimeout(esconderDiv, 9000);
 
-	<script language="JavaScript">
+                    // Função para mostrarTooltip
+                    function mostrarTooltip(elemento, mensagem) {
+                            var el = document.getElementById(elemento);
+                            el.innerHTML = mensagem;
+                    }
 
-        function AbreAppletPopUp()
-        {
-            w=300; //largura da janela(popup)
-            h=300; //altura da janela(popup)
+                    //Form JQuery
+                    $(function() {
 
-            winl = (screen.width - w) / 2; //DEIXARÁ A JANELA(POPUP) NO CENTRO DA TELA
-            wint = (screen.height - h) / 2;
+                        $( "input:submit", ".submit_administrador" ).button();
+                        $( "input:submit", ".submit_administrador" ).click(function() {
+                            $('#formularioAdministrador').submit();
+                            //return true;
+                        });
 
-            winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars=yes,toolbar=0,status=0, resizable=yes'; //configurações da popup
+                    });
 
-            win = window.open("applet_page.jsp","popApplet",winprops); // abre a popup
-            win.focus(); //Focaliza a popup
-        }
+            </script>
 
-    </script>
+            <script type="text/javascript">
 
-</head>
-<body id="obreiros">
-<div id="all">
-	<div id="topo">
-		<%@ include file = "Topo.jsp" %>
-	</div>
-	<div id="menu">
-		<%@ include file = "menu_administrativo.html" %>
-	</div>
-	<div id="conteudo">
-		<ul id="tabmenu">
-			<li><a href="#">Cadastro</a></li>
-		</ul>
-		<div id="conteudo_tabmenu">
-			<div id="mensagemRetorno">
-				<%
-					if (formularioDeObreiro.getMensagemStatus() != null && !formularioDeObreiro.getMensagemStatus().equals("")){
-						out.println(formularioDeObreiro.getMensagemStatus() + "<br />");
-						out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
-						if(formularioDeObreiro.verificarDadoDeConfirmacao("confirmacao_cadastro")){
-							out.println("Foram incluidos no banco de dados <br />");
-							out.println("Nome: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_nome") + "<br />");
-							out.println("Cargo: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cargo") + "<br />");
-							out.println("CPF: "+ formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_cpf") + "<br />");
-							out.println("Congregação: " + formularioDeObreiro.obterDadoDeConfirmacao("confirmacao_congregacao"));
-						}
-					}
-				%>
-			</div>
+            function AbreAppletPopUp()
+            {
+                w=300; //largura da janela(popup)
+                h=300; //altura da janela(popup)
 
+                winl = (screen.width - w) / 2; //DEIXARÁ A JANELA(POPUP) NO CENTRO DA TELA
+                wint = (screen.height - h) / 2;
 
-		<form name="formularioObreiro" method="post" action="Controller?acao=obreiro_register" id="formularioObreiro">
-			<p>
-				<label for="Nome">Nome: </label>
-				<input type="text" name="Nome" value="
-				<%if (formularioDeObreiro != null
-					&& formularioDeObreiro.verificarCampoPreenchido("Nome")) {
-				out.println(formularioDeObreiro.obterCampoPreenchido("Nome"));
-			}%>
-				" id="Nome" />
-				<span class="erroCampoFormulario">
-					<%
-						if (validadorDeObreiro != null
-								&& validadorDeObreiro.verificarCampoComErro("Nome")) {
-							out.println(validadorDeObreiro.obterCampoComErro("Nome"));
-						}
-					%>
-				</span>
-			</p>
-			<p>
-				<label for="Cargo">Cargo: </label>
-				<input type="text" name="Cargo" value="
-				<%if (formularioDeObreiro != null
-					&& formularioDeObreiro.verificarCampoPreenchido("Cargo")) {
-				out.println(formularioDeObreiro.obterCampoPreenchido("Cargo"));
-			}%>
-				"id="Cargo" />
-				<span class="erroCampoFormulario">
-					<%
-						if (validadorDeObreiro != null
-								&& validadorDeObreiro.verificarCampoComErro("Cargo")) {
-							out.println(validadorDeObreiro.obterCampoComErro("Cargo"));
-						}
-					%>
-				</span>
-			</p>
-			<p>
-				<label for="Cpf">CPF: </label>
-				<input type="text" name="Cpf" maxlength="11" value="
-				<%if (formularioDeObreiro != null
-					&& formularioDeObreiro.verificarCampoPreenchido("Cpf")) {
-				out.println(formularioDeObreiro.obterCampoPreenchido("Cpf"));
-			}%>
-				" id="Cpf" onfocus="mostrarTooltip('toolTip_cpf', 'Somente números.');" onblur="mostrarTooltip('toolTip_cpf', '');" />
-				<span class="erroCampoFormulario">
-				<span id="toolTip_cpf"></span>
-				<%
-					if (validadorDeObreiro != null
-							&& validadorDeObreiro.verificarCampoComErro("Cpf")) {
-						out.println(validadorDeObreiro.obterCampoComErro("Cpf"));
-					}
-				%>
-				</span>
-			</p>
+                winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars=yes,toolbar=0,status=0, resizable=yes'; //configurações da popup
+
+                win = window.open("applet_page.jsp","popApplet",winprops); // abre a popup
+                win.focus(); //Focaliza a popup
+            }
+
+            //Form JQuery
+            $(function() {
+
+                $( "input:submit", ".submit_administrador" ).button();
+                $( "input:submit", ".submit_administrador" ).click(function() {
+                    $('#formularioAdministrador').submit();
+                    //return true;
+                });
+
+            });
+
+        </script>
+
+    </head>
+    <body id="administradores">
+        <div id="all">
+                <div id="topo">
+                        <%@ include file = "Topo.jsp" %>
+                </div>
+                <div id="menu">
+                        <%@ include file = "menu_administrativo.html" %>
+                </div>
+                <div id="conteudo">
+                        <ul id="tabmenu">
+                                <li><a href="#">Cadastro</a></li>
+                        </ul>
+                        <div id="conteudo_tabmenu">
+                                <div id="mensagemRetorno">
+                                        <%
+                                            if(formularioDeAdministrador.getMensagemStatus() != null && !formularioDeAdministrador.getMensagemStatus().equals("")){
+                                                out.println(formularioDeAdministrador.getMensagemStatus() + "<br />");
+                                                out.println("<script type=\"text/javascript\">document.getElementById('mensagemRetorno').style.display = 'block';</script>");
+                                                if(formularioDeAdministrador.verificarDadoDeConfirmacao("confirmacao_cadastro")){
+                                                    out.println("Foram incluidos no banco de dados <br />");
+                                                    out.println("Nome: " + formularioDeAdministrador.obterDadoDeConfirmacao("confirmacao_nome") + "<br />");
+                                                    out.println("CPF: "+ formularioDeAdministrador.obterDadoDeConfirmacao("confirmacao_cpf") + "<br />");
+                                                }
+                                            }
+
+                                        %>
+                                </div>
 
 
-			<p>
-				<label for="Senha">Senha: </label>
-				<input type="text" name="Senha" id="Senha" />
-				<span class="erroCampoFormulario">
-					<%
-						if (validadorDeObreiro != null
-								&& validadorDeObreiro.verificarCampoComErro("Senha")) {
-							out.println(validadorDeObreiro.obterCampoComErro("Senha"));
-						}
+                        <form name="formularioObreiro" method="post" action="Controller?acao=administrador_register" id="formularioAdministrador">
+                                <p>
+                                        <label for="Nome">Nome: </label>
+                                        <input type="text" name="Nome" value="<%
+                                       
+                                            if (formularioDeAdministrador != null
+                                                    && formularioDeAdministrador.verificarCampoPreenchido("Nome")) {
+                                                out.println(formularioDeAdministrador.obterCampoPreenchido("Nome"));
+                                            }
+                                        %>" id="Nome" />
+                                        <span class="erroCampoFormulario">
+                                                <%
+                                                
+                                                if (validadorDeFormularioDeAdministrador != null
+                                                                && validadorDeFormularioDeAdministrador.verificarCampoComErro("Nome")) {
+                                                        out.println(validadorDeFormularioDeAdministrador.obterCampoComErro("Nome"));
+                                                }
+                                                
+                                                %>
+                                        </span>
+                                </p>
+                                <p>
+                                        <label for="Cpf">CPF: </label>
+                                        <input type="text" name="Cpf" maxlength="11" value="<%
+                                        
+                                            if (formularioDeAdministrador != null
+                                                    && formularioDeAdministrador.verificarCampoPreenchido("Cpf")) {
+                                                out.println(formularioDeAdministrador.obterCampoPreenchido("Cpf"));
+                                            }
+                                        
+                                        %>" id="Cpf" onfocus="mostrarTooltip('toolTip_cpf', 'Somente números.');" onblur="mostrarTooltip('toolTip_cpf', '');" />
+                                        <span class="erroCampoFormulario">
+                                        <span id="toolTip_cpf"></span>
+                                        <%
+                                        
+                                        if (validadorDeFormularioDeAdministrador != null
+                                                        && validadorDeFormularioDeAdministrador.verificarCampoComErro("Cpf")) {
+                                                out.println(validadorDeFormularioDeAdministrador.obterCampoComErro("Cpf"));
+                                        }
+                                        
+                                        %>
+                                        </span>
+                                </p>
+                                <p>
+                                        <label for="Senha">Senha: </label>
+                                        <input type="password" name="Senha" id="Senha" />
+                                        <span class="erroCampoFormulario">
+                                                <%
+                                                
+                                                    if (validadorDeFormularioDeAdministrador != null
+                                                                    && validadorDeFormularioDeAdministrador.verificarCampoComErro("Senha")) {
+                                                            out.println(validadorDeFormularioDeAdministrador.obterCampoComErro("Senha"));
+                                                    }
+                                                
+                                                %>
+                                        </span>
+                                        <span class="erroCampoFormulario">
+                                                <%
+                                                
+                                                    if (validadorDeFormularioDeAdministrador != null
+                                                                    && validadorDeFormularioDeAdministrador.verificarCampoComErro("SenhaMatch")) {
+                                                            out.println(validadorDeFormularioDeAdministrador.obterCampoComErro("SenhaMatch"));
+                                                    }
+                                                
+                                                %>
+                                        </span>
+                                </p>
 
-					%>
-				</span>
-				<span class="erroCampoFormulario">
-					<%
-						if (validadorDeObreiro != null
-								&& validadorDeObreiro.verificarCampoComErro("SenhaMatch")) {
-							out.println(validadorDeObreiro.obterCampoComErro("SenhaMatch"));
-						}
+                                <p>
+                                        <label for="SenhaConfirmacao">Confirmação da Senha: </label>
+                                        <input type="password" name="SenhaConfirmacao" id="SenhaConfirmacao" />
+                                        <span class="erroCampoFormulario">
+                                                <%
+                                               
+                                                if (validadorDeFormularioDeAdministrador != null
+                                                                && validadorDeFormularioDeAdministrador.verificarCampoComErro("SenhaConfirmacao")) {
+                                                        out.println(validadorDeFormularioDeAdministrador.obterCampoComErro("SenhaConfirmacao"));
+                                                }
+                                                
+                                                %>
+                                        </span>
+                                </p>
+                                     
+                               <%-- <p>
+                                <button type="submit" name="botao_action" value="Cadastrar">Cadastrar</button>
+                                </p>--%>
 
-					%>
-				</span>
-			</p>
+                                <div class="submit_administrador">
+                                    <input type="submit" id="submit_administrador" name="botao_action" value="Cadastrar Administrador"/>
+                                </div>
 
-			<p>
-				<label for="SenhaConfirmacao">Confirmação da Senha: </label>
-				<input type="text" name="SenhaConfirmacao" id="SenhaConfirmacao" />
-				<span class="erroCampoFormulario">
-					<%
-						if (validadorDeObreiro != null
-								&& validadorDeObreiro.verificarCampoComErro("SenhaConfirmacao")) {
-							out.println(validadorDeObreiro.obterCampoComErro("SenhaConfirmacao"));
-						}
+                        </form>
 
-					%>
-				</span>
-			</p>
-			<p>
-				<label for="Digital">Digital: </label>
-				<input type="button" name="digital" onClick="AbreAppletPopUp()" id="digital" value="InserirDigital"/>
-			</p>
-
-			<p>
-				<label for="Congregacao">Congregação</label>
-				<select name="Congregacao">
-					<option value=""></option>
-
-					<%
-
-					List<Congregacao> listaDeCongregacao;
-					listaDeCongregacao = formularioDeObreiro.getListaDeCongregacoes();
-
-					 if(formularioDeObreiro != null && formularioDeObreiro.verificarCampoPreenchido("Congregacao")){
-						 String congregacao = formularioDeObreiro.obterCampoPreenchido("Congregacao").trim();
-
-						 for(int posicao=0; posicao<listaDeCongregacao.size(); posicao++){
-							 String congregacaoCorrente = listaDeCongregacao.get(posicao).getNome().trim();
-							 if(congregacaoCorrente.equals(congregacao)){
-
-					%>
-								<option selected="selected" value="<%out.print(listaDeCongregacao.get(posicao).getIdCongregacao()); %>"> <% out.print(listaDeCongregacao.get(posicao).getNome()); %> </option>
-
-							<%}else{ %>
-								<option value="<%out.print(listaDeCongregacao.get(posicao).getIdCongregacao()); %>"> <% out.print(listaDeCongregacao.get(posicao).getNome()); %> </option>
-
-							<%
-							}
-						 }
-					 }
-					 else{
-						for(int posicao = 0; posicao < listaDeCongregacao.size(); posicao++){
-					%>
-							<option value="<%out.print(listaDeCongregacao.get(posicao).getIdCongregacao()); %>"> <% out.print(listaDeCongregacao.get(posicao).getNome()); %> </option>
-					<%
-
-						}
-					 }
-
-					%>
-					<!-- Hidden Input dos campos para retrieve -->
-					<%
-					for(Congregacao congregacao : listaDeCongregacao){
-						out.println("<input type=\"hidden\" name=\"" + congregacao.getIdCongregacao() + "\" value=\"" + congregacao.getNome() + "\"/>");
-					}
-
-					%>
-
-
-				</select>
-				<!-- Exibe erros relacionado ao preenchimento da congregação -->
-				<span class="erroCampoFormulario">
-				<%
-					if (validadorDeObreiro != null
-							&& validadorDeObreiro.verificarCampoComErro("Congregacao")) {
-						out.println(validadorDeObreiro.obterCampoComErro("Congregacao"));
-					}
-				%>
-				</span>
-			</p>
-			<p>
-			<button type="submit" name="botao_action" value="Cadastrar">Cadastrar</button>
-			</p>
-		</form>
-
-		</div>
-	</div>
-	<div id="rodape">
-		<%@ include file = "Rodape.html" %>
-	</div>
-</div>
-</body>
+                        </div>
+                </div>
+                <div id="rodape">
+                        <%@ include file = "Rodape.html" %>
+                </div>
+        </div>
+    </body>
 </html>

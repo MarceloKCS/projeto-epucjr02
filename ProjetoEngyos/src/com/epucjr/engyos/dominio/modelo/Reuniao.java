@@ -54,11 +54,14 @@ public class Reuniao implements IReuniao{
 	@Field
 	private String horario;	
 	
-	@ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="reuniao", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	@JoinColumn 
 	private List<PresencaObreiro> listaDePresencaObreiro;
 	
 	private String reuniaoStatus;  //ATIVO-INATIVO
+
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date momentoReuniaoMarcada;
 
         @Temporal(TemporalType.TIMESTAMP)
         private Date horárioInicioEfetivo;
@@ -92,18 +95,20 @@ public class Reuniao implements IReuniao{
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = REUNIAO_ATIVA;
 		this.quantidadeMaxObreirosReuniao = 0;
+                this.momentoReuniaoMarcada = null;
                 this.horárioInicioEfetivo = null;
                 this.horárioDeEncerramentoEfetivo = null;
                 this.sessionStatus = new ReuniaoSessionStatus();
 	}
 	
-	public Reuniao(String local, String data, String hora) {
+	public Reuniao(String local, String data, String hora, long momentoReuniaoMarcada) {
 		this.local = local;
 		this.data = data;
 		this.horario = hora;		
 		this.listaDePresencaObreiro = new ArrayList<PresencaObreiro>();
 		this.reuniaoStatus = REUNIAO_ATIVA;
 		this.quantidadeMaxObreirosReuniao = 0;
+                this.momentoReuniaoMarcada = new Date(momentoReuniaoMarcada);
                 this.horárioInicioEfetivo = null;
                 this.horárioDeEncerramentoEfetivo = null;
                 this.sessionStatus = new ReuniaoSessionStatus();
@@ -494,6 +499,14 @@ public class Reuniao implements IReuniao{
 
     public void setReuniaoSessionStatus(ReuniaoSessionStatus sessionStatus) {
         this.sessionStatus = sessionStatus;
+    }
+
+    public Date getMomentoReuniaoMarcada() {
+        return momentoReuniaoMarcada;
+    }
+
+    public void setMomentoReuniaoMarcada(Date momentoReuniaoMarcada) {
+        this.momentoReuniaoMarcada = momentoReuniaoMarcada;
     }
 
     

@@ -21,6 +21,9 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Indexed
 public class Congregacao {
+        /******************************
+	 *	ATRIBUTOS
+	 ******************************/
 
 	//Essas marcação são necessárias ao hibernate search e cumprem duas funções:
 	// - O primeiro é para indexar para tornar possivel a realização de buscas
@@ -40,29 +43,41 @@ public class Congregacao {
 	
 	@Field
 	private String endereco;
+        private boolean congregacaoPadrao;
 	
 	@OneToMany (mappedBy = "congregacao", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	//@JoinColumn (name="congrefacao_id")
 	private List<Obreiro> obreiros;
 	
-	////////////////
-	// CONSTRUTOR //
-	////////////////
+	/******************************
+	 *	CONSTRUTOR
+	 ******************************/
 	public Congregacao(){
 		this.nome = "";
 		this.endereco = "";
 		this.obreiros = new ArrayList<Obreiro>();
+                this.congregacaoPadrao = false;
 	}
 	
 	public Congregacao(String nome, String endereco) {
 		this.nome = nome;
 		this.endereco = endereco;
 		this.obreiros = new ArrayList<Obreiro>();
+                this.congregacaoPadrao = false;
 	}
 	
-	////////////////////////
-	// GETTERS AND SETTERS//
-	////////////////////////
+
+         /******************************
+         *	METODOS
+         ******************************/
+
+        public void inserirObreiro(Obreiro obreiro){
+            this.obreiros.add(obreiro);
+        }
+
+        /******************************
+         *	GETTERS AND SETTERS
+         ******************************/
 	public String getNome() {
 		return this.nome;
 	}
@@ -102,4 +117,12 @@ public class Congregacao {
 	public void setIdCongregacao(long idCongregacao){
 		this.idCongregacao = idCongregacao;
 	}
+
+        public boolean isCongregacaoPadrao() {
+            return congregacaoPadrao;
+        }
+
+        public void setCongregacaoPadrao(boolean congregacaoPadrao) {
+            this.congregacaoPadrao = congregacaoPadrao;
+        }
 }

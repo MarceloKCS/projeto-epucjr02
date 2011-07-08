@@ -19,6 +19,7 @@ import com.epucjr.engyos.dominio.modelo.Identificacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.GeradorPDF;
 
 public class TesteRelatorio2 {
@@ -79,9 +80,13 @@ public class TesteRelatorio2 {
 	public static void main(String[] args) {
 		// instancia os DataSet
 		TesteRelatorio2 tg = new TesteRelatorio2();
+                String local = "Aki";
+                String data = "20/20/2020";
+                String horario = "20:20:20";
+                long momentoRegistroReuniao = DateTimeUtils.converterDateTimeToMilissegundos(data, horario);
 
 		// cria situacao
-		Reuniao reuniao = new Reuniao("Aki", "20/20/2020", "20:20:20");
+		Reuniao reuniao = new Reuniao(local, data, horario, momentoRegistroReuniao);
 		Obreiro[] obreiros = new Obreiro[20];
 		ArrayList<Congregacao> congregacaos = new ArrayList<Congregacao>(2);
 

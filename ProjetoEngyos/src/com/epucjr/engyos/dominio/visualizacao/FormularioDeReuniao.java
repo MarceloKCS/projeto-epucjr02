@@ -7,13 +7,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.epucjr.engyos.dominio.crud.ValidadorDeFormularioDeReuniao;
+import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
+import com.epucjr.engyos.tecnologia.dao.CongregacaoDAO;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.ListUtilTokenizer;
+import org.apache.log4j.Logger;
 
 public class FormularioDeReuniao {
+    private static org.apache.log4j.Logger log = Logger.getLogger(FormularioDeReuniao.class);
 
 	/******************************
 	 *	ATRIBUTOS
@@ -28,6 +33,7 @@ public class FormularioDeReuniao {
 	private List<Obreiro> listaDeObreiros;
 	private String mensagemStatus;
 	private ValidadorDeFormularioDeReuniao validadorDeFormularioDeReuniao;
+        private String congregacaoPadrao;
 
 	/******************************
 	 *	CONSTRUTOR
@@ -42,9 +48,10 @@ public class FormularioDeReuniao {
 		this.minuto = "";
 		this.listaDeObreiros = new ArrayList<Obreiro>();
 		this.mensagemStatus = "";
-		this.carregarDadosDoFormulario();
 		this.validadorDeFormularioDeReuniao = new ValidadorDeFormularioDeReuniao();
+                this.congregacaoPadrao = "";
 
+                this.carregarDadosDoFormulario();
 	}
 
 	/******************************
@@ -117,24 +124,36 @@ public class FormularioDeReuniao {
     }
 
 	private void carregarDadosDoFormulario(){
+            log.info("#carregarDadosDoFormulario");
 		//Carregando a lista de Obreiros utilizada para agendamento da reunião
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
-
-		List<Obreiro> listaDeObreiro = dataAccessObjectManager.obterListaDeObreiros();
+                CongregacaoDAO congregacaoDao = new CongregacaoDAO();
+		boolean congregacaoPadraoDefinido = congregacaoDao.isConregacaoPadraoDefinida();
+                List<Obreiro> listaDeObreiro = dataAccessObjectManager.obterListaDeObreiros();
 
 		this.setListaDeObreiros(listaDeObreiro);
-		this.setMensagemStatus("Formulario Carregado");
+
+                if(congregacaoPadraoDefinido){
+                    Congregacao congregacao = congregacaoDao.obteCongregacaoPadrao();
+                    log.debug("nomeCongregacao: " + congregacao.getNome());
+                    log.debug("endereco: " + congregacao.getEndereco());
+
+                    this.setCongregacaoPadrao(congregacao.getEndereco());
+                }
 
                 //Fechando o EntityManager de DataAccessObjectManager após uso
                 if (dataAccessObjectManager != null) {
                     dataAccessObjectManager.fecharEntityManager();
                 }
+
+                this.setMensagemStatus("Formulario Carregado");
 		
 	}
 
 	public void definirCamposPreenchidosPeloUsuario(HttpServletRequest httpServletRequest){
 		//Obtenção dos campos preenchidos pelo usuário
 		String local = httpServletRequest.getParameter("local");
+                String dataReuniao = httpServletRequest.getParameter("dataReuniao");
 		String dia = httpServletRequest.getParameter("dataReuniaoDia");
 		String mes = httpServletRequest.getParameter("dataReuniaoMes");
 		String ano = httpServletRequest.getParameter("dataReuniaoAno");
@@ -163,6 +182,10 @@ public class FormularioDeReuniao {
 		if(ano != null && !ano.equals("00")){
 			this.definirCampoPreenchido("dataReuniaoAno", ano);
 		}
+
+                if(dataReuniao != null && !dataReuniao.equals("")){
+                    this.definirCampoPreenchido("dataReuniao", dataReuniao);
+                }
 		
 		if(hora != null && !hora.equals("24")){
 			this.definirCampoPreenchido("horaReuniao", hora);
@@ -185,6 +208,7 @@ public class FormularioDeReuniao {
 		String dia = reuniao.getDia();
 		String mes = reuniao.getMes();
 		String ano = reuniao.getAno();
+                String dataReuniao = DateTimeUtils.converterDataBr(dia, mes, ano);
 		String hora = reuniao.getHora();
 		String minuto = reuniao.getMinuto();
                 String idReuniao = reuniao.getIdReuniao() + "";
@@ -215,6 +239,10 @@ public class FormularioDeReuniao {
 		if(ano != null && !ano.equals("00")){
 			this.definirCampoPreenchido("dataReuniaoAno", ano);
 		}
+
+                 if(dataReuniao != null && !dataReuniao.equals("")){
+                    this.definirCampoPreenchido("dataReuniao", dataReuniao);
+                }
 
 		if(hora != null && !hora.equals("24")){
 			this.definirCampoPreenchido("horaReuniao", hora);
@@ -314,6 +342,16 @@ public class FormularioDeReuniao {
 			ValidadorDeFormularioDeReuniao validadorDeFormularioDeReuniao) {
 		this.validadorDeFormularioDeReuniao = validadorDeFormularioDeReuniao;
 	}
+
+        public String getCongregacaoPadrao() {
+            return congregacaoPadrao;
+        }
+
+        public void setCongregacaoPadrao(String congregacaoPadrao) {
+            this.congregacaoPadrao = congregacaoPadrao;
+        }
+
+
 	
 	
 

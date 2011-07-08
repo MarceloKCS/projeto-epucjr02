@@ -8,13 +8,14 @@ package com.epucjr.engyos.aplicacao.webcontrole;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.ReuniaoSessionControl;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Rogerio
  */
 public class ActionReuniaoSessionFinishCommand implements Command{
-
+    private static org.apache.log4j.Logger log = Logger.getLogger(ActionAdministradorEditCommand.class);
     @Override
     public Object execute(Object... arg) {
         HttpServletRequest request = (HttpServletRequest) arg[0];

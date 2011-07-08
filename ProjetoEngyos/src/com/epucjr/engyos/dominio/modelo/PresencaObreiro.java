@@ -30,11 +30,11 @@ public class PresencaObreiro {
         @Temporal(TemporalType.TIMESTAMP)
         private Date momentoRegistroPresenca;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )	
+	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn
 	private Obreiro obreiro;
 	
-	@ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="listaDePresencaObreiro", fetch = FetchType.LAZY , cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn
 	private List<Reuniao> reuniao;
 	
