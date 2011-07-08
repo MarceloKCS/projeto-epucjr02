@@ -4,13 +4,14 @@ import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.aplicacao.controle.ReuniaoSessionControl;
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Projeto Engyos Team
  */
 public class ActionReuniaoSessionStartCommand implements Command{
-
+    private static org.apache.log4j.Logger log = Logger.getLogger(ActionAdministradorEditCommand.class);
     @Override
     public Object execute(Object... arg) {
 
@@ -21,6 +22,7 @@ public class ActionReuniaoSessionStartCommand implements Command{
         ReuniaoSessionControl reuniaoSessionControl = new ReuniaoSessionControl(request.getSession());
 
         String idReuniaoPagina = request.getParameter("idReuniao");
+        log.debug("idReuniao: " + idReuniaoPagina);
         long idReuniao = 0;
 
         if (idReuniaoPagina != null && !idReuniaoPagina.equals("")) {
@@ -29,7 +31,7 @@ public class ActionReuniaoSessionStartCommand implements Command{
 
         if (!reuniaoSessionControl.verificarSessionStatusAtiva()){
             reuniaoSessionControl.criarEDefinirDadosSessaoDeReuniao(idReuniao);
-            System.out.println("CLOSED SESSION: STARTING");
+            log.debug("CLOSED SESSION: STARTING");
             //Verifica se a sessão foi préviamente iniciada, porém apenas fechada/pausada
             //dentro do tempo límite
             if(reuniaoSessionControl.verificarSessaoJaPreviamenteIniciada()){
@@ -62,7 +64,7 @@ public class ActionReuniaoSessionStartCommand implements Command{
             //Verificando se foi ele que iniciou a reuniao.
             if(reuniaoSessionControl.isSessaoDeReuniaoMinha()){
                 //Nada a fazer, tentei iniciar de novo o que já era meu, foi mal :-(
-                System.out.println("SESSION ALREADY OPENED");
+                log.debug("SESSION ALREADY OPENED");
                 resposta = "Reunião já iniciada";
             }
             else{
@@ -74,7 +76,7 @@ public class ActionReuniaoSessionStartCommand implements Command{
                 //Tipo de dados definidos: Date
                 //GH Process - Nivel médio
                 request.setAttribute("reuniaoElapsedTime", DateTimeUtils.calcularTempoDecorrido(reuniaoSessionControl.obtemTempoParcialReuniaoIniciada().getTime()));
-                System.out.println("SESSION ALREADY OPENED");
+                log.debug("SESSION ALREADY OPENED");
                 resposta = "Reunião préviamente iniciada";
             }
 

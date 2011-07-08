@@ -55,7 +55,7 @@ public class GeradorQueryLucene {
 			parametroBusca = "\"\"";
 		}
 
-		this.setSearchQuery("nome:" + parametroBusca + " OR endereco: " + parametroBusca);
+		this.setSearchQuery("nome:" + parametroBusca + "* OR endereco: " + parametroBusca + "*");
 
 		this.setLuceneQuery(this.getQueryParser().parse(this.getSearchQuery()));
 
@@ -79,6 +79,19 @@ public class GeradorQueryLucene {
 
 
 	}
+
+        public void geraQueryLuceneBuscarAdministrador(String parametroBusca) throws ParseException{
+            if (parametroBusca == null || parametroBusca.equals("")) {
+                parametroBusca = "\"\"";
+            }
+
+            this.setSearchQuery("nome:" + parametroBusca + "* OR cpf: " + parametroBusca + "*");
+
+            this.setLuceneQuery(this.getQueryParser().parse(this.getSearchQuery()));
+            System.out.println("GQL:33: " + this.getLuceneQuery().toString());
+            System.out.println(searchQuery.toString());
+
+        }
 	
 	public String putScapeCaracterParametroBusca(String parametroBusca){
 		if(parametroBusca.contains(":")){

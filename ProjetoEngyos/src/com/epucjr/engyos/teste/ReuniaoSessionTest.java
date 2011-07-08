@@ -31,8 +31,8 @@ public class ReuniaoSessionTest {
 
         //Pega o tempo corrente
         Date date = new Date();       
-
-        Reuniao reuniao = new Reuniao("Rua do tamandua, 123", DateTimeUtils.obterDataCorrenteBr(), DateTimeUtils.obterTempoCorrente());
+        long momentoRegistroReuniao = DateTimeUtils.converterDateTimeToMilissegundos(DateTimeUtils.obterDataCorrenteBr(), DateTimeUtils.obterTempoCorrente());
+        Reuniao reuniao = new Reuniao("Rua do tamandua, 123", DateTimeUtils.obterDataCorrenteBr(), DateTimeUtils.obterTempoCorrente(), momentoRegistroReuniao);
 
         ReuniaoSessionStatus reuniaoSessionStatus = new ReuniaoSessionStatus();
         //reuniaoSessionStatus.setCURRENT_SESSION_ID(idSession);

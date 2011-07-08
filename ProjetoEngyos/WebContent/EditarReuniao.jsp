@@ -13,14 +13,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 	<title>Reuniões - Projeto Engyos - Controle de Presença</title>
-	<link href="screen.css" rel="stylesheet" type="text/css" />
-	
+	<link href="css/screen.css" rel="stylesheet" type="text/css" />
+        <link href="css/jqueryui/jquery-ui.css" type="text/css" rel="stylesheet"/>
+
+        <script type='text/javascript' src="javascript/jquery-1.5.2.js"></script>
+        <script type='text/javascript' src="javascript/jqueryui/jquery-ui.js"></script>
+        <script type='text/javascript' src="javascript/jqueryui/jquery.ui.button.js"></script>
+        <script type='text/javascript' src="javascript/jqueryui/jquery.ui.datepicker.js"></script>
 	<script type='text/javascript' src="javascript/OptionTransfer.js"></script>
 	<script type='text/javascript' src="javascript/replicarCampos.js"></script>
 	<script type='text/javascript' src="javascript/selectbox.js"></script>
 
+        <style type="text/css">
+            #ui-datepicker-div{font-size: 62.5%;}
+            .submit_reuniao {padding-top: 10px; font-size: 62.5%; }
+         </style>
+         
 	<script type="text/javascript">
 	// Função para esconder a Div após alguns segundos
 	function esconderDiv() {
@@ -42,6 +52,25 @@
 			document.getElementById("obreiros").value = listaDeObreiros;
 		}
 	}
+
+        $(function() {
+            $( "#dataReuniao" ).datepicker({
+                dateFormat: 'dd/mm/yy',
+                showOn: "button",
+                buttonImage: "./imagens/calendar_icon.png",
+                buttonImageOnly: true,
+                changeMonth: true,
+                changeYear: true
+            });
+
+
+            $( "input:submit", ".submit_reuniao" ).button();
+            $( "input:submit", ".submit_reuniao" ).click(function() {
+                obterObreirosSelecionados();
+                $('#formularioReuniao').submit();
+                //return true;
+            });
+         });
 	
 	</script>	
 
@@ -74,15 +103,16 @@
 					
 				%>
 		</div>
-	<form name="formularioReuniao" method="post" action="Controller" id="formularioReuniao">
+	<form name="formularioReuniao" method="post" action="Controller?acao=reuniao_editer" id="formularioReuniao">
             <input type="hidden" name="idReuniao" value="<% if(formularioDeReuniao != null && formularioDeReuniao.verificarCampoPreenchido("idReuniao")){ out.print(formularioDeReuniao.obterCampoPreenchido("idReuniao"));}%>">
             <p>
 				<label for="Local">Local:</label>
-				<input type="text" name="local" id="local" value="
-				<%if (formularioDeReuniao != null
-					&& formularioDeReuniao.verificarCampoPreenchido("local")) {
-				out.println(formularioDeReuniao.obterCampoPreenchido("local"));
-				}%>
+				<input type="text" name="local" id="local" value="<%
+                                    if (formularioDeReuniao != null
+                                            && formularioDeReuniao.verificarCampoPreenchido("local")) {
+                                        out.println(formularioDeReuniao.obterCampoPreenchido("local"));
+                                    }
+                                %>
 				"/>
 				<span class="erroCampoFormulario">
 					<%
@@ -94,119 +124,30 @@
 				</span>
 			</p>
 			<p>
-				<label for="Data">Data: </label>
-				<select name="dataReuniaoDia">
-					<option value="00"></option>
-					<%
-					String zero;
-					if(formularioDeReuniao != null && formularioDeReuniao.verificarCampoPreenchido("dataReuniaoDia")){
-						String dia = formularioDeReuniao.obterCampoPreenchido("dataReuniaoDia");
-						for(int posicao = 1; posicao <= 31; posicao++){
-							if(posicao < 10){
-								zero = "0";
-								zero = zero + Integer.toString(posicao);
-							}
-							else{
-								zero = Integer.toString(posicao);
-							}
-							if(dia.equals(zero)){
-								out.println("<option selected=\"selected\" value=" + zero +">"+ zero +"</option>");
-							}
-							else{
-								out.println("<option value=\""+zero+"\">"+zero+"</option>");
-							}
-						}
-					}
-					else{
-						for(int posicao = 1; posicao <= 31; posicao++){
-							if(posicao < 10){
-								zero = "0";
-								zero = zero + Integer.toString(posicao);
-							}
-							else{
-								zero = Integer.toString(posicao);
-							}
-							out.println("<option value=\""+zero+"\">"+zero+"</option>");
-						}
-					}
-					%>
-				</select>
-				
-				
-				<select name="dataReuniaoMes">
-					<option value="00"></option>
-					<%
-					if(formularioDeReuniao != null && formularioDeReuniao.verificarCampoPreenchido("dataReuniaoMes")){
+                            <label for="Data">Data: </label>
+                            <input id="dataReuniao" type="text" size="15" name="dataReuniao" value="<%
+                                if (formularioDeReuniao != null
+                                        && formularioDeReuniao.verificarCampoPreenchido("dataReuniao")) {
+                                    out.println(formularioDeReuniao.obterCampoPreenchido("dataReuniao"));
+                                }
+                            %>"/>
 
-						String mes = formularioDeReuniao.obterCampoPreenchido("dataReuniaoMes");
-						for(int posicao = 1; posicao <= 12; posicao++){
-							if(posicao <10){
-								zero = "0";
-								zero = zero + Integer.toString(posicao);
-							}
-							else{
-								zero = Integer.toString(posicao);
-							}
-							if(mes.equals(zero)){
-								out.println("<option selected=\"selected\" value=" + zero +">"+zero+"</option>");
-							}
-							else{
-								out.println("<option value=\""+zero+"\">"+zero+"</option>");
-							}
-						}
-					}
-					else{
-						for(int posicao = 1; posicao <= 12; posicao++){
-							if(posicao <10){
-								zero = "0";
-								zero = zero + Integer.toString(posicao);
-							}
-							else{
-								zero = Integer.toString(posicao);
-							}
-							out.println("<option value=\""+zero+"\">"+zero+"</option>");
-						}
-					}
-					%>
-				</select>
-				<select name="dataReuniaoAno">
-					<option value="0000"></option>
-					<%
-					Calendar calendar = Calendar.getInstance();
-					int anoAtual = calendar.get(calendar.YEAR);
-					
-					if(formularioDeReuniao != null && formularioDeReuniao.verificarCampoPreenchido("dataReuniaoAno")){
-						String ano = formularioDeReuniao.obterCampoPreenchido("dataReuniaoAno");
-						for(int posicao = 2010; posicao <= (anoAtual + 30); posicao++){
-							if(ano.equals(Integer.toString(posicao))){
-								out.println("<option selected=\"selected\" value=" + posicao +">"+posicao+"</option>");
-							}
-							else{
-								out.println("<option value=\""+posicao+"\">"+posicao+"</option>");
-							}
-						}
-					}
-					else{
-						for(int posicao = 2010; posicao <= (anoAtual + 30); posicao++){
-							out.println("<option value=\""+posicao+"\">"+posicao+"</option>");
-						}
-					}
-					%>
-				</select>
-			
-				<span class="erroCampoFormulario">				
-				<%
-					if (validadorDeReuniao != null
-							&& validadorDeReuniao.verificarCampoComErro("Data")) {
-						out.println(validadorDeReuniao
-								.obterCampoComErro("Data"));
-					}
-				%>
-				</span>
+                            <span class="erroCampoFormulario">
+                            <%
+                                    if (validadorDeReuniao != null
+                                                    && validadorDeReuniao.verificarCampoComErro("Data")) {
+                                            out.println(validadorDeReuniao
+                                                            .obterCampoComErro("Data"));
+                                    }
+                            %>
+                            </span>
 				
 			</p>
 			<p>
 
+                            <%
+                                String zero = "";
+                            %>
 				<label for="Data">Hora: </label>
 				<select name="horaReuniao">
 					<option value="24"></option>
@@ -296,7 +237,7 @@
 				
 				
 			</p>
-			<p>
+			<div>
 				<table border="0">
 					<tbody>
 						<tr>
@@ -371,10 +312,11 @@
 						</tr>
 					</tbody>
 				</table>
-			</p>
-			<p>
-				<button type="submit" name="acao" value="reuniao_editer" onclick="obterObreirosSelecionados();">Editar</button>
-			</p>
+			</div>			
+
+                        <div class="submit_reuniao">
+                                <input type="submit" id="submit_reuniao" name="botao_action" value="Alterar Reuniao"/>
+                        </div>
 		</form>
 		</div>
 	</div>

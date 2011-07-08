@@ -8,6 +8,8 @@ package com.epucjr.engyos.aplicacao.web;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.dominio.factory.CommandFactory;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +64,12 @@ public class FrontControllerAjaxServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     public void servico(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //response.getWriter().print("TESTE");       
+        //response.getWriter().print("TESTE");
+        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        response.setCharacterEncoding("ISO-8859-1"); // You want world domination, huh?
+        //InputStreamReader inputStream = new InputStreamReader(request.getInputStream());
+        //log.debug("\ncharacter Encoding" + inputStream.getEncoding());
+        PrintWriter printWriter = response.getWriter();
         String acao = request.getParameter("acao");
         log.debug("acao requisitada : " + acao);
         System.out.println("ACAO_RETRIEVED = " + acao);
@@ -75,9 +82,9 @@ public class FrontControllerAjaxServlet extends HttpServlet {
 
         System.out.println("RESPOSTA = " + resposta);
         log.debug("resposta da requisição : " + resposta);
-        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        response.getWriter().write(resposta);
+        
+        printWriter.write(resposta);
+        printWriter.close();
         //String viewJsp = viewFactory.getView(acao, resposta);
 
 //		RequestDispatcher view = request.getRequestDispatcher(viewJsp);

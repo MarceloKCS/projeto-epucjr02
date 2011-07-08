@@ -1,6 +1,7 @@
 package com.epucjr.engyos.dominio.crud;
 
 
+import com.epucjr.engyos.dominio.modelo.Administrador;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class BuscaAvancada {
 	private List<Obreiro> listaDeObreirosEncontrados;
 	private List<Congregacao> listaDeCongregacoesEncontradas;
 	private List<Reuniao> listaDeReunioesEncontradas;
+        private List<Administrador> listaDeAdministradoresEncontrados;
 	private boolean ocorrenciasEncontradas;
 	private GeradorQueryLucene luceneQueryGenerator;
 	private int quantidadeTotalResultados;
@@ -50,6 +52,7 @@ public class BuscaAvancada {
 		this.listaDeObreirosEncontrados = new ArrayList<Obreiro>();
 		this.listaDeCongregacoesEncontradas = new ArrayList<Congregacao>();
 		this.listaDeReunioesEncontradas = new ArrayList<Reuniao>();
+                this.listaDeAdministradoresEncontrados = new ArrayList<Administrador>();
 		this.luceneQueryGenerator = new GeradorQueryLucene();
 		this.ocorrenciasEncontradas = false;
 		this.mensagemStatus = "";
@@ -174,6 +177,16 @@ public class BuscaAvancada {
 		Sort sort = null;
 		//Define a partir de qual campo será ordenado
 		SortField sortField = new SortField("datareun_sort", SortField.STRING, true);
+		sort = new Sort(sortField);
+
+		return sort;
+	}
+
+        //Classe que defina a ordenação para o Hibernate Search a ser utilizado pelo FullTextQuery apenas
+	public Sort ordenaAdministradorResult(){
+		Sort sort = null;
+		//Define a partir de qual campo será ordenado
+		SortField sortField = new SortField("nomeadm_sort", SortField.STRING);
 		sort = new Sort(sortField);
 
 		return sort;
@@ -360,6 +373,82 @@ public class BuscaAvancada {
 
 	}
 
+        @SuppressWarnings("unchecked")
+        public void buscarAdministrador(String parametroBusca, int numeroPagina){
+            if(!parametroBusca.equals("")){
+                if(numeroPagina > 0){
+                    this.setPaginaCorrente(numeroPagina);
+                }
+
+                try {
+                    this.getLuceneQueryGenerator().geraQueryLuceneBuscarAdministrador(parametroBusca);
+                    FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.getEntityManager());
+                    FullTextQuery query = fullTextEntityManager.createFullTextQuery(this.luceneQueryGenerator.getLuceneQuery(), Administrador.class);
+
+                    //Define a ordenação da lista obtida
+                    query.setSort(this.ordenaAdministradorResult());
+
+                    //Definindo Quantidade Total de Resultados
+                    this.calcularQuantidadeTotalDeResultados(fullTextEntityManager);
+
+                    //Definindo a quantidade De Paginas
+                    this.calcularQuantidadeDePaginas(this.getQuantidadeTotalResultados());
+
+                    //Realizando a Paginação
+                    //Obtendo o primeiro Resultado da pagina do intervalo
+                    int primeiroResultadoBusca = (numeroPagina - 1) * this.getQuantidadeDeResultadosPorPagina() + 1;
+                    this.setPrimeiroResultadoCorrente(primeiroResultadoBusca);
+
+                    //Realizada a paginação dos resultados de busca
+                    this.setListaDeAdministradoresEncontrados(query.setFirstResult(primeiroResultadoBusca - 1).setMaxResults(this.getQuantidadeDeResultadosPorPagina()).getResultList());
+
+                    this.setOcorrenciasEncontradas(true);
+                    this.setMensagemStatus("Busca Realizada");
+
+                } catch (ParseException e) {
+                    this.setOcorrenciasEncontradas(false);
+                    this.setMensagemStatus("Ocorreu algo na busca: \n erro cod:01");
+                    e.printStackTrace();
+                }
+            }
+            else{
+                    this.buscarTodosAdministradores(numeroPagina);
+		}
+        }
+
+        public void buscarTodosAdministradores(int numeroPagina){
+            List<Administrador> listaDeAdministradores = new ArrayList<Administrador>();
+
+            //Pega todos os obreiros
+            listaDeAdministradores = this.getEntityManager().createQuery("from Administrador order by nome desc").getResultList();
+            //Definindo Quantidade Total de Resultados
+		this.setQuantidadeTotalResultados(listaDeAdministradores.size());
+
+		//Definindo a quantidade De Paginas
+		this.calcularQuantidadeDePaginas(this.getQuantidadeTotalResultados());
+
+		//Realizando a Paginação
+		//Obtendo o primeiro Resultado da pagina do intervalo
+		int primeiroResultadoBusca = (numeroPagina - 1) * this.getQuantidadeDeResultadosPorPagina() + 1;
+		this.setPrimeiroResultadoCorrente(primeiroResultadoBusca);
+
+		//Obtendo o ultimo resultado no intervalo
+		int ultimoResultado = numeroPagina * this.getQuantidadeDeResultadosPorPagina();
+		if(ultimoResultado > this.getQuantidadeTotalResultados()){
+			ultimoResultado = this.getQuantidadeTotalResultados();
+		}
+
+		this.setListaDeAdministradoresEncontrados(listaDeAdministradores.subList(primeiroResultadoBusca - 1, ultimoResultado));
+
+		if(this.getListaDeAdministradoresEncontrados().size() > 0){
+			this.setOcorrenciasEncontradas(true);
+			this.setMensagemStatus("Busca Realizada");
+		}
+		else{
+			this.setOcorrenciasEncontradas(false);
+			this.setMensagemStatus("Não existem registros no banco de dados");
+		}
+        }
 
 	/************************
 	 * GETTERS/SETTERS
@@ -399,6 +488,16 @@ public class BuscaAvancada {
 			List<Reuniao> listaDeReunioesEncontradas) {
 		this.listaDeReunioesEncontradas = listaDeReunioesEncontradas;
 	}
+
+        public List<Administrador> getListaDeAdministradoresEncontrados() {
+            return listaDeAdministradoresEncontrados;
+        }
+
+        public void setListaDeAdministradoresEncontrados(List<Administrador> listaDeAdministradoresEncontrados) {
+            this.listaDeAdministradoresEncontrados = listaDeAdministradoresEncontrados;
+        }
+
+
 
 	public boolean isOcorrenciasEncontradas() {
 		return ocorrenciasEncontradas;

@@ -5,6 +5,7 @@ import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.modelo.Identificacao;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 
 
 public class TesteInsert {
@@ -35,9 +36,13 @@ public class TesteInsert {
 	}
 	
 	public static void inserirReuniao(){
-		
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
-		Reuniao reuniao = new Reuniao("Na casa do Calebe", "31/01/2010", "00:30");
+                String local = "Na casa do Calebe";
+                String data = "31/01/2010";
+                String horario = "00:30:00";
+                long momentoRegistroReuniao = DateTimeUtils.converterDateTimeToMilissegundos(data, horario);
+
+		Reuniao reuniao = new Reuniao(local, data, horario, momentoRegistroReuniao);
 		dataAccessObjectManager.persistirObjeto(reuniao);
 		
 		if(dataAccessObjectManager.isOperacaoEfetuada()){

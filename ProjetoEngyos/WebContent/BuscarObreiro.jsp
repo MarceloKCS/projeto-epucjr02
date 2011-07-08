@@ -14,7 +14,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Buscar - Projeto Engyos - Controle de Presença</title>
-	<link href="screen.css" rel="stylesheet" type="text/css" />
+	<link href="css/screen.css" rel="stylesheet" type="text/css" />
 	
 </head>
 <body id="buscarCongregacao"> 

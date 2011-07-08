@@ -42,6 +42,22 @@ public class DataAccessObjectManager {
 	 * e não somente um tipo especifico.
 	 ***************************************************************************************/
 
+        public void persistir(Object generico){
+
+                if(entityManager == null || !entityManager.isOpen()){
+                        this.entityManager = EmFactory.getEntityManager();
+                }
+
+                EntityTransaction transaction =  entityManager.getTransaction();
+                if(!transaction.isActive()){
+                        transaction.begin();
+                }
+                entityManager.persist(generico);
+                transaction.commit();
+                //entityManager.close();
+                //this.setOperacaoEfetuada(true);
+                //this.setMensagemStatus("Operação Realizada com Sucesso!");
+	}
 
 	public void persistirObjeto(Object generico){
 
@@ -52,30 +68,93 @@ public class DataAccessObjectManager {
 		}		
 
 		if(!objetoExistente){
-			try{
-				EntityTransaction transaction =  entityManager.getTransaction();
-				if(!transaction.isActive()){
-					transaction.begin();
-				}
-				entityManager.persist(generico);		
-				transaction.commit();
-				//entityManager.close();
-				this.setOperacaoEfetuada(true);
-				this.setMensagemStatus("Operação Realizada com Sucesso!");
-			}catch(Exception e){
-				e.printStackTrace();
-				this.setOperacaoEfetuada(false);
-				this.setMensagemStatus("Erro interno na operação");			
+                    try{
+                        EntityTransaction transaction =  entityManager.getTransaction();
+                        if(!transaction.isActive()){
+                                transaction.begin();
+                        }
+                        entityManager.persist(generico);
+                        transaction.commit();
+                        //entityManager.close();
+                        this.setOperacaoEfetuada(true);
+                        this.setMensagemStatus("Operação Realizada com Sucesso!");
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        this.setOperacaoEfetuada(false);
+                        this.setMensagemStatus("Erro interno na operação");
 
-			}
+                    }
 		}
 		else{
-			this.setOperacaoEfetuada(false);
+                    this.setOperacaoEfetuada(false);
 					
 
 		}
 
 	}
+
+        public void persistirAdmnistrador(Administrador administrador){
+
+		boolean objetoExistente = this.isAdmnistradorExistente(administrador.obterCPF());
+
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+
+		if(!objetoExistente){
+                    try{
+                        EntityTransaction transaction =  entityManager.getTransaction();
+                        if(!transaction.isActive()){
+                                transaction.begin();
+                        }
+                        entityManager.persist(administrador);
+                        transaction.commit();
+                        //entityManager.close();
+                        this.setOperacaoEfetuada(true);
+                        this.setMensagemStatus("Operação Realizada com Sucesso!");
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        this.setOperacaoEfetuada(false);
+                        this.setMensagemStatus("Erro interno na operação");
+                    }
+		}
+		else{
+                    this.setMensagemStatus("Já existe Admnistrador registrado com este cpf.");
+                    this.setOperacaoEfetuada(false);
+		}
+	}
+
+        public void persistirObreiro(Obreiro obreiro){
+
+		boolean objetoExistente = this.isObreiroExistente(obreiro.getCpf());
+
+		if(entityManager == null || !entityManager.isOpen()){
+			this.entityManager = EmFactory.getEntityManager();
+		}
+
+		if(!objetoExistente){
+                    try{
+                        EntityTransaction transaction =  entityManager.getTransaction();
+                        if(!transaction.isActive()){
+                                transaction.begin();
+                        }
+                        entityManager.persist(obreiro);
+                        transaction.commit();
+                        //entityManager.close();
+                        this.setOperacaoEfetuada(true);
+                        this.setMensagemStatus("Operação Realizada com Sucesso!");
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        this.setOperacaoEfetuada(false);
+                        this.setMensagemStatus("Erro interno na operação");
+                    }
+		}
+		else{
+                    this.setMensagemStatus("Já existe obreiro registrado com este cpf.");
+                    this.setOperacaoEfetuada(false);
+		}
+	}
+
 
 	public boolean isObjetoExistente(Object generico){
 
@@ -106,37 +185,26 @@ public class DataAccessObjectManager {
 	}
 
 	public void mergeDataObjeto(Object objeto){
-		//TODO
-		boolean usuarioExistente = false;
 
-		if(entityManager == null || !entityManager.isOpen()){
-			this.entityManager = EmFactory.getEntityManager();
-		}		
+            if(entityManager == null || !entityManager.isOpen()){
+                    this.entityManager = EmFactory.getEntityManager();
+            }
 
-		if(!usuarioExistente){
-			try{
-				EntityTransaction transaction =  entityManager.getTransaction();
-				if(!transaction.isActive()){
-					transaction.begin();
-				}
-				entityManager.merge(objeto);		
-				transaction.commit();
-				this.setOperacaoEfetuada(true);
-				this.setMensagemStatus("Operação Realizada com Sucesso!");
-			}catch(Exception e){
-				e.printStackTrace();
-				this.setOperacaoEfetuada(false);
-				this.setMensagemStatus("Erro interno na operação");			
+            try{
+                    EntityTransaction transaction =  entityManager.getTransaction();
+                    if(!transaction.isActive()){
+                            transaction.begin();
+                    }
+                    entityManager.merge(objeto);
+                    transaction.commit();
+                    this.setOperacaoEfetuada(true);
+                    this.setMensagemStatus("Operação Realizada com Sucesso!");
+            }catch(Exception e){
+                    e.printStackTrace();
+                    this.setOperacaoEfetuada(false);
+                    this.setMensagemStatus("Erro interno na operação");
 
-			}
-		}
-		else{
-			this.setOperacaoEfetuada(false);
-			this.setMensagemStatus("Usuario Já Existente no Registro...");		
-
-		}
-		//this.listaDeFuncionarios.add(funcionario);
-		//this.carregarListaDeCandidatos();
+            }
 	}	
 	
 	public void fecharEntityManager(){
@@ -207,37 +275,28 @@ public class DataAccessObjectManager {
 	}
 
 
-	public void deletarObjeto(Object generico){
+       public void deletarObjeto(Object generico) {
 
-		boolean objetoExistente = false;
+            if (entityManager == null || !entityManager.isOpen()) {
+                this.entityManager = EmFactory.getEntityManager();
+            }
 
-		if(entityManager == null || !entityManager.isOpen()){
-			this.entityManager = EmFactory.getEntityManager();
-		}		
+            try{
+                EntityTransaction transaction =  entityManager.getTransaction();
+                if(!transaction.isActive()){
+                        transaction.begin();
+                }
+                entityManager.remove(generico);
+                transaction.commit();
+                //entityManager.close();
+                this.setOperacaoEfetuada(true);
+                this.setMensagemStatus("Operação Realizada com Sucesso!");
+            }catch(Exception e){
+                e.printStackTrace();
+                this.setOperacaoEfetuada(false);
+                this.setMensagemStatus("Erro interno na operação");
 
-		if(!objetoExistente){
-			try{
-				EntityTransaction transaction =  entityManager.getTransaction();
-				if(!transaction.isActive()){
-					transaction.begin();
-				}
-				entityManager.remove(generico);		
-				transaction.commit();
-				//entityManager.close();
-				this.setOperacaoEfetuada(true);
-				this.setMensagemStatus("Operação Realizada com Sucesso!");
-			}catch(Exception e){
-				e.printStackTrace();
-				this.setOperacaoEfetuada(false);
-				this.setMensagemStatus("Erro interno na operação");			
-
-			}
-		}
-		else{
-			this.setOperacaoEfetuada(false);
-			this.setMensagemStatus("Usuario Já Existente no Registro...");		
-
-		}
+            }
 
 	}
 	
@@ -306,7 +365,14 @@ public class DataAccessObjectManager {
 		List<Obreiro> listaDeObreiro = new ArrayList<Obreiro>();
 		
 		listaDeObreiro = this.getEntityManager().createQuery("from Obreiro order by nome").getResultList();
-	
+
+                if(listaDeObreiro != null){
+                    this.setOperacaoEfetuada(true);
+                }
+                else{
+                    this.setOperacaoEfetuada(false);
+                }
+               
 		return listaDeObreiro;
 	}
 
@@ -321,17 +387,86 @@ public class DataAccessObjectManager {
 
 		listaDeCongregacao =  entityManager.createQuery("from Congregacao order by nome").getResultList();
 
+                if(listaDeCongregacao != null){
+                    this.setOperacaoEfetuada(true);
+                }
+                else{
+                    this.setOperacaoEfetuada(false);
+                }
 		return listaDeCongregacao;
 
 	}
 
+        public boolean isAdmnistradorExistente(String cpfAdmnistrador){
+            if (entityManager == null || !entityManager.isOpen()) {
+                this.entityManager = EmFactory.getEntityManager();
+            }
+
+            Administrador administrador = this.entityManager.find(Administrador.class, cpfAdmnistrador);
+
+            if(administrador == null){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+        public boolean isCongregacaoExistente(long congregacaoId){
+             if (entityManager == null || !entityManager.isOpen()) {
+                this.entityManager = EmFactory.getEntityManager();
+            }
+
+            Congregacao congregacao = this.entityManager.find(Congregacao.class, congregacaoId);
+
+            if(congregacao == null){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+        public boolean isObreiroExistente(String cpfOBreiro) {
+            if (entityManager == null || !entityManager.isOpen()) {
+                this.entityManager = EmFactory.getEntityManager();
+            }
+
+            Obreiro obreiro = entityManager.find(Obreiro.class, cpfOBreiro);
+
+            if(obreiro == null){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }
+
+        public boolean isReuniaoExistente(long reuniaoId){
+            if (entityManager == null || !entityManager.isOpen()) {
+                this.entityManager = EmFactory.getEntityManager();
+            }
+
+            Reuniao reuniao = this.entityManager.find(Reuniao.class, reuniaoId);
+
+            if(reuniao == null){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
 
 	/******************************
 	 *	GETTERS AND SETTERS
 	 ******************************/
 
 	public EntityManager getEntityManager() {
-		return entityManager;
+                if (this.entityManager == null || !this.entityManager.isOpen()) {
+                    this.entityManager = EmFactory.getEntityManager();
+                }
+		return this.entityManager;
 	}
 
 	public void setEntityManager(EntityManager entityManager) {

@@ -15,9 +15,12 @@ import com.epucjr.engyos.dominio.visualizacao.FormularioDeReuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 import com.epucjr.engyos.tecnologia.utilitarios.ListUtilTokenizer;
+import org.apache.log4j.Logger;
 
 public class ActionReuniaoRegisterCommand implements Command{
+    private static org.apache.log4j.Logger log = Logger.getLogger(ActionObreiroRegisterCommand.class);
 
+    @Override
 	public Object execute(Object... arg) {
 		//Instanciação de objetos e variáveis necessários para a realização do cadastro
 		HttpServletRequest request = (HttpServletRequest) arg[0];
@@ -27,18 +30,26 @@ public class ActionReuniaoRegisterCommand implements Command{
 		List<Obreiro> listaDeObreirosSelecionados = new ArrayList<Obreiro>();
 		//Obtenção de parâmetros necessários obtidos da página
 		String local = request.getParameter("local");
-		String dia = request.getParameter("dataReuniaoDia");
-		String mes = request.getParameter("dataReuniaoMes");
-		String ano = request.getParameter("dataReuniaoAno");
+//		String dia = request.getParameter("dataReuniaoDia");
+//		String mes = request.getParameter("dataReuniaoMes");
+//		String ano = request.getParameter("dataReuniaoAno");
+                String dataReuniao = request.getParameter("dataReuniao");
 		String hora = request.getParameter("horaReuniao");
 		String minuto = request.getParameter("minutoReuniao");
 		//Os Ids de obreiros obtidos são tokenizados pelo Javascript com %
 		String obreiroIdsTokenized = request.getParameter("obreiros");
 
+                log.debug("local: " + local);
+                log.debug("dataReuniao: " + dataReuniao);
+                log.debug("horaReuniao: " + hora);
+                log.debug("minutoReuniao: " + minuto);
+                log.debug("obreiros: " + obreiroIdsTokenized);
+                
+
 		//Passoss para agendar uma reunião
 		//1. Validar os dados cadastrais
 		ValidadorDeFormularioDeReuniao validadorDeFormularioDeReuniao = new ValidadorDeFormularioDeReuniao();
-		validadorDeFormularioDeReuniao.verificarCamposValidos(local, dia, mes, ano, hora, minuto);
+		validadorDeFormularioDeReuniao.verificarCamposValidos(local, dataReuniao, hora, minuto);
 
 		if(validadorDeFormularioDeReuniao.isFormularioValido()){
 			dataAccessObjectManager = new DataAccessObjectManager();
@@ -56,11 +67,12 @@ public class ActionReuniaoRegisterCommand implements Command{
 			List<PresencaObreiro> listaDePresenca = this.inserirObreirosNaLista(listaDeObreirosSelecionados);
 			
 			//2.c. Preparando a data e hora
-			String data = DateTimeUtils.converterDataBr(dia, mes, ano);
+			String data = dataReuniao;
 			String horario = DateTimeUtils.converterHorarioHHMM(hora, minuto);
+                        long momentoReuniaoMarcado = DateTimeUtils.converterDateTimeToMilissegundos(data, horario);
 			
 			//Instanciando a reunião para persistência
-			Reuniao reuniao = new Reuniao(local, data, horario);
+			Reuniao reuniao = new Reuniao(local, data, horario, momentoReuniaoMarcado);
 			reuniao.setListaDePresencaObreiro(listaDePresenca);
 
                         //Coloca o módulo de controle de sessão

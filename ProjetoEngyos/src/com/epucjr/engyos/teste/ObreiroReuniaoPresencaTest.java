@@ -6,6 +6,7 @@ import com.epucjr.engyos.dominio.modelo.Obreiro;
 import com.epucjr.engyos.dominio.modelo.PresencaObreiro;
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
+import com.epucjr.engyos.tecnologia.utilitarios.DateTimeUtils;
 
 public class ObreiroReuniaoPresencaTest {
 
@@ -52,7 +53,12 @@ public class ObreiroReuniaoPresencaTest {
 	}
 	
 	public static void inserirObreiroNaLista_Novo(){
-		Reuniao reuniao = new Reuniao("Casa do Cadu", "25/01/2010", "18:07");
+                String local = "Casa do Cadu";
+                String data = "25/01/2010";
+                String horario = "22:53:32";
+                long momentoRegistroReuniao = DateTimeUtils.converterDateTimeToMilissegundos(data, horario);
+
+		Reuniao reuniao = new Reuniao(local, data, horario, momentoRegistroReuniao);
 		DataAccessObjectManager dataAccessObjectManager = new DataAccessObjectManager();
 		
 		Obreiro obreiro = dataAccessObjectManager.obterObreiro("31273800893");

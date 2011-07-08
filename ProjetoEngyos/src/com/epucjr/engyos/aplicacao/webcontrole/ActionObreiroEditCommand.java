@@ -73,13 +73,6 @@ public class ActionObreiroEditCommand implements Command {
             digitalLida = (String) session.getAttribute("DigitalObtida");
         }
 
-        if (cpf.equals("88436038339")) {
-            System.out.println("igual");
-        } else {
-            System.out.println("tem coisa ai");
-            System.out.println("cpf =" + cpf + "___");
-        }
-
         //Reobtenção do obreiro a ser editado
         dataAccessObjectManager = new DataAccessObjectManager();
         Obreiro obreiro = dataAccessObjectManager.obterObreiro(cpf);

@@ -14,6 +14,7 @@ import com.epucjr.engyos.dominio.modelo.Congregacao;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeCongregacao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
  *Classe que tem como finalidade executar a ação que cumpra a promessa de editar uma congregação
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 1.0
  */
 public class ActionCongregacaoEditCommand implements Command{
-
+     private static org.apache.log4j.Logger log = Logger.getLogger(ActionCongregacaoEditCommand.class);
 
     /**
      * Método que executa a requisição de edição do formulário de congregação
@@ -45,6 +46,7 @@ public class ActionCongregacaoEditCommand implements Command{
      */
     @Override
     public Object execute(Object... arg) {
+
          //Instanciação de objetos e variáveis necessários para a realização do cadastro
         HttpServletRequest request = (HttpServletRequest) arg[0];
         DataAccessObjectManager dataAccessObjectManager = null;
@@ -54,11 +56,22 @@ public class ActionCongregacaoEditCommand implements Command{
         String nomeDaCongregacao = request.getParameter("Nome");
 	String endereco = request.getParameter("Endereco");
         String idCongregacaoString = request.getParameter("idCongregacao");
+        String congregacaoPadrao = request.getParameter("congregacao_padrao");
         long idCongregacao = 0;
+        boolean congregacaoPadraoBool = false;
+        log.debug("Nome: " + nomeDaCongregacao);
+        log.debug("Endereco: " + endereco);
+        log.debug("idCongregacao: " + idCongregacaoString);
+        log.debug("congregacao_padrao: " + congregacaoPadrao);
 
         if(idCongregacaoString != null && !idCongregacaoString.equals("")){
             idCongregacao = Long.parseLong(idCongregacaoString.trim());
         }
+
+        if(congregacaoPadrao != null && congregacaoPadrao.trim().equals("selecionado")){
+            congregacaoPadraoBool = true;
+        }
+        log.debug("congregacao_padrao_boolean: " + congregacaoPadraoBool);
 
          //Reobtenção da congregacao a ser editada
          dataAccessObjectManager = new DataAccessObjectManager();
@@ -70,6 +83,10 @@ public class ActionCongregacaoEditCommand implements Command{
          }
          if(!endereco.equals(congregacao.getEndereco())){
              congregacao.setEndereco(endereco);
+         }
+
+         if(!congregacao.isCongregacaoPadrao() && congregacaoPadraoBool){
+            congregacao.setCongregacaoPadrao(congregacaoPadraoBool);
          }
 
         //1. Validar os dados cadastrais
