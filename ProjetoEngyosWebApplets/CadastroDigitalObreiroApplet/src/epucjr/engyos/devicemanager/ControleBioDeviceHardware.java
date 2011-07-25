@@ -6,6 +6,7 @@ package epucjr.engyos.devicemanager;
 
 import com.nitgen.SDK.BSP.NBioBSPJNI;
 import com.nitgen.SDK.BSP.NBioBSPJNI.FIR_HANDLE;
+import epucjr.engyos.handler.CadastroDigitalExceptionHandler;
 
 /**
  *
@@ -22,6 +23,7 @@ public class ControleBioDeviceHardware {
     private int digitalCapturadaStatusDispositivo; // se valor for igual a zero quer dizer OK
     private String digitalModoTexto;
     private Object digitalModoBinario;
+    private CadastroDigitalExceptionHandler cadastroDigitalExceptionHandler;
 
     public ControleBioDeviceHardware() {
         this.nBioBSPJNI = null;
@@ -31,6 +33,7 @@ public class ControleBioDeviceHardware {
         this.mensagemStatus = "";
         this.usuarioValido = false;
         this.digitalCapturadaStatusDispositivo = 0;
+        this.cadastroDigitalExceptionHandler = new CadastroDigitalExceptionHandler();
     }
 
     public void inicializaHardware() {
@@ -54,7 +57,19 @@ public class ControleBioDeviceHardware {
 
         if (isHardwareInicializado()) {
             //Abre o dispositivo
-            nBioBSPJNI.OpenDevice(device_enum_info.DeviceInfo[0].NameID, device_enum_info.DeviceInfo[0].Instance);
+            try{
+                nBioBSPJNI.OpenDevice(device_enum_info.DeviceInfo[0].NameID, device_enum_info.DeviceInfo[0].Instance);
+            }
+            catch(NullPointerException ex){
+                cadastroDigitalExceptionHandler.lidarComExcecaoLancadaPelaAplicacao(ex);
+                this.setMensagemStatus("Ocorreu erro de hardware ou hardware não inicializado");
+                this.setHardwareInicializado(false);
+            }
+            catch(Exception ex){
+                cadastroDigitalExceptionHandler.lidarComExcecaoLancadaPelaAplicacao(ex);
+                this.setMensagemStatus("Ocorreu erro de hardware ou hardware não inicializado");
+                this.setHardwareInicializado(false);
+            }
         } else {
             this.setMensagemStatus("Ocorreu erro de hardware ou hardware não inicializado");
         }

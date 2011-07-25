@@ -5,8 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import com.epucjr.engyos.aplicacao.controle.Command;
 import com.epucjr.engyos.dominio.crud.BuscaAvancada;
 import com.epucjr.engyos.dominio.visualizacao.FormularioDeBuscaDaReuniao;
+import org.apache.log4j.Logger;
 
 public class ActionReuniaoFindCommand implements Command{
+    private static org.apache.log4j.Logger log = Logger.getLogger(ActionReuniaoFindCommand.class);
 	
 	public Object execute(Object... arg) {
 		//Instanciação de objetos e variáveis necessários para a realização da busca
@@ -16,9 +18,9 @@ public class ActionReuniaoFindCommand implements Command{
 		String parametroBusca = request.getParameter("busca_input");
 		int paginaSelecionada = 0;
 		String paginaSelecionadaStr = request.getParameter("paginaCorrente");
-		
-		System.out.println("PARAMETRO = " + parametroBusca);
-		System.out.println("PC = " + paginaSelecionadaStr);
+
+                log.debug("busca_input = " + parametroBusca);
+                log.debug("paginaCorrente = " + paginaSelecionadaStr);
 		
 		//Preparação dos campos de busca respeitando as especificações dos métodos
 		if(parametroBusca == null){

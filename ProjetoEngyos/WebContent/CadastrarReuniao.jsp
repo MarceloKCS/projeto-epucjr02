@@ -25,7 +25,7 @@
         <script type='text/javascript' src="javascript/jqueryui/jquery.ui.datepicker.js"></script>
         <script type='text/javascript' src="javascript/OptionTransfer.js"></script>
         <script type='text/javascript' src="javascript/selectbox.js"></script>
-         <style type="text/css">
+        <style type="text/css">
             #ui-datepicker-div{font-size: 62.5%;}
             .submit_reuniao {padding-top: 10px; font-size: 62.5%; }
 
@@ -310,8 +310,8 @@
                             %>
                             </span>
 
-
                         </p>
+
                         <div id="tabela_obreiros" class="tabela_obreiros">
                            <div class="align-lt">
                                <select multiple="multiple" name="obreiros1" id="lista_obreiros1" ondblclick="moveSelectedOptions(this.form['obreiros1'],this.form['obreiros2'],true,this.form['movepattern1'].value)">

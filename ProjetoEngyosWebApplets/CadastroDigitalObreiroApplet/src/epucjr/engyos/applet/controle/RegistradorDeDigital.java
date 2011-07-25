@@ -27,10 +27,12 @@ public class RegistradorDeDigital {
         ControleBioDeviceHardware controleBioDeviceHardware = new ControleBioDeviceHardware();
         controleBioDeviceHardware.inicializaHardware();
         controleBioDeviceHardware.abrirDispositivo();
-        Object digital = controleBioDeviceHardware.capturarDigitalModoString();
-         // String valorBin = controleBioDeviceHardware.capturarDigitalModoBinario();
-        controleBioDeviceHardware.fecharDispositivo();
-
+        Object digital = null;
+        if(controleBioDeviceHardware.isHardwareInicializado()){
+            digital = controleBioDeviceHardware.capturarDigitalModoString();
+            // String valorBin = controleBioDeviceHardware.capturarDigitalModoBinario();
+            controleBioDeviceHardware.fecharDispositivo();
+        }
         this.setMensagemStatus(controleBioDeviceHardware.getMensagemStatus());
         this.setOperacaoExecutada(controleBioDeviceHardware.isOperacaoExecutada());
 
@@ -40,8 +42,9 @@ public class RegistradorDeDigital {
     public void capturarArmazenarDigitalServlet(){
         ServletComunication servletComunication = new ServletComunication();
         NBioBSPJNI.FIR_TEXTENCODE digitalCapturadaModoText = (NBioBSPJNI.FIR_TEXTENCODE) this.capturarImpressaoDigital();
-        String digitalCapturadaText = digitalCapturadaModoText.TextFIR;
+
         if(this.isOperacaoExecutada()){
+            String digitalCapturadaText = digitalCapturadaModoText.TextFIR;
             String resposta = servletComunication.marcarDigitalString(digitalCapturadaText);
             this.setMensagemStatus(resposta);
             System.out.println("resposta = " + this.getMensagemStatus());

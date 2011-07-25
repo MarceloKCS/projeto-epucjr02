@@ -348,7 +348,7 @@ ul#tabmenu {
 	height: 40px;
 	width: 490px;
 }
-	ul#tabmenu li {
+	ul#tabmenu li, li.tab_on {
 		background: #EEE;
 		border: 2px solid #CCC;
 		border-bottom: 2px solid #EEE;
@@ -360,14 +360,33 @@ ul#tabmenu {
 		text-align: center;
 		width: 140px;
 	}
-		ul#tabmenu li a {
-			color: #AAA;
-			font-weight: bold;
-			text-decoration: none;
-		}
-		ul#tabmenu li a:hover {
-			color: #333;
-		}
+        ul#tabmenu li a, li.tab_on a {
+                color: #AAA;
+                font-weight: bold;
+                text-decoration: none;
+        }
+        ul#tabmenu li a:hover {
+                color: #333;
+        }
+
+        ul#tabmenu li a, li.tab_off a {
+                color: #AAA;
+                font-weight: bold;
+                text-decoration: none;
+        }
+
+	ul#tabmenu li.tab_off {
+		background-color: #CCC;
+	}
+	ul#tabmenu li.tab_off:hover {
+		background: #EEE;
+	}
+        ul#tabmenu li.tab_off:hover a {
+                color: #333;
+        }
+        ul#tabmenu li.tab_off a {
+                color: #999;
+        }
 
 /* Tab menu - Conteudo */
 

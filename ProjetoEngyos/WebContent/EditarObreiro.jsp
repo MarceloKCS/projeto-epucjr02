@@ -25,6 +25,8 @@
             <script type='text/javascript' src="javascript/jqueryui/jquery-ui.js"></script>
             <script type='text/javascript' src="javascript/jqueryui/jquery.ui.button.js"></script>
             <script type='text/javascript' src="javascript/jquery.form.js"></script>
+            <script src="javascript/jquery.alerts.js" type="text/javascript"></script>
+            <link href="css/jqueryalerts/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 
             <style type="text/css">
                 div#dialog-congregacao-form {font-size: 62.5%;}
@@ -218,6 +220,10 @@
 
                   function inserirDigital(){
                       document.digital_applet.triggerDigitalInsert();
+                  }
+
+                  function emitirAvisoApplet(mensagem){
+                      jAlert(mensagem);
                   }
 
             </script>
