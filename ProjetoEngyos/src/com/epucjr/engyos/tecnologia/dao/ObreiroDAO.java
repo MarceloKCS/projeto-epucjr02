@@ -41,6 +41,7 @@ public class ObreiroDAO implements IObreiroDAO{
             Obreiro obreiro = this.dataAccessObjectManager.obterObreiro(cpfObreiro);
             this.dataAccessObjectManager.deletarObjeto(obreiro);
             this.setOperacaoExecutada(this.dataAccessObjectManager.isOperacaoEfetuada());
+            this.setMensagemStatus(this.dataAccessObjectManager.getMensagemStatus());
         }else{
             this.setOperacaoExecutada(true);
             this.setMensagemStatus("Obreiro inexistente no sistema.");

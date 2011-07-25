@@ -1,13 +1,15 @@
 package com.epucjr.engyos.dominio.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.Cascade;
 
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -57,8 +59,8 @@ public class Obreiro {
 	//@ContainedIn
 	private Congregacao congregacao;
 
-        @OneToOne(mappedBy="obreiro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-        private PresencaObreiro presencaObreiro;
+        @OneToMany(mappedBy="obreiro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+        private List<PresencaObreiro> presencaObreiro;
 
 	/******************************
 	 *	CONSTRUTOR
@@ -67,7 +69,7 @@ public class Obreiro {
 		this.nome = "";
 		this.cargo = "";
 		this.identificacao = new Identificacao();
-                this.presencaObreiro = new PresencaObreiro();
+                this.presencaObreiro = new ArrayList<PresencaObreiro>();
 	}
 	
 	public Obreiro(String nome, String cargo, String cpf, Congregacao congregacao, String imppressaoDigital, String senha) {
@@ -76,7 +78,7 @@ public class Obreiro {
 		this.cpf = cpf;
 		this.congregacao = congregacao;		
 		this.identificacao = new Identificacao(imppressaoDigital, senha);
-                this.presencaObreiro = new PresencaObreiro();
+                this.presencaObreiro = new ArrayList<PresencaObreiro>();
 	}
 
         public Obreiro(String nome, String cargo, String cpf, Congregacao congregacao, String senha) {
@@ -85,7 +87,7 @@ public class Obreiro {
 		this.cpf = cpf;
 		this.congregacao = congregacao;
 		this.identificacao = new Identificacao(senha);
-                this.presencaObreiro = new PresencaObreiro();
+                this.presencaObreiro = new ArrayList<PresencaObreiro>();
 	}
 	
 	public Obreiro(String nome, String cargo, String cpf, Congregacao congregacao, Identificacao identificacao) {
@@ -94,7 +96,7 @@ public class Obreiro {
 		setCpf(cpf);
 		setCongregacao(congregacao);
 		this.identificacao = identificacao;
-                this.presencaObreiro = new PresencaObreiro();
+                this.presencaObreiro = new ArrayList<PresencaObreiro>();
 	}
 
     /******************************
@@ -162,7 +164,7 @@ public class Obreiro {
 		this.identificacao = identificacao;
 	}
 
-        public PresencaObreiro getPresencaObreiro() {
+        public List<PresencaObreiro> getPresencaObreiro() {
             return presencaObreiro;
         }
 

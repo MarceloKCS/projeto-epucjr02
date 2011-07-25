@@ -7,8 +7,10 @@ package com.epucjr.engyos.tecnologia.dao;
 
 import com.epucjr.engyos.dominio.modelo.Reuniao;
 import com.epucjr.engyos.tecnologia.persistencia.DataAccessObjectManager;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 /**
@@ -46,6 +48,7 @@ public class ReuniaoDAO implements IReuniaoDAO{
              Reuniao reuniao = this.dataAccessObjectManager.obterReuniao(idReuniao);
              this.dataAccessObjectManager.deletarObjeto(reuniao);
              this.setOperacaoExecutada(this.dataAccessObjectManager.isOperacaoEfetuada());
+             this.setMensagemStatus(dataAccessObjectManager.getMensagemStatus());
          }else{
             this.setOperacaoExecutada(true);
             this.setMensagemStatus("Reunião inexistente no sistema.");
@@ -62,6 +65,26 @@ public class ReuniaoDAO implements IReuniaoDAO{
     @Override
     public Reuniao findByPrimaryKey(long idReuniao) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<Reuniao> findByTimeInterval(long tempoInicio, long tempoFinal){
+        List<Reuniao> listaDeReunioesNoPeriodo = null;
+        String sQLQuery = "from Reuniao r where r.reuniaoStatus = :status and r.momentoReuniaoMarcada between :start and :end";
+        Query query = entityManager.createQuery(sQLQuery, Reuniao.class);
+
+        Date tempoInicioInput = new Date(tempoInicio);
+        Date tempoFinalInput = new Date(tempoFinal);
+
+        System.out.println("Inicio: " + tempoInicioInput.getMonth());
+        System.out.println("Fim: " + tempoFinalInput.getMonth());
+
+        query.setParameter("status", "ATIVA");
+        query.setParameter("start", tempoInicioInput);
+        query.setParameter("end", tempoFinalInput);
+        listaDeReunioesNoPeriodo = query.getResultList();
+        //listaDeReunioesNoPeriodo =  entityManager.createQuery("from Reuniao order by nome").getResultList();
+
+        return listaDeReunioesNoPeriodo;
     }
 
     @Override

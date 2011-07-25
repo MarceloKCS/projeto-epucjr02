@@ -54,8 +54,8 @@ public class Reuniao implements IReuniao{
 	@Field
 	private String horario;	
 	
-	@ManyToMany(mappedBy="reuniao", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-	@JoinColumn 
+	@ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	//@JoinColumn
 	private List<PresencaObreiro> listaDePresencaObreiro;
 	
 	private String reuniaoStatus;  //ATIVO-INATIVO
@@ -84,7 +84,6 @@ public class Reuniao implements IReuniao{
         @JoinColumn
         ReuniaoSessionStatus sessionStatus;
 	
-		
 	/******************************
 	 *	CONSTRUTOR
 	 ******************************/
@@ -209,8 +208,6 @@ public class Reuniao implements IReuniao{
     public int obterTempoDeDuracaoReuniao() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-
 
     public boolean verificarObreiroEstevePresenteNaReuniao(String cpf) {
         PresencaObreiro presencaObreiro = this.obterPresencaDeObreiroDaLista(this.listaDePresencaObreiro, cpf);

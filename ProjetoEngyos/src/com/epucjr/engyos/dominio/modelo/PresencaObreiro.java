@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -30,12 +30,12 @@ public class PresencaObreiro {
         @Temporal(TemporalType.TIMESTAMP)
         private Date momentoRegistroPresenca;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn
 	private Obreiro obreiro;
 	
 	@ManyToMany(mappedBy="listaDePresencaObreiro", fetch = FetchType.LAZY , cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinColumn
+	//@JoinColumn
 	private List<Reuniao> reuniao;
 	
 	public PresencaObreiro() {
@@ -43,7 +43,7 @@ public class PresencaObreiro {
 		this.momentoPresenca = "";
 		this.dataPresenca = "";
                 this.momentoRegistroPresenca = null;
-		this.obreiro = new Obreiro();
+		this.obreiro = null;
 		this.reuniao = new ArrayList<Reuniao>();
 	}
 	

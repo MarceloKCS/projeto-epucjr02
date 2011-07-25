@@ -206,7 +206,7 @@ public class ReuniaoSessionControl extends MainSessionControl{
          boolean reuniaoValida = true;
          //Verifica se a reunião está ativa, então será dispendido esforço para
          //verificar se ela está no prazo
-         System.out.println("Current Reuniao Status : " + reuniao.getReuniaoStatus());
+         log.debug("Current Reuniao Status : " + reuniao.getReuniaoStatus());
         if (reuniao.getReuniaoStatus().equals(Reuniao.REUNIAO_ATIVA)) {
             //Verifica se a reunião está dentro do prazo minimo estipulado nesta classe em "tempoMaxReuniaoEmMilissegundos".
             //Que está representando um tempo de 24 de atraso do seu agendamento
